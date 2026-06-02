@@ -61,7 +61,6 @@ phaistos_comprehensive_grid.py — 6-level evidence grid
 phaistos_scoring_doc.py     — Formal mathematical scoring definition
 phaistos_literature.py      — Literature synthesis + bibliography
 phaistos_final_reading.py   — Complete disc reading
-phaistos_holdout.py         — Cross-validation
 
 PHAISTOS_ΕΡΕΥΝΑ_ΠΛΗΡΗΣ.txt — Full research report v3.3 (Greek, 22 sections)
 INDEPENDENT_REVIEW.txt      — Honest independent review of all weaknesses
