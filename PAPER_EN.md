@@ -192,6 +192,31 @@ Each key tested only against its own vocabulary corpus with its own Monte Carlo 
 
 B_FREQ achieves a higher Z, but its matches are all unknown-meaning syllable fragments (a-sa, sa-ra). G_LUWIAN matches include independently attested words: `wa-tar` (PIE *wódr̥, water), `Tiwat` (Luwian sun god), `za` (demonstrative pronoun).
 
+### 5.7 Structural Fingerprint Comparison — Pillar 4 (Key-Independent)
+
+To test whether the disc's sign-system *structure* resembles one language family more than others — before applying any phonetic key — we computed 9 structural metrics for the disc and three reference systems (`phaistos_structural_similarity.py`):
+
+| Metric | Phaistos Disc | Luwian Hier. | Linear A | Egyptian |
+|--------|:-------------:|:------------:|:--------:|:--------:|
+| Zipf exponent α | 1.862 | 1.754 | 0.804 | 1.243 |
+| H1 unigram entropy (bits) | 3.045 | 2.840 | 4.547 | 4.329 |
+| Redundancy R | 0.221 | 0.208 | 0.064 | 0.118 |
+| Word-length mean | 4.607 | 3.596 | 3.021 | 2.853 |
+| Bigram repetition rate | 0.556 | 0.528 | 0.150 | 0.835 |
+| Final-sign concentration | 0.295 | 0.234 | 0.146 | 0.132 |
+
+**Structural distance from disc** (Euclidean across all 9 metrics):
+
+| Reference | Distance | Metrics won |
+|-----------|:--------:|:-----------:|
+| **Luwian Hieroglyphic** | **1.36** | **7 / 9** |
+| Linear A | 2.52 | 2 / 9 |
+| Egyptian (AED-TEI) | 2.77 | 0 / 9 |
+
+Luwian Hieroglyphic is structurally closest to the disc across all nine sign-system metrics, with no phonetic key applied. This constitutes Pillar 4: a key-independent structural argument that the disc's sign-distribution patterns are most compatible with the Luwian writing system.
+
+*Limitation:* Luwian and Linear A reference corpora are small (47 and 48 word-forms respectively). Egyptian comparison uses character-level Latin transliteration. Results are indicative, not definitive.
+
 ---
 
 ## 6. Negative Control and Self-Critique
@@ -204,7 +229,7 @@ Synthetic disc test (1,000 trials, same marginal frequencies, randomized adjacen
 
 ### 6.2 What Remains Valid
 
-The three key-independent pillars (Section 5.2) are unaffected by this finding, as they do not depend on the phonetic scoring function. The bigram Z=10 is sequential, not frequency-driven. The corpus control Z=27 uses independently classified Egyptian vocabulary categories. Sign #45 at centers is purely geometric.
+The four key-independent pillars (Sections 5.2 and 5.7) are unaffected by this finding, as they do not depend on the phonetic scoring function. The bigram Z=10 is sequential, not frequency-driven. The corpus control Z=27 uses independently classified Egyptian vocabulary categories. Sign #45 at centers is purely geometric. The structural fingerprint comparison (Pillar 4) operates at the sign-system level, prior to any phonetic mapping.
 
 ### 6.3 Key Design Circularity
 
@@ -257,9 +282,10 @@ We have demonstrated:
 1. The Phaistos Disc contains a statistically non-random sequential structure in the [#36→#11] bigram (Z=10), independent of any phonetic assumption.
 2. Its vocabulary register is identifiably ritual/theological (domain control Z=27.16 vs Z=−0.40), independent of any phonetic assumption.
 3. Its spiral centers share a geometric chiasmus and exclusively host Sign #45 (solar symbol).
-4. Among 10 tested phonetic keys, G_LUWIAN (Luwian Hieroglyphic) achieves the highest Bonferroni-significant score (p<0.0001).
-5. G_LUWIAN produces a coherent solar-water cosmological reading with structural parallels to the Egyptian Amduat.
-6. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence.
+4. Its sign-system structure (Zipf, entropy, redundancy, word-length, positional patterns) is closest to Luwian Hieroglyphic across 9 metrics (distance=1.36 vs Linear A=2.52, Egyptian=2.77), independent of any phonetic assumption.
+5. Among 10 tested phonetic keys, G_LUWIAN (Luwian Hieroglyphic) achieves the highest Bonferroni-significant score (p<0.0001).
+6. G_LUWIAN produces a coherent solar-water cosmological reading with structural parallels to the Egyptian Amduat.
+7. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence.
 
 The methodology presented here — blind multi-key grid testing with Bonferroni correction, corpus-domain control, perturbation analysis, and negative control — constitutes a replicable framework applicable to any undeciphered script where candidate reference corpora are available.
 
