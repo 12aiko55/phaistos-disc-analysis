@@ -100,7 +100,7 @@ python phaistos_headtohead.py
 
 If you use this code or findings, please cite:
 
-> Chavadakis, M. (2026). *Statistical Analysis of the Phaistos Disc: A Computational Methodology for Phonetic Key Evaluation*. Zenodo. https://doi.org/[DOI_PENDING]
+> Chavadakis, M. (2026). *Statistical Analysis of the Phaistos Disc: A Computational Methodology for Phonetic Key Evaluation*. Zenodo. https://doi.org/10.5281/zenodo.20517462
 
 ## Next Steps / Open Questions
 
