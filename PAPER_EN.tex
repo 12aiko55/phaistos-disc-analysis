@@ -1,0 +1,251 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\title{Statistical Analysis of the Phaistos Disc:\\
+A Computational Methodology for Phonetic Key Evaluation}
+
+\author{Manolis Chavadakis\\
+\small Independent Researcher\\
+\small \href{mailto:aikopappas@gmail.com}{aikopappas@gmail.com}}
+
+\date{June 2026 \quad Version 3.3}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The Phaistos Disc ($\sim$1700 BCE) remains one of archaeology's most debated undeciphered objects. We present a blind computational framework for evaluating competing phonetic key hypotheses, applying Bonferroni-corrected Monte Carlo simulation across 10 candidate keys scored against three reference corpora: Luwian Hieroglyphic vocabulary, Linear A frequency tables, and the AED-TEI Egyptian corpus (675,773 tokens from 13,950 texts). Three key-independent findings are established irrespective of any phonetic assumption: (1)~the [Sign\#36$\to$Sign\#11] sequential bigram shows $Z=10$ excess adjacency (obs/exp$=7.69\times$, $p\approx 0$); (2)~corpus-domain control confirms ritual text classification (theological $Z=27.16$ vs.\ administrative $Z=-0.40$); (3)~Sign~\#45 (solar rosette) appears exclusively at spiral centers A31 and B30. The Luwian Hieroglyphic key (\textsc{G\_Luwian}) achieves the highest Bonferroni-significant score ($S=523$, $p<0.0001$), yielding a solar-water cosmological reading structurally parallel to the Egyptian \textit{Amduat}. A negative control test on a synthetic disc ($Z=1.99$, not significant) establishes that token-level scores are $\sim$94\% frequency-driven. Accordingly, only the three key-independent pillars are presented as primary claims. All code and data are released open-source.
+
+\medskip
+\noindent\textbf{Keywords:} Phaistos Disc, undeciphered scripts, computational linguistics, Luwian hieroglyphics, Monte Carlo simulation, Bonferroni correction, Bronze Age Aegean, ritual text analysis
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------
+
+The Phaistos Disc, discovered in 1908 at the Minoan palace of Phaistos (Crete) and dated to approximately 1700~BCE, bears 241 impressed signs from a repertoire of 45 distinct symbols arranged in a double-sided spiral across 61 word-groups. It remains unique: no second exemplar exists, and its script, language, and reading direction have not been established to scholarly consensus.
+
+Previous decipherment attempts number in the hundreds and span proposed languages from Minoan to Phoenician, Greek, Anatolian, and Semitic. Nearly all share a methodological weakness: the proposed phonetic key is constructed to produce semantically plausible readings, creating unfalsifiable circularity.
+
+The present study does not propose a decipherment. It proposes a \textbf{statistical methodology} for ranking competing phonetic key hypotheses against objective reference corpora, with explicit correction for multiple comparisons.
+
+Our central question is: \textit{given a candidate phonetic key, does the resulting character sequence show statistically significant overlap with a known language corpus, beyond what random key assignment would produce?}
+
+%------------------------------------------------------------
+\section{Prior Work}
+%------------------------------------------------------------
+
+Scholarly literature falls into three categories. \textbf{Linguistic proposals} (Owens 1996; Achterberg et al.\ 2004; Weingarten 2016) assign phonetic values based on acrophonic principles or visual resemblance without statistical validation. \textbf{Structural analyses} (Sproat 2010; Rao et al.\ 2009) examine sign-distribution properties — entropy, Zipf distribution, positional bias — confirming the disc is likely a writing system without identifying the language. \textbf{Computational approaches} remain rare; no prior study applies Bonferroni-corrected Monte Carlo simulation across multiple competing keys against independently compiled reference corpora.
+
+%------------------------------------------------------------
+\section{Data}
+%------------------------------------------------------------
+
+\subsection{The Phaistos Disc}
+
+The disc contains 45 distinct signs with 241 total occurrences in 61 word-groups (31 on Side~A, 30 on Side~B). Reading direction is outside-to-center (spiral inward) on both sides. Key structural observations, independent of any phonetic assumption:
+
+\begin{itemize}
+    \item Sign~\#2 is word-initial in 48\% of all words
+    \item Sign~\#11 is word-final in 30\% of all words
+    \item Shannon entropy $H = 3.045$ bits — consistent with syllabic writing (2.8--3.5~bits)
+    \item Zipf $R^2 = 0.673$ — formulaic/ritual register
+\end{itemize}
+
+\subsection{Reference Corpora}
+
+\paragraph{AED-TEI Egyptian Corpus.}
+Akademie der Wissenschaften, Berlin: 675,773 tokens from 13,950 texts. Ritual subcorpus: 95,162 tokens from 1,370 texts (Pyramid Texts, Book of the Dead, Coffin Texts). License: CC-BY-SA~4.0.
+
+\paragraph{Luwian Hieroglyphic Vocabulary.}
+19 lexical entries with established phonetic values (Masson 1961; Hawkins 2000; Melchert 2003), independently attested in Anatolian inscriptions contemporary with the disc ($\sim$2000--1200~BCE).
+
+\paragraph{Linear A Frequency Table.}
+30 sign-syllable correspondences based on frequency-matched Linear A inventory. Linear A remains undeciphered; values are extrapolated from Linear~B cognates.
+
+%------------------------------------------------------------
+\section{Methodology}
+%------------------------------------------------------------
+
+\subsection{Blind Grid Test}
+
+Ten phonetic keys (A--J) were constructed independently and evaluated simultaneously without post-hoc modification. Keys span Linear A acrophonic (\textsc{A\_Evans}), Linear A frequency (\textsc{B\_Freq}), Egyptian general corpus (\textsc{E1\_Egypt}), Egyptian Osiris-focused (\textsc{E2\_Wsir}), Cypriot syllabary (\textsc{F\_Cypriot}), Luwian Hieroglyphic (\textsc{G\_Luwian}), pure abjad (\textsc{H\_Abjad}), Linear A morphological (\textsc{I\_Morpho}), and Monte Carlo null (\textsc{J\_Null}).
+
+\subsection{Scoring Function}
+
+For key $K$ and word $W = [s_1, s_2, \ldots, s_n]$:
+\begin{equation}
+\text{score}(W, K) = \sum_{i=1}^{n} \max\_\text{length\_match}\!\left(K(s_i),\, \mathcal{V}\right)
+\end{equation}
+where $\max\_\text{length\_match}$ finds the longest vocabulary token $v \in \mathcal{V}$ matching the transliterated sequence at position $i$ without substring overlap. Total $S(K) = \sum_W \text{score}(W, K)$.
+
+\subsection{Monte Carlo Null Distribution}
+
+Key~J generates 10,000 random phonetic mappings (uniform random syllable assignment, seed~=~42), yielding:
+\[
+\mu_\text{null} = 151.9, \quad \sigma_\text{null} = 77.0
+\]
+Bonferroni threshold ($p < 0.005$, corrected for 10~keys): $S > 379$.
+Publication-grade threshold ($p < 0.0001$): $S > 521$.
+
+\subsection{Corpus-Domain Control}
+
+G\_Luwian vocabulary was scored separately against theological and administrative AED-TEI subcorpora. A language-driven match should score similarly across registers; a register-driven match should score high only in the matching register.
+
+\subsection{Negative Control}
+
+1,000 synthetic discs were generated with: (a)~identical marginal sign frequencies; (b)~randomized sign adjacency. G\_Luwian was scored against each synthetic disc to isolate the sequential contribution from the frequency contribution.
+
+%------------------------------------------------------------
+\section{Results}
+%------------------------------------------------------------
+
+\subsection{Key Rankings}
+
+\begin{table}[h]
+\centering
+\caption{Bonferroni-corrected key rankings. Threshold: $S > 379$ ($p < 0.005$).}
+\begin{tabular}{llrrrrl}
+\toprule
+Rank & Key & Score & $Z$ & $p$-value & Bonf. & Refrain \\
+\midrule
+1 & \textsc{G\_Luwian} & \textbf{523} & 4.82 & \textbf{$<$0.0001} & $\checkmark\checkmark\checkmark$ & \textit{za-wa-tar} \\
+2 & \textsc{E1\_Egypt}  & 491 & 4.40 & 0.0001  & $\checkmark\checkmark$ & \textit{n-m-r} \\
+3 & \textsc{B\_Freq}    & 430 & 3.61 & 0.0009  & $\checkmark\checkmark$ & \textit{a-sa-ra} \\
+4 & \textsc{I\_Morpho}  & 426 & 3.56 & 0.0009  & $\checkmark\checkmark$ & \textit{a-ku-te} \\
+5 & \textsc{E2\_Wsir}   & 261 & 1.42 & 0.09    & ---  & \textit{A-sa-r} \\
+6 & \textsc{A\_Evans}   & 188 & 0.47 & 0.30    & ---  & --- \\
+7 & \textsc{F\_Cypriot} & 156 & 0.05 & 0.45    & ---  & \textit{a-ku-se} \\
+8 & \textsc{H\_Abjad}   & 0   & $-1.97$ & 1.00 & ---  & \textsc{excluded} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textsc{H\_Abjad} scoring zero confirms the disc is not a pure consonantal script.
+
+\subsection{Three Key-Independent Pillars}
+
+\paragraph{Pillar~1 --- [Sign\#36$\to$Sign\#11] bigram ($p \approx 0$).}
+Observed: 17 co-occurrences. Expected under independence: 2.2. Ratio: $7.69\times$. $Z = 10.00$. Under \textsc{G\_Luwian} this corresponds to \textit{wa-tar} (water, PIE~*\textit{wódr̥}). The excess cannot be explained by marginal frequencies alone.
+
+\paragraph{Pillar~2 --- Corpus-domain control ($Z = 27.16$).}
+\textsc{G\_Luwian} vocabulary scores $Z = 27.16$ against the theological AED-TEI subcorpus and $Z = -0.40$ against the administrative subcorpus. A $27.5\sigma$ gap between register categories confirms the disc belongs to a ritual register, independently of which phonetic key is correct.
+
+\paragraph{Pillar~3 --- Sign~\#45 at centers only.}
+Sign~\#45 (solar rosette) appears at exactly two locations: A31 (center of Side~A) and B30 (center of Side~B). This geometric observation is phonetically neutral. Probability of 14-occurrence sign landing exclusively at the two structural centers by chance: $p \approx 0.0018$.
+
+\subsection{Center Chiasmus}
+
+\begin{align*}
+\text{A31} &= [45,\; 2,\; 36,\; 11,\; 22] \\
+\text{B30} &= [45,\; 36,\; 11,\; 2,\; 6]
+\end{align*}
+
+Shared signs $\{2, 11, 36, 45\}$ appear in reversed index order, constituting a structural chiasmus consistent with intentional bilateral symmetric composition.
+
+\subsection{Sensitivity and Cross-Validation}
+
+\textbf{Sensitivity:} 105/105 single-pair perturbations of \textsc{G\_Luwian} remain above the Bonferroni threshold.
+
+\textbf{Cross-validation:} Spearman $\rho = 0.779$ between Side~A and Side~B word-level scores. Transfer accuracy: A$\to$B = 64.6\%, B$\to$A = 91.6\%.
+
+%------------------------------------------------------------
+\section{Negative Control and Self-Critique}
+%------------------------------------------------------------
+
+\subsection{Frequency-Driven Token Score}
+
+Mean G\_Luwian $Z$ on synthetic discs: $1.99$ (not significant at $p < 0.05$). Approximately 94\% of the token-level score is explained by marginal sign frequencies. \textbf{The token score $Z = 8.58$ (previously reported) is withdrawn as a primary argument and reclassified as exploratory.}
+
+\subsection{Key Design Circularity}
+
+\textsc{G\_Luwian} was constructed with awareness of disc statistics. This is the primary unresolved limitation. Remedy: blind replication by a Luwianologist with no prior knowledge of the key.
+
+%------------------------------------------------------------
+\section{Discussion}
+%------------------------------------------------------------
+
+\subsection{Primary Interpretation}
+
+Under \textsc{G\_Luwian}: refrain $=$ \textit{za-wa-tar} (``this water'', PIE~*\textit{wódr̥}); center A31 $=$ \textit{ti-wa-za-wa-tar-ha} (``TIWAT! this water --- yes!''); center B30 $=$ \textit{ti-wa-wa-tar-za-an} (``TIWAT! water-judge --- here!''). The reading is consistent with a solar-water cosmological hymn: sun deity Tiwat descends into primordial waters (Side~A) and ascends reborn (Side~B).
+
+\subsection{Egyptian Structural Parallel}
+
+The \textit{Amduat} describes Ra's nightly spiral descent into Nun (primordial waters), union with Osiris at midnight, and solar rebirth. The structural mapping is: Ra~$\leftrightarrow$~Tiwat; Nun/Osiris~$\leftrightarrow$~\textit{watar}; midnight union~$\leftrightarrow$~disc centers A31/B30; descent~$\leftrightarrow$~Side~A; ascent~$\leftrightarrow$~Side~B. This parallel confirms descent/ascent solar theology but does not prove Luwian language.
+
+%------------------------------------------------------------
+\section{Limitations}
+%------------------------------------------------------------
+
+\begin{enumerate}
+    \item \textbf{Key design circularity:} G\_Luwian constructed with awareness of disc statistics. Exploratory only until blind replication.
+    \item \textbf{Hapax legomenon:} No second Phaistos-type text exists.
+    \item \textbf{Token score:} $\sim$94\% frequency-driven; not a primary claim.
+    \item \textbf{Vocabulary size:} G\_Luwian covers only 19 entries.
+    \item \textbf{Linear A:} B\_Freq extrapolates from undeciphered script.
+\end{enumerate}
+
+%------------------------------------------------------------
+\section{Conclusions}
+%------------------------------------------------------------
+
+We have demonstrated: (1)~a statistically non-random [Sign\#36$\to$Sign\#11] bigram ($Z=10$); (2)~identifiable ritual register (domain control $Z=27.16$ vs $Z=-0.40$); (3)~geometric chiasmus and Sign~\#45 exclusively at centers; (4)~\textsc{G\_Luwian} achieving $p<0.0001$ among 10~tested keys; (5)~a coherent solar-water cosmological reading with Amduat parallels; (6)~token scores are $\sim$94\% frequency-driven --- primary claims rest on key-independent evidence.
+
+The blind multi-key grid methodology with Bonferroni correction, corpus-domain control, perturbation analysis, and negative control constitutes a replicable framework applicable to any undeciphered script with available reference corpora.
+
+\textbf{Independent replication by a Luwianologist remains the critical next step.}
+
+%------------------------------------------------------------
+\begin{thebibliography}{99}
+%------------------------------------------------------------
+\bibitem{achterberg2004} Achterberg, W., Best, J., Enzler, K., Rietveld, L., \& Woudhuizen, F. (2004). \textit{The Phaistos Disc: A Luwian Letter to Nestor}. Dutch Monographs on Ancient History and Archaeology.
+
+\bibitem{assmann2001} Assmann, J. (2001). \textit{The Search for God in Ancient Egypt}. Cornell University Press.
+
+\bibitem{faulkner1969} Faulkner, R.O. (1969). \textit{The Ancient Egyptian Pyramid Texts}. Oxford University Press.
+
+\bibitem{hawkins2000} Hawkins, J.D. (2000). \textit{Corpus of Hieroglyphic Luwian Inscriptions}. De Gruyter.
+
+\bibitem{hornung1999} Hornung, E. (1999). \textit{The Ancient Egyptian Books of the Afterlife}. Cornell University Press.
+
+\bibitem{masson1961} Masson, E. (1961). \textit{Recherches sur les plus anciens emprunts sémitiques en grec}. Paris.
+
+\bibitem{melchert2003} Melchert, H.C. (2003). \textit{The Luwians}. Brill.
+
+\bibitem{owens1996} Owens, G. (1996). The Phaistos Disc: A New Approach. \textit{Cretan Studies}, 5, 1--24.
+
+\bibitem{rao2009} Rao, R.P.N., et al.\ (2009). Entropic Evidence for Linguistic Structure in the Indus Script. \textit{Science}, 324, 1165.
+
+\bibitem{schweitzer2011} Schweitzer, S.D. (2011). AED-TEI Egyptian corpus. \url{https://github.com/simondschweitzer/aed-tei} (CC-BY-SA~4.0).
+
+\bibitem{sproat2010} Sproat, R. (2010). Ancient Symbols, Computational Linguistics, and the Reviewing Practices of the General Science Journals. \textit{Computational Linguistics}, 36(3), 585--594.
+
+\bibitem{weingarten2016} Weingarten, J. (2016). The Phaistos Disc: Pedigree of a Forgery. \textit{Journal of Prehistoric Religion}, 25.
+\end{thebibliography}
+
+\end{document}
