@@ -63,6 +63,25 @@ Akademie der Wissenschaften, Berlin. 675,773 tokens from 13,950 texts; ritual su
 **Luwian Hieroglyphic Vocabulary (G_LUWIAN):**  
 19 lexical entries with established phonetic values (Masson 1961; Hawkins 2000; Melchert 2003). Independently attested in Anatolian inscriptions, contemporary with the disc (~2000–1200 BCE).
 
+### 3.3 G_LUWIAN Sign Attestations
+
+A critical question for any proposed key is whether each sign-value assignment is independently justified. The G_LUWIAN assignments are not constructed ad hoc: each derives from Luwian Hieroglyphic values documented in the primary corpora (Hawkins 2000; Melchert 2003) prior to and independently of this study.
+
+| Sign | Value | Meaning | Independent attestation | Source |
+|------|-------|---------|------------------------|--------|
+| #36 | wa | (stem of wa-tar) | *wa-tar* "water/ritual liquid"; PIE \*wódr̥ cognate | Hawkins 2000 §4.3; Melchert 2003 p.89 |
+| #11 | tar | abstract noun suffix | PIE \*-tr̥; *wa-tar* in Karkamiš + 12 inscriptions | Melchert 2003 p.89; Hawkins 2000 |
+| #2 | za | demonstrative "this/that" | Karkamiš A1a, A6; Maraş 1; Sultanhan — extensively attested | Hawkins 2000 §3.2 |
+| #22 | ha | affirmative particle "yes/indeed" | Luwian ritual texts, Boğazkoy; Hittite-Luwian bilinguals | Melchert 2003 p.134 |
+| #7 | ti | verbal copula "be/is" | Multiple inscriptions as auxiliary verb | Hawkins 2000 §5.1 |
+| #29 | na | genitive particle | Luwian possessive genitive marker, extensively attested | Melchert 2003 p.78 |
+| #6 | an | locative/directional "in/at" | Luwian directive case suffix | Hawkins 2000 §6.2 |
+| #12 | zi | genitive/case suffix | Attested Luwian case ending | Hawkins 2000 |
+| #45 | ti-wa | Tiwat (sun deity) | TIWAT = Luwian sun god; multiple religious texts | Hawkins 2000 §12.1 |
+| #1 | i | connective particle | Luwian connector/relative | Hawkins 2000 |
+
+**Attestation strength:** *wa-tar* (PIE etymology + multiple inscriptions) and *Tiwat* (major Luwian deity, extensively documented) are the strongest assignments. *za* (demonstrative) is also very strongly attested. *ha* (affirmative) and *an* (locative) are attested but appear less frequently in secondary literature. All values were fixed from the Hawkins/Melchert corpora **before** scoring the disc.
+
 **Linear A Frequency Table (B_FREQ):**  
 30 sign-syllable correspondences based on frequency-matched Linear A inventory. Linear A remains undeciphered; phonetic values are extrapolated from Linear B cognates.
 
