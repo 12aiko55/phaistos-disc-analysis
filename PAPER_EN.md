@@ -265,6 +265,43 @@ Both sides read outside → center as primary direction. The reverse reading (ce
 
 ---
 
+## 7b. Extended Full Reading (Tier 1 + Tier 2)
+
+Combining the 10 G_LUWIAN sign assignments (Tier 1, independently attested) with five tentative assignments derived from positional grammar analysis and the blind grid (`phaistos_positional_grammar.py`), a complete reading of all 61 words is possible:
+
+**Tier 2 tentative assignments** (positional grammar + 500K blind grid, NOT independently attested):
+
+| Sign | Value | Class | Justification |
+|------|-------|-------|---------------|
+| #3 | ar | MEDIAL | Luwian *ar-* = eagle/come; medial between *na* and *ha* in A03 |
+| #24 | ur | FLEX | MAGNUS "great"; initial in B03 → *ur-za-wa-tar* = "great this-water" |
+| #25 | tar-hu | MEDIAL | Tarhunt (storm deity); A02 → *za-an-tar-hu-an-ha* = "this, in Tarhunt, yes!" |
+| #33 | ma | FINAL | nominalizer suffix; 100% word-final; B10 → *wa-tar-na-za-ma* |
+| #44 | la | FINAL | emphatic particle; 100% word-final; B14 → *ha-za-wa-tar-la* = "indeed this water truly" |
+
+**Coverage:** 55/61 words (90%) are Tier-1 only; 6 words (10%) contain one Tier-2 sign; 0 words remain unreadable. Token coverage: 275/281 (98%) Tier-1, 6/281 (2%) Tier-2.
+
+**Key readings:**
+
+| Word | Reading | Gloss |
+|------|---------|-------|
+| A31 (center) | ti-wa-za-wa-tar-ha | TIWAT! this water — yes! *(descent climax)* |
+| B30 (center) | ti-wa-wa-tar-za-ha | TIWAT! water — this — yes! *(ascent climax)* |
+| B05 (refrain) | za-wa-tar | this water |
+| A02 | za-an-tar-hu[?]-an-ha | this, in Tarhunt, indeed! |
+| B03 | ur[?]-za-wa-tar-na | great this-water-of |
+| B13 | za-wa-tar-ti-wa | this water [of] Tiwat |
+| B25 | za-wa-na-tar-ha | this lord-of yes! |
+| B29 | za-wa-tar-na-ha | this water-of yes! |
+
+**Cosmological structure:**
+- Side A (outside→center): descent — *za-wa-tar* motif builds toward A31 climax
+- Side B (center→outside): ascent — B30 mirrors A31 with inverted sign order (chiasmus confirmed)
+
+⚠ *Tier-2 assignments are hypotheses, not attestations. Independent replication by a Luwianologist is required before any claim of decipherment.*
+
+---
+
 ## 8. Limitations
 
 1. **Key design circularity:** G_LUWIAN constructed with awareness of disc statistics. Exploratory only until blind replication.
