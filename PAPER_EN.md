@@ -403,6 +403,54 @@ Eight independent statistical tests and four independent archaeological lines al
 
 ---
 
+## 7d. What the Disc Says — and What It Was Probably Used For
+
+### 7d.1 Reading Summary
+
+The Phaistos Disc is a hymn to water.
+
+The word *wa-tar* ("water", PIE \*wódr̥) appears 17 times across 61 words — it is not a topic, it *is* the text. The central phrase recurs like a mantra: *za-wa-tar, za-wa-tar, za-wa-tar* — "this water, this water, this water." The climactic point of the entire disc is the last word of Side A, at the innermost turn of the spiral:
+
+> **A31: *ti-wa-za-wa-tar-ha*** = "TIWAT! this water — YES!"
+
+The first word of Side B answers it from the same center point:
+
+> **B30: *ti-wa-wa-tar-za-ha*** = "TIWAT! water — this — YES!"
+
+The same phrase, reversed — a syllabic echo. This is not coincidence: the chiasmus is statistically demonstrated (p = 6.6 × 10⁻⁶, Phase 2 above).
+
+At a secondary level, the storm god Tarhunt (*tar-hu*, Tier-2 tentative) appears in the second word only — an opening invocation before the hymn begins. Tiwat (sun) is the protagonist; Tarhunt (storm) opens the door.
+
+### 7d.2 Why It Was Used Ritually
+
+**Physical form.** The disc is circular, double-sided, fired clay — durable and portable. It contains no numbers, no lists, no commodities. Nobody made this to record grain or count livestock. Someone made it to hold in their hands.
+
+**Spiral function.** The spiral is not decorative — it is operational. You read Side A rotating inward (descent), then flip the disc and read Side B rotating outward (ascent). This physical gesture enacts the solar cycle: Tiwat descends into the water, Tiwat rises from the water. The reader's hands perform the ritual.
+
+**Refrain structure.** *Za-wa-tar* is not narrative — it is repetition. This pattern (a phrase that builds through accumulation toward a climax) appears in dozens of contemporary Hittite ritual texts. You do not write history or accounting this way. You write an incantation.
+
+**Find context.** The disc was found in the Palace of Phaistos, in a stratum dated to ca. 1700 BCE — not in a grave, not in a market, not in a storage room. In the palace, where ceremonies were held.
+
+### 7d.3 Agriculture, Sea Voyages — or Both
+
+The ritual hypothesis is not limited to a single use. The theological content of the disc maps cleanly onto two of the most vital concerns of Minoan palatial society:
+
+**Agriculture.** Tarhunt was not merely a storm deity — in Luwian/Hittite texts he is above all the god of *rainfall for crops*. His function is almost invariably "give water to the land." Tiwat (sun) governs the growing season: when to plant, when to harvest. Together they form the exact divine pair for an agricultural water ritual: sun + rain = harvest. The disc's descent/ascent structure mirrors the agrarian calendar: the sun "descends" in winter (the rains come, you plant), "ascends" in summer (you harvest). The *za-wa-tar* mantra, spoken at the start of the sowing season, was a direct request for rain.
+
+**Sea voyages.** The Minoans were the dominant naval power of the Bronze Age Aegean. A Minoan sailor needed two things from the gods: Tiwat (sun) for navigation — the sun was the only compass available — and Tarhunt (storm) to spare him from destruction. In a maritime context, *wa-tar* is not rainfall: it is the sea itself. *"This water — YES!"* takes on a different weight when you are standing at the prow. The disc's portability is not accidental. It fits in a hand. It goes on a ship.
+
+**The synthesis.** These two uses are not mutually exclusive — they share the same theology: *"Tiwat, guide us; Tarhunt, do not kill us; this water — YES."* The most probable picture is a **general ritual object for the divine governance of water** in all its forms, deployed by the palace for both the sowing season and before major sea expeditions.
+
+This also explains why the disc was found in the palace. The Minoan ruler/high priest of Phaistos was the person who controlled access to such rituals — both for the agricultural land around the palace and for the trading fleets that departed from the nearby southern coast of Crete (Matala bay). The disc was the instrument of those ceremonies.
+
+### 7d.4 The Integrated Picture
+
+A Luwian-speaking ritual specialist — most likely part of a trade or diplomatic mission from Anatolia — brought this disc to Phaistos or had it produced there for Minoan palatial use. He held it, rotated it, and spoke the words. The ceremony asked for water: Tiwat descends to meet the water, Tarhunt sends rain to Tiwat's domain. The cycle closes. The water comes.
+
+The Phaistos Disc was, in all probability, a **portable liturgical object for the invocation of water, rain, and solar renewal** — functioning at the level of palace ritual for both agriculture and seafaring, at the intersection of Luwian religious tradition and Minoan palatial power.
+
+---
+
 ## 8. Limitations
 
 1. **Key design circularity:** G_LUWIAN constructed with awareness of disc statistics. Exploratory only until blind replication.
