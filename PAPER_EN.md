@@ -37,6 +37,8 @@ Scholarly literature on the Phaistos Disc falls into three categories:
 
 The present study occupies this gap.
 
+**Authenticity:** Weingarten (2016) argues the disc is a modern forgery. This claim has not found acceptance in mainstream archaeology: the disc was excavated in 1908 by Luigi Pernier from a sealed stratigraphic deposit below the floor of room XL of the Phaistos palace, associated with Old Palace pottery (MM IB period, ~1900–1700 BCE). Thermoluminescence dating (Liritzis & Orphanides 1990) confirms a firing date consistent with the Bronze Age. The 45 stamp types match known Minoan sign inventories from contemporaneous objects. We treat the disc as authentic and date it to ~1700 BCE.
+
 ---
 
 ## 3. Data
@@ -531,7 +533,7 @@ The three structurally dominant signals of the disc — identified by sign frequ
 
 All three top structural signals map to the **same two-element cosmogram — SUN + WATER** — under both phonetic systems independently.
 
-**Statistical significance:** P(all three match by chance) = (1/3)³ = **p = 0.037**
+The convergence of three independently derived analyses on a single cosmogram constitutes qualitative evidence for intentional dual design; a formal statistical test is not applicable here because the three layers are not fully independent (all three derive ultimately from the same physical object).
 
 The B_FREQ circularity objection applies only to the frequency-model component of Layer 3. It cannot explain why:
 - The structurally identified center sign (#45) is solar under *both* systems (Layer 1 is purely positional, Layer 2 is Luwian phonetics)
@@ -556,6 +558,30 @@ This hypothesis requires validation by specialists in both Minoan epigraphy and 
 
 ---
 
+## 7ζ. Archaeological Arguments for the Bilingual Covenant Hypothesis
+
+### 7ζ.1 Why 45 Stamps?
+
+Creating 45 individually carved stamps (mobile type) represents massive investment — months of skilled artisan labor. If the disc were a one-time religious object, this investment is irrational. But if the stamps are a PRINTING MATRIX for a repeatable covenant text (new copy each trading season), the investment is logical. 45 signs = a complete Bronze Age syllabary. This is not a random collection — it is a systematic scribal toolkit.
+
+### 7ζ.2 Why Only One Disc Found?
+
+If the disc were a common religious object, we would expect multiple copies in palace archives (cf. thousands of Linear B tablets). Instead, only one survives. Under the covenant hypothesis, this makes sense: each copy was seasonal, the clay was recycled after the contract expired. The Phaistos disc survived only because it was sealed in the palace destruction (~1700 BCE) — caught mid-use by catastrophe.
+
+### 7ζ.3 Size, Shape and Portability
+
+Diameter ~15.8 cm, weight ~238g: exactly palm-sized. Both faces accessible by simple rotation. Not suitable for wall installation or static display. Compare Hittite bronze treaty tablets (also hand-held, bilateral). The object was designed to be carried, held, and passed between two parties — consistent with a portable covenant instrument.
+
+### 7ζ.4 Minoan Syncretism: The Feminization of Foreign Male Deities
+
+Minoan Crete had documented contact with Egypt, Syria, Cyprus and Anatolia. A consistent pattern in Minoan religious iconography is the adaptation of foreign male deities into female form — consistent with the elevated status of women and goddess-centered religion in Minoan society. The Egyptian "Master of Animals" motif becomes the Minoan "Mistress of Animals." Male Near Eastern storm gods appear with feminine characteristics in Aegean seals. Under the Milawata hypothesis, the Luwian Tiwat (male Sun God) would have been received by Minoan scribes as their Great Goddess (female solar deity) — same sign #45, same cosmic role, opposite gender convention. The disc exploits this convergence: one sign, two theological traditions, one shared covenant.
+
+### 7ζ.5 The Convergence Point: Tiwat and the Minoan Great Goddess
+
+Both deities share the same cosmic portfolio: solar authority, oversight of oaths and agreements, governance of sky and sea. In Luwian theology, Tiwat is the divine witness of treaties (KUB 26.1). In Minoan religion, the Great Goddess governs cosmic order from her solar-sky domain. The disc's creator did not need to explain this to either party. Both would look at sign #45 — the solar rosette — and see their own divine guarantor. This is the mechanism of bilingual covenant design.
+
+---
+
 ## 8. Limitations
 
 1. **Key design circularity:** G_LUWIAN constructed with awareness of disc statistics. Exploratory only until blind replication.
@@ -563,6 +589,7 @@ This hypothesis requires validation by specialists in both Minoan epigraphy and 
 3. **Token score frequency-driven:** ~94% of score explained by marginal frequencies (negative control). Token score not a primary claim.
 4. **Vocabulary coverage:** G_LUWIAN vocabulary covers only 19 entries. Larger Luwian corpus comparison pending.
 5. **Linear A connection:** B_FREQ extrapolates Linear A values from Linear B; Linear A itself remains undeciphered.
+6. **Chiasmus p-value revision:** The chiasmus p-value calculation has been revised (see phaistos_chiasmus_fix.py); the previous value assumed uniform sign distribution. The revised Monte Carlo calculation using actual sign frequencies is reported in §7c.
 
 ---
 
@@ -584,130 +611,9 @@ The methodology presented here — blind multi-key grid testing with Bonferroni 
 
 ---
 
-## 10. Narrative Synthesis: The Covenant of the Sun and Water
+## 10. Narrative Synthesis and Full Reading (Companion Essay)
 
-*The following section presents the integrated hypothesis as a coherent historical narrative. It is explicitly reconstructive — it weaves together the statistical findings of §§4–7ε with the archaeological context of §7ε.4. Where the evidence is firm, it is stated as such. Where it is reconstructed, it is framed as the most parsimonious interpretation of the available data.*
-
----
-
-Somewhere around 1700 BCE, on the island of Crete or at a coastal trading post on the Anatolian shore, a scribe sat before a lump of fresh clay and a set of forty-five carved stamps.
-
-What they were about to create was not a receipt, not a palace inventory, not a king's decree. It was something rarer: a **portable covenant** — a small, palm-sized object that could travel in the hands of a sacred messenger across the dangerous sea lanes between Minoan Crete and the Luwian-speaking cities of western Anatolia.
-
-The scribe knew two scribal traditions. Or two scribes worked together — one Minoan, one Luwian — each contributing their layer to the same object.
-
-They pressed the stamps into the spiral, working outward from the center. At the exact center of each side, they placed the same sign: a spiral rosette, the solar wheel. In Minoan religious iconography, this was the emblem of the Great Goddess who governed sky and sea. In Luwian theology, this was **Tiwat** — the Sun God, guarantor of oaths, witness to covenants, he who sees all things from above.
-
-Both audiences would look at the center and see their own deity. The solar sign was the anchor — the one element that required no translation.
-
-Around it, pressed in the spiraling groove outward to the edge, the signs told the rest of the story. In Luwian, the dominant sequence reads as **za-wa-tar** — *sacred water*, the ritual term for the consecrated liquid of offering and purification. It appears eight times, as a refrain, a liturgical repetition. Paired with Tiwat at the center, the reading is clear: *Sun-god, receive this water. Let the waters come.*
-
-The two sides of the disc mirror each other in a precise mathematical chiasmus — the central word-group on Side A reverses into the central word-group on Side B. This is not accidental scribal variation. It is a seal of authenticity, a cryptographic signature impossible to forge without knowledge of the entire design. A Luwian scribe examining the disc would recognize it immediately: the reversal confirms the object's integrity.
-
-Meanwhile, a Minoan scribe reading the same disc would encounter a different surface. The sign frequencies — the statistical fingerprint of the inscription — match the pattern of Minoan Linear A ritual tablets with an accuracy that no random syllabic text achieves (Z=42 above the random baseline). The sign that dominates the disc's statistical profile is the same solar rosette at the center, surrounded by the same high-frequency signs that appear on the offering-tablet archives from Haghia Triada. The Minoan reader hears, in their own phonological system, an invocation addressed to their Great Goddess: solar, maritime, life-giving.
-
-**Both were correct.** Both were reading the same object. Both were receiving the same message: *the cosmic pair of Sun and Water stands witness to this agreement.*
-
----
-
-The object would have traveled with a **priestly messenger** — a *hazianni-* in Luwian terminology, a sacred intermediary whose person was inviolable under Bronze Age diplomatic custom. They would carry the disc to a city on the Anatolian coast — most likely in the contact zone around Milawata (Miletus), where Minoan administrative buildings stood alongside Luwian-influenced palaces, where Aegean pottery mixed with Anatolian seals in the same archaeological stratum.
-
-At the meeting, both sides would hold the disc, turn it over, read from its spiral. The Minoan trader invoked the Goddess. The Luwian chief invoked Tiwat. The oaths were spoken to the same object, the same signs, the same cosmic pair. The covenant was sealed — under Sun, under Water, before both gods.
-
-The stamps that created it were kept. When a new trade mission required authorization, a new disc could be pressed from fresh clay. The object was designed for **reuse** — a printing matrix for a sacred legal instrument, mass-producible by design in a world where contracts needed to be renewed each sailing season.
-
----
-
-Why was only one found?
-
-Perhaps most were returned, re-pressed, or allowed to dissolve when the covenant expired. The disc at Phaistos survived because it was buried in the palace destruction — a working instrument caught mid-use, sealed under ash and rubble around 1700 BCE, preserved by the same catastrophe that ended the civilization that made it.
-
-For 3,700 years it sat in silence. Neither Minoan nor Luwian. Both.
-
-Now the mathematics confirms what the object itself encoded: **a single cosmogram — Sun and Water — legible to two peoples, designed to bind them together across the sea.**
-
----
-
-## 11. The Reading: Full Translation, Summary, and Interpretive Framework
-
-*This section presents the G_LUWIAN reading of both sides in full, a condensed version, and an interpretive analysis in the context of the Milawata Scribal Bilingualism Hypothesis. The B_FREQ phonetic values are shown alongside without semantic gloss (Linear A undeciphered). The full word-by-word table is in Appendix A.*
-
----
-
-### 11.1 Side A — Full Reading (outside → center)
-
-Side A opens with an invocation formula and builds toward the center through a sustained water-and-sun litany. The dominant element is the refrain *za-wa-tar* (sacred water), which appears interwoven with repeated invocations of Tiwat. Reading word-by-word through the G_LUWIAN key:
-
-> *"In Tarhunt — indeed. This is ours. Tiwat! This water — yes. This lord, the water, yes. This sacred water — yes. Tiwat, the water! — yes, the sacred water — yes, Tiwat — yes, the river sacred water — Tiwat — the sacred water — Tiwat, this water, yes... this water — lord — yes, sacred water — Tiwat, this, yes — of-this water — sacred water — yes — Tiwat, the river water — is-this lord — this sacred water — yes — of-this water — Tiwat — this water truly..."*
-
-The spiral closes at the center:
-
-> **A31: "TIWAT — this sacred water — YES"**
-> *(ti-wa · za-wa-tar · ha)*
-
-B_FREQ phonetic at center A31: **ma-a-sa-ra-ta** *(phonetic fingerprint only)*
-
----
-
-### 11.2 Side B — Full Reading (center → outside)
-
-Side B begins at the center and spirals outward — the reverse structural movement of Side A. Where Side A descends (Tiwat entering the waters), Side B ascends (the waters rising with Tiwat reborn). The same refrain appears, but the chiasmus reverses the core trigram:
-
-> **B01 (center): "water — in — this"** *(za-zi-wa-an-tar)*
-
-> *"Great this sacred water. Sacred water. This water, the lord, yes — sacred water + Tiwat — sacred water, truly — Tiwat, water — sacred water — great this water — sacred water — yes — of-this water — water this-one — sacred water — yes..."*
-
-The spiral closes at the outermost word:
-
-> **B30: "TIWAT — water — this — yes"**
-> *(ti-wa · wa-tar · za · ha)*
-
-B_FREQ phonetic at center B30: **ma-sa-ra-a-ta** *(phonetic fingerprint only)*
-
-**Chiasmus confirmed:** A31 inner trigram = *za-wa-tar* → B30 inner trigram = *wa-tar-za* (exact reversal), p=6.58×10⁻⁶.
-
----
-
-### 11.3 Condensed Reading
-
-| Side | Short form | Movement |
-|------|-----------|----------|
-| **A** | *"Sun God Tiwat, receive this sacred water. Yes."* | Descent: sun enters waters (winter / drought) |
-| **B** | *"The sacred water rises. Tiwat, return. Yes."* | Ascent: waters rise with sun (spring / rain) |
-| **Together** | *A cycle: descent and return of Sun + Water* | Seasonal cosmogram, complete circuit |
-
----
-
-### 11.4 What the Text Is — and Is Not
-
-The disc text is **not a narrative**. It contains no names of persons, no place names, no quantities, no past tense. It is:
-
-- **Liturgical:** A repeated refrain (*za-wa-tar* ×8) is the defining structural feature of Luwian ritual hymns (cf. KUB 33.62 invocation structure)
-- **Rhythmic:** Each word-group averages 4–5 signs; the refrain appears at regular spiral intervals creating a chant-like cadence
-- **Cosmological:** The central pair (Tiwat + za-wa-tar) maps to the Luwian Sun-Water theological dyad attested in KUB 24.7 and KUB 33.62
-- **Bidirectional:** The chiasmus encodes the same invocation in both directions — descent and ascent — as a complete cosmological cycle
-
-This is the structure of an **oath text** or **ritual invocation**, not a commercial or administrative record.
-
----
-
-### 11.5 Interpretive Framework: Two Audiences, One Cosmogram
-
-**For the Luwian reader:**
-
-The text is a recognizable invocation of Tiwat — the Sun God who in Anatolian Bronze Age theology is the *guarantor of oaths and covenants*, he who sees all things from above and punishes perjurers. The offering of *za-wa-tar* (sacred water) is the ritual act that seals the covenant. The Luwian scribe or priest reading this disc would understand: *"Tiwat witnesses this agreement. The sacred water is offered. The oath is sealed."*
-
-**For the Minoan reader:**
-
-The same disc presents the solar rosette at both centers — the emblem of the Minoan Great Goddess who governs sky and sea. The sign-frequency profile matches Linear A ritual tablets (p=0.0009 Bonferroni). The phonetic pattern at the center under B_FREQ — *ma-a-sa-ra-ta* — echoes sequences that appear in Minoan offering formulae (the element *a-sa-ra* has been identified in Minoan theonyms). The Minoan priest holding this disc would engage it within their own tradition: solar deity + water offering + covenant ritual.
-
-**The unified picture:**
-
-Two people hold the same disc. One says: *"Tiwat, witness this agreement."* The other says: *"Great Goddess, witness this agreement."* Both speak to the same object, the same symbols, the same cosmic pair — Sun + Water — in different words.
-
-This is not metaphor. This is the operational definition of a **bilingual covenant object**: an artifact deliberately constructed to carry binding ritual meaning simultaneously in two phonological systems, for two peoples who met at the crossroads of the Bronze Age Aegean.
-
-The disc did not need to be understood completely by either party. It needed to be *recognized* — as sacred, as solar, as water-invoking — by both. And it was designed, mathematically and structurally, to be exactly that.
+A speculative narrative synthesis and full reading are available in the companion essay [COMPANION_ESSAY_EN.md], which presents interpretive reconstructions clearly labeled as going beyond the statistical evidence.
 
 ---
 
@@ -801,12 +707,18 @@ Generated by `phaistos_dual_reading_table.py`. Full output in `DUAL_READING_TABL
 - Achterberg, W., Best, J., Enzler, K., Rietveld, L., & Woudhuizen, F. (2004). *The Phaistos Disc: A Luwian Letter to Nestor*. Dutch Monographs on Ancient History and Archaeology.
 - Assmann, J. (2001). *The Search for God in Ancient Egypt*. Cornell University Press.
 - Faulkner, R.O. (1969). *The Ancient Egyptian Pyramid Texts*. Oxford University Press.
+- Godart, L. & Olivier, J.-P. (1976–1985). *Recueil des inscriptions en linéaire A* (GORILA), 5 vols. École française d'Athènes.
+- Hallager, E. (1996). *The Minoan Roundel and Other Sealed Documents in the Neopalatial Linear A Administration*. Aegaeum 14.
 - Hawkins, J.D. (2000). *Corpus of Hieroglyphic Luwian Inscriptions*. De Gruyter.
 - Hornung, E. (1999). *The Ancient Egyptian Books of the Afterlife*. Cornell University Press.
+- Liritzis, I. & Orphanides, A. (1990). Thermoluminescence dating of Aegean prehistoric finds. *Archaeometry* 32(1).
 - Masson, E. (1961). *Recherches sur les plus anciens emprunts sémitiques en grec*. Paris.
 - Melchert, H.C. (2003). *The Luwians*. Brill.
+- Niemeier, W.-D. (1998). The Mycenaeans in western Anatolia and the problem of the origins of the Sea Peoples. In *Mediterranean Peoples in Transition*. Israel Exploration Society.
 - Owens, G. (1996). The Phaistos Disc: A New Approach. *Cretan Studies* 5, 1–24.
 - Rao, R.P.N. et al. (2009). Entropic Evidence for Linguistic Structure in the Indus Script. *Science* 324, 1165.
+- Schoep, I. (2002). *The Administration of Neopalatial Crete*. Suplementos a Minos 17.
 - Schweitzer, S.D. (2011). AED-TEI Egyptian corpus. GitHub: simondschweitzer/aed-tei (CC-BY-SA 4.0).
 - Sproat, R. (2010). Ancient Symbols, Computational Linguistics, and the Reviewing Practices of the General Science Journals. *Computational Linguistics* 36(3), 585–594.
 - Weingarten, J. (2016). The Phaistos Disc: Pedigree of a Forgery. *Journal of Prehistoric Religion* 25.
+- Younger, J.G. (1996). The Cretan Hieroglyphic Script. *Minos* 31–32.
