@@ -267,7 +267,9 @@ Both sides read outside → center as primary direction. The reverse reading (ce
 
 ## 7b. Extended Full Reading (Tier 1 + Tier 2)
 
-Combining the 10 G_LUWIAN sign assignments (Tier 1, independently attested) with five tentative assignments derived from positional grammar analysis and the blind grid (`phaistos_positional_grammar.py`), a complete reading of all 61 words is possible:
+Combining the 10 G_LUWIAN sign assignments (Tier 1, independently attested) with five tentative assignments derived from positional grammar analysis and the blind grid (`phaistos_positional_grammar.py`), a complete reading of all 61 words is possible.
+
+> **Epistemological note:** Tier-2 identifications are positionally constrained but not uniquely determined. For each unattested sign, the Luwian syllable inventory contains 3–8 candidates consistent with its positional profile; we select the candidate that maximizes the composite blind-grid score, but this selection is **exploratory, not probative**. A reader may substitute alternative Luwian candidates within the same positional class without affecting any Tier-1 result.
 
 **Tier 2 tentative assignments** (positional grammar + 500K blind grid, NOT independently attested):
 
