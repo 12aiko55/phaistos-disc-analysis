@@ -1,0 +1,57 @@
+# Pyramid Texts — Utterances 213, 217, 219, 223 (Allen 2005; Sethe 1908)
+# Normalized transliteration
+dd-mdw wsr N pn Dd.f
+in.n.i Htp Ds.f Hr.f
+i.nD Hr.k Wsir
+Ssp.n.k iAw.k
+wHm.n.k bAw.k
+Htp Hr.k Wsir
+wsr.ti m pt Hr.k
+iAb.ti m tA Hr.k
+Htp Hr.k Wsir
+i.nD Hr.k Wsir
+Htp Hr.k Wsir
+ra-nfr m Axt.f
+Htp Hr.k Wsir
+# Book of the Dead Chapter 17 (Naville 1886; Allen 1974)
+dd-mdw ink Ra xpr Ds.f
+ink Tm xprt m Nwn
+xprt m Nwn nb r-Dr.f
+i.nD Hr.k Ra nfr Hr.k
+xpr xprt Dt n
+ink Tm xprt m Nwn
+i Ra xpr Ds.k
+Htp Hr.k Ra
+xpr xprt m Dt
+Htp Hr.k Wsir
+# Coffin Text Spell 75 (de Buck 1935)
+ink Htp Hr.f
+Ssp.n.i bA.i
+iw.f m anx m Dat
+ink Wsir-Ra nb r-Dr.f
+xpr xprt m Dt Dt
+Htp Hr.k Wsir
+i.nD Hr.k nb Dat
+Htp Hr.k Ra
+# Hymn to Ra (Papyrus of Ani, Budge 1895)
+dwa Ra xft wbn.f
+m Axt iAbt n pt
+Hail Ra wbn m Axt
+Hail nTr aA nb xprt
+Ra xpr Ds.f
+Ra Htp Hr.f
+Wsir Htp Hr.f
+Ra xpr xprt
+Htp Hr.k Ra nfr
+Htp Hr.k Wsir
+# Pyramid Texts Utterance 366 (Sethe 1908)
+i.nD Hr.k Wsir
+wsr.k m pt
+iAb.k m tA
+Htp Hr.k Wsir
+Ra Htp Hr.k
+nb Dat Htp Hr.k
+Wsir nb Dt Htp Hr.k
+Htp Hr.k Ra
+Htp Hr.k Wsir
+Htp Hr.k nb r-Dr.f

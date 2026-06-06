@@ -1,0 +1,77 @@
+# KN Fp 1 (libation tablets, Knossos) — da-pu2-ri-to-jo po-ti-ni-ja
+da-pu2-ri-to-jo po-ti-ni-ja me-ri
+pa-si-te-o-i me-ri
+a-ta-na-po-ti-ni-ja me-ri
+e-nu-wa-ri-jo me-ri
+pa-ja-wo-ne me-ri
+di-we me-ri
+e-ra me-ri
+di-ri-mi-jo di-we me-ri
+qe-ra-si-ja me-ri
+a-ne-mo i-je-re-ja me-ri
+# KN Gg 702 (oil tablets)
+pa-si-te-o-i o-ri-wo
+a-ta-na-po-ti-ni-ja o-ri-wo
+po-se-da-o-ne o-ri-wo
+# KN As 1516 (personnel)
+a-ke-ra2-wo ko-wo
+a-no-zo-wo ko-wa
+e-ri-nu-wo ko-wo
+pa-ro e-ke-ra2-wo o-pe-ro
+a-ni-ja-pi ko-wa o-pe-ro-si
+ke-re-te-u ko-wo o-pe-ro
+# PY An 519 (Pylos rowers)
+ro-o-wa e-re-ta pe-re-u-ro-na-de i-jo
+a-pu2-wa e-re-ta
+po-ra-pi e-re-ta
+te-ta-ra-ne e-re-ta
+a-po-ne-we e-re-ta
+# PY Cn 328 (livestock)
+su-ri-mo qa-ra ko-to-no
+po-me ko-to-no me-ri
+e-pi-me-de-e su-ke
+wi-du-wo-i-jo ko-to-no
+# PY Ea 59 (landholding)
+a-ma-ru-ta ki-ti-me-na ko-to-na
+te-re-ta to-so pe-mo
+e-ke-ra2-wo te-o-jo do-e-ro
+di-wi-je-u ka-ma
+# KN C 902 (cattle)
+pa-ro a-ko-so-ta BOS VIR
+wi-ja-ka-re-wo BOS VIR
+e-ko-me-no BOS MUL
+# KN Dv 1097 (sheep)
+pe-ri-qo-ta OVISm
+wo-di-je-ja OVISf
+qo-u-qo-ta OVISm
+# MY Oe 106 (Mycenae)
+ko-ri-ja-do-no a-re-pa zo-a
+wo-de-wi-jo zo-a
+mi-ja-ro zo-a
+# PY Ta 641 (furniture)
+to-pe-za e-re-pa-te-jo a-pi-qo-ro o-wi-de-ta-i
+to-pe-za a-ja-me-na re-wo-te-re-jo
+po-pi qe-qi-no-me-na e-ne-wo-pe-za
+# KN So 894 (chariots)
+i-qo BIG e-re-mo-de
+a-ni-ja-pi BIG pu-na-so
+pa-ra-ku-we BIG pa-ra-ku-we
+# PY Jn 829 (bronze smiths)
+a-ta-ra-si-jo ko-ru-te-we
+ke-re-te-u ta-ra-si-ja
+wi-ri-ne-u ta-ra-si-ja
+# KN L 693 (textiles)
+po-pu-re-ja pa-we-a TELA
+ri-no TELA pa-we-a
+te-tu-ko-wo-a TELA
+# PY Un 718 (commodities at Pylos)
+pa-ro do-ti-ja HORD T
+pa-ro to-ro-qe-jo-me-no HORD
+a-ta-o AROM
+# Scribal hands / headings (KN 115 style)
+a-ko-ra-ja VIR
+a-mi-ni-si-ja VIR
+e-ko-so VIR
+a-ne-mo VIR
+o-u-ki-te-mi VIR
+do-so-mo GRA
