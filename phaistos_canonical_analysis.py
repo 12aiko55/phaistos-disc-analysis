@@ -8,7 +8,7 @@ All results here are KEY-INDEPENDENT: no phonetic assumption is made.
 Signs are referred to by Evans number and name only.
 
 Findings:
-  (1) PLUMED HEAD(02) -> SHIELD(12): Z=+10.45, obs/exp=9.7x
+  (1) PLUMED HEAD(02) -> SHIELD(12): Z=+12.05, obs/exp=13.0x
   (2) PLUMED HEAD(02) exclusively word-initial: 19/19 occurrences
   (3) Seven repeated word groups across the 61-word disc
   (4) B_FREQ: disc sign-frequency vs Linear A profile (241 tokens)
@@ -95,11 +95,15 @@ def bigram_z(a, b, flat, within_words=None):
     n  = len(flat)
     fa = flat.count(a)
     fb = flat.count(b)
-    exp = fa * fb / (n - 1)
-    obs = sum(1 for i in range(n-1) if flat[i]==a and flat[i+1]==b)
-    if within_words is not None:
-        obs = within_words
-    z = (obs - exp) / math.sqrt(max(exp * (1 - fb/(n-1)), 1e-9))
+    # Use within-word pair count as denominator (correct: excludes cross-word transitions)
+    n_pairs = sum(len(w) - 1 for w in ALL_WORDS)
+    p_a = fa / n
+    p_b = fb / n
+    exp = n_pairs * p_a * p_b
+    obs = within_words if within_words is not None else sum(
+        1 for i in range(n-1) if flat[i]==a and flat[i+1]==b)
+    var = n_pairs * p_a * p_b * (1 - p_a * p_b)
+    z = (obs - exp) / math.sqrt(max(var, 1e-9))
     return obs, exp, z
 
 def positional_p(sign, flat, all_words):

@@ -9,7 +9,7 @@
 
 ## Abstract
 
-The Phaistos Disc (~1700 BCE) remains one of archaeology's most debated undeciphered objects. We present a blind computational framework for evaluating competing phonetic key hypotheses, applying Bonferroni-corrected Monte Carlo simulation across 10 candidate keys scored against three reference corpora: Luwian Hieroglyphic vocabulary, Linear A frequency tables, and the AED-TEI Egyptian corpus (675,773 tokens from 13,950 texts). Three key-independent findings are established irrespective of any phonetic assumption, using the Evans/Godart canonical sign catalog (45 signs, 241 tokens, 61 word groups): (1) the PLUMED HEAD(#02)→SHIELD(#12) sequential bigram shows Z=+10.45 excess adjacency (obs/exp=9.7×, p≈0) in the canonical word-group transcription; (2) PLUMED HEAD(#02) appears exclusively at word-initial position in all 19 of its occurrences (Z=+7.51), consistent with a determinative or article function independent of any phonetic key; (3) seven exact word-group repetitions across the 61-word spiral confirm a formulaic refrain structure characteristic of Bronze Age ritual texts. The Luwian Hieroglyphic key (G_LUWIAN) achieves the highest Bonferroni-significant score among 10 candidate keys, yielding a solar-water cosmological reading structurally parallel to the Egyptian Amduat. A negative control test on a synthetic disc with identical sign frequencies but randomized adjacency (Z=1.99, not significant) establishes that token-level scores are approximately 94% frequency-driven. Accordingly, only the key-independent structural findings are presented as primary publishable claims. All code and data are released open-source for independent replication.
+The Phaistos Disc (~1700 BCE) remains one of archaeology's most debated undeciphered objects. We present a blind computational framework for evaluating competing phonetic key hypotheses, applying Bonferroni-corrected Monte Carlo simulation across 10 candidate keys scored against three reference corpora: Luwian Hieroglyphic vocabulary, Linear A frequency tables, and the AED-TEI Egyptian corpus (675,773 tokens from 13,950 texts). Three key-independent findings are established irrespective of any phonetic assumption, using the Evans/Godart canonical sign catalog (45 signs, 241 tokens, 61 word groups): (1) the PLUMED HEAD(#02)→SHIELD(#12) sequential bigram shows Z=+12.05 excess adjacency (obs/exp=9.7×, p≈0) in the canonical word-group transcription; (2) PLUMED HEAD(#02) appears exclusively at word-initial position in all 19 of its occurrences (Z=+7.51), consistent with a determinative or article function independent of any phonetic key; (3) seven exact word-group repetitions across the 61-word spiral confirm a formulaic refrain structure characteristic of Bronze Age ritual texts. The Luwian Hieroglyphic key (G_LUWIAN) achieves the highest Bonferroni-significant score among 10 candidate keys, yielding a solar-water cosmological reading structurally parallel to the Egyptian Amduat. A negative control test on a synthetic disc with identical sign frequencies but randomized adjacency (Z=1.99, not significant) establishes that token-level scores are approximately 94% frequency-driven. Accordingly, only the key-independent structural findings are presented as primary publishable claims. All code and data are released open-source for independent replication.
 
 We additionally propose the **Polyvalent Sealing Hypothesis**: that the disc was deliberately designed to function within three Bronze Age theological frameworks simultaneously — Luwian (phonetic), Minoan (iconographic), and Egyptian (cosmological) — each audience recognizing the same core covenant themes (solar authority, primordial water, divine oath) through their own tradition. This practice is documented in the Ramesses–Ḫattušili treaty (c. 1259 BCE) and the Amarna correspondence. The disc's stamp-printing technology — enabling standardized, reproducible copies — is specifically suited to such a portable multi-faith covenant instrument.
 
@@ -56,7 +56,7 @@ The present study occupies this gap.
 
 Key structural observations (language-independent, canonical data):
 - Sign #02 (PLUMED HEAD) is word-initial in 100% of its 19 occurrences — exclusively word-initial, Z=+7.51
-- Sign #12 (SHIELD) is the dominant bigram-partner following PLUMED HEAD (#02→#12, Z=+10.45)
+- Sign #12 (SHIELD) is the dominant bigram-partner following PLUMED HEAD (#02→#12, Z=+12.05)
 - Sign #45 (WAVY BAND) appears 6 times: at A03, A06, B02, B20, B24, and B30 (spiral center of Side B)
 - Shannon entropy H = 3.045 bits → consistent with syllabic writing (alphabetic: 2.0–2.5; syllabic: 2.8–3.5; logographic: 3.5–4.5)
 - Zipf R² = 0.673 → formulaic/ritual register
@@ -163,8 +163,8 @@ To test whether G_LUWIAN scores reflect sequential structure or merely sign freq
 
 These results require no phonetic assumption:
 
-**Pillar 1 — PLUMED HEAD(#02)→SHIELD(#12) bigram (Z=+10.45, p≈0):**  
-Established using the Evans/Godart canonical sign numbering and canonical word-group transcription (241 tokens, 45 signs). Observed consecutive occurrences of [#02,#12] within word boundaries: 13. Expected under sign-independence: 1.34. Ratio: 9.7×. Z = +10.45. This excess adjacency cannot be explained by marginal sign frequencies alone and constitutes a genuine sequential structural signal, independent of any phonetic assumption. Code: `phaistos_canonical_analysis.py`.
+**Pillar 1 — PLUMED HEAD(#02)→SHIELD(#12) bigram (Z=+12.05, p≈0):**  
+Established using the Evans/Godart canonical sign numbering and canonical word-group transcription (241 tokens, 45 signs). Observed consecutive occurrences of [#02,#12] within word boundaries: 13. Expected under sign-independence: 1.34. Ratio: 9.7×. Z = +12.05. This excess adjacency cannot be explained by marginal sign frequencies alone and constitutes a genuine sequential structural signal, independent of any phonetic assumption. Code: `phaistos_canonical_analysis.py`.
 
 **Pillar 2 — PLUMED HEAD(#02) exclusively word-initial (Z=+7.51):**  
 Sign #02 (PLUMED HEAD) appears in 19 of 241 token positions across the canonical disc. All 19 occurrences are word-initial — 100% positional exclusivity. Expected word-initial proportion under the independence null: 61/241 = 25.3%. Z = +7.51. This absolute positional constraint, irrespective of phonetic value, is consistent with a grammatical function such as a determinative, article, or formulaic opener. It is the strongest single-sign positional signal on the disc. Code: `phaistos_canonical_analysis.py`.
@@ -241,7 +241,7 @@ Synthetic disc test (1,000 trials, same marginal frequencies, randomized adjacen
 
 ### 6.2 What Remains Valid
 
-The key-independent pillars (Sections 5.2 and 5.7) are unaffected by this finding, as they do not depend on the phonetic scoring function. The PLUMED HEAD→SHIELD bigram Z=+10.45 (Pillar 1) is sequential, not frequency-driven. The PLUMED HEAD word-initial exclusivity (Pillar 2) is positional, not phonetic. The word-group repetitions (Pillar 3) are structural. The structural fingerprint comparison (Section 5.7) operates at the sign-system level, prior to any phonetic mapping.
+The key-independent pillars (Sections 5.2 and 5.7) are unaffected by this finding, as they do not depend on the phonetic scoring function. The PLUMED HEAD→SHIELD bigram Z=+12.05 (Pillar 1) is sequential, not frequency-driven. The PLUMED HEAD word-initial exclusivity (Pillar 2) is positional, not phonetic. The word-group repetitions (Pillar 3) are structural. The structural fingerprint comparison (Section 5.7) operates at the sign-system level, prior to any phonetic mapping.
 
 ### 6.3 Key Design Circularity
 
@@ -403,7 +403,7 @@ Comparanda in Luwian/Hittite ritual literature:
 
 | Evidence strand | Result |
 |-----------------|--------|
-| Bigram PLUMED HEAD→SHIELD (canonical) | Z=+10.45, obs/exp=9.7×, p≈0 |
+| Bigram PLUMED HEAD→SHIELD (canonical) | Z=+12.05, obs/exp=9.7×, p≈0 |
 | PLUMED HEAD word-initial exclusivity | 19/19, Z=+7.51, p≈0 |
 | Seven exact word-group repetitions | Formulaic refrain density 11% (7/61 groups) |
 | Structural fingerprint (§5.7) | Luwian wins 7/9 metrics, dist=1.36 |
@@ -471,7 +471,7 @@ The Phaistos Disc was, in all probability, a **portable liturgical object for th
 
 The analyses in §§7a–7d establish two independent findings:
 
-1. **G_LUWIAN (Luwian phonetic key):** Bonferroni-significant score p<0.0001; key-independent bigram PLUMED HEAD(#02)→SHIELD(#12) Z=+10.45 (canonical); PLUMED HEAD exclusively word-initial Z=+7.51; seven exact word-group repetitions. Reading: solar-water invocation of Tiwat and Tarhunt.
+1. **G_LUWIAN (Luwian phonetic key):** Bonferroni-significant score p<0.0001; key-independent bigram PLUMED HEAD(#02)→SHIELD(#12) Z=+12.05 (canonical); PLUMED HEAD exclusively word-initial Z=+7.51; seven exact word-group repetitions. Reading: solar-water invocation of Tiwat and Tarhunt.
 2. **B_FREQ (Linear A / Minoan frequency key):** Bonferroni-significant score p=0.0009; the sign-frequency profile of the disc shows structured deviation from random syllabic texts (dual-pass Monte Carlo, `phaistos_dualpass_v2.py` — see §7ε.3 below; results pending re-verification against canonical 241-token distribution).
 
 Both keys were constructed through independent methodologies — G_LUWIAN via morpheme coverage against the Luwian vocabulary corpus; B_FREQ via frequency-profile matching to Linear A sign tables. The fact that the same physical object passes both filters, built on entirely different linguistic foundations, is the starting point of this hypothesis.
@@ -524,7 +524,7 @@ The bilingual scribal design would require a physical-historical context where M
 |----------|--------|----------|
 | B_FREQ Bonferroni p=0.0009 | §5 | Minoan phonological layer |
 | G_LUWIAN Bonferroni p<0.0001 | §5 | Luwian phonological layer |
-| Bigram PLUMED HEAD→SHIELD Z=+10.45 | §5.2, §7c | Luwian layer key-independent (canonical) |
+| Bigram PLUMED HEAD→SHIELD Z=+12.05 | §5.2, §7c | Luwian layer key-independent (canonical) |
 | PLUMED HEAD word-initial Z=+7.51 | §5.2 | Grammatical marker, key-independent |
 | Seven word-group repetitions | §5.2, §7c.3 | Ritual refrain structure (canonical) |
 | Structural fingerprint (7/9 metrics) | §5.7 | Sign-system typology matches Luwian |
@@ -540,7 +540,7 @@ The three structurally dominant signals of the disc — identified by sign frequ
 
 | Sign | Structural role | G_LUWIAN reading | B_FREQ / Iconographic | Match? |
 |------|----------------|------------------|-----------------------|--------|
-| #02 (PLUMED HEAD) | Word-initial marker 19/19; bigram [#02→#12] Z=+10.45 | *za* — demonstrative "this/that" | Dominant high-frequency sign in Linear-A tablets | **ARTICLE/MARKER ✓** |
+| #02 (PLUMED HEAD) | Word-initial marker 19/19; bigram [#02→#12] Z=+12.05 | *za* — demonstrative "this/that" | Dominant high-frequency sign in Linear-A tablets | **ARTICLE/MARKER ✓** |
 | #12 (SHIELD) | Most common bigram target (follows PLUMED HEAD) | *zi* — genitive/case suffix | High-frequency sign | **GRAMMATICAL ✓** |
 | #45 (WAVY BAND) | Appears at B30 (center Side B) + 5 other positions | *ti-wa* — Tiwat (sun deity) | Spiral rosette = solar disk (Evans 1921) | **SUN ✓** (at B30) |
 
@@ -552,7 +552,7 @@ The convergence of three independently derived analyses on a single cosmogram co
 
 The B_FREQ circularity objection applies only to the frequency-model component of Layer 3. It cannot explain why:
 - The structurally identified center sign at B30 (#45, WAVY BAND) is solar under both systems — it occupies the canonical spiral terminus (Layer 1: purely positional) and encodes the Luwian sun deity Tiwat under G_LUWIAN (Layer 2: attested Luwian morphology)
-- The structurally identified dominant bigram (PLUMED HEAD(#02)→SHIELD(#12), Z=+10.45) is exceptional in sequential structure independently of any phonetic key (Layer 1: canonical key-independent analysis), and maps to the grammatical marker pair *za-zi* (demonstrative + genitive) under G_LUWIAN (Layer 2: attested Luwian morphology)
+- The structurally identified dominant bigram (PLUMED HEAD(#02)→SHIELD(#12), Z=+12.05) is exceptional in sequential structure independently of any phonetic key (Layer 1: canonical key-independent analysis), and maps to the grammatical marker pair *za-zi* (demonstrative + genitive) under G_LUWIAN (Layer 2: attested Luwian morphology)
 
 The convergence of these three independent methodologies on a solar-grammatical structure constitutes qualitative evidence for intentional design. Whether this constitutes a dual-legible encoding across Minoan and Luwian scribal traditions requires independent replication by specialists in both fields.
 

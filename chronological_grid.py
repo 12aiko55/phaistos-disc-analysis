@@ -129,6 +129,86 @@ disc_repeat  = repeat_density(ALL_WORDS)
 disc_wibias  = word_initial_bias(ALL_WORDS, SIGN_FREQ)
 
 # ---------------------------------------------------------------------------
+# 1b. Compute structural metrics from embedded corpus files
+# ---------------------------------------------------------------------------
+def parse_corpus_lines(filepath):
+    """Parse embedded corpus: each non-comment, non-blank line = one word group.
+    Tokens are space-separated items (hyphen-joined = single token)."""
+    words = []
+    try:
+        with open(filepath, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                tokens = line.split()
+                if tokens:
+                    words.append(tokens)
+    except FileNotFoundError:
+        pass
+    return words
+
+def compute_metrics_from_words(words):
+    """Compute all structural metrics from a list of word groups (each = list of str tokens)."""
+    if not words:
+        return {}
+    all_tokens = [t for w in words for t in w]
+    freq = Counter(all_tokens)
+    n_tokens = len(all_tokens)
+    n_types = len(freq)
+    n_words = len(words)
+    freqs = list(freq.values())
+    ttr = n_types / n_tokens if n_tokens else 0
+    zipf = zipf_exponent(freqs)
+    ent = entropy(freqs)
+    lens = [len(w) for w in words]
+    wl_mean = sum(lens) / len(lens)
+    wl_std = math.sqrt(sum((x - wl_mean)**2 for x in lens) / len(lens))
+    # bigram concentration (top 5)
+    bg = Counter()
+    for w in words:
+        for i in range(len(w) - 1):
+            bg[(w[i], w[i+1])] += 1
+    bg_total = sum(bg.values())
+    bg_conc = sum(v for _, v in bg.most_common(5)) / bg_total if bg_total else 0
+    # repeat density
+    wg_counts = Counter(tuple(w) for w in words)
+    rep = sum(v for v in wg_counts.values() if v >= 2) / n_words
+    # word-initial bias
+    initials = Counter(w[0] for w in words if w)
+    wi_bias = max(initials.values()) / sum(initials.values()) if initials else 0
+    return {
+        "tokens": n_tokens, "types": n_types, "words": n_words,
+        "ttr": round(ttr, 3), "zipf": round(zipf, 3) if zipf else None,
+        "entropy_bits": round(ent, 3), "wl_mean": round(wl_mean, 2),
+        "wl_std": round(wl_std, 2), "wl_min": min(lens), "wl_max": max(lens),
+        "bg_conc_top5": round(bg_conc, 3), "repeat_density": round(rep, 3),
+        "wi_bias": round(wi_bias, 3),
+    }
+
+_CORPUS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "corpora")
+
+def _sample_entry(name, corpus_file, date_bce, source, extra=None):
+    words = parse_corpus_lines(os.path.join(_CORPUS_DIR, corpus_file))
+    m = compute_metrics_from_words(words)
+    m.update({"date_bce": date_bce, "source": source + " [SAMPLE]", "_computed": True})
+    if extra:
+        m.update(extra)
+    return m
+
+# Pre-compute sample metrics from embedded corpora
+_SUM_SAMPLE  = _sample_entry("SUMERIAN_SAMPLE",  "sumerian/sumerian_embedded.txt",
+    "2600–1700", "ETCSL t.4.13.01 + t.2.2.3 embedded sample (n≈97 lines)")
+_LB_SAMPLE   = _sample_entry("LINEARB_SAMPLE",   "linearb/linearb_embedded.txt",
+    "1450–1200", "Knossos Gg/Fp/As tablets embedded sample (n≈77 lines)")
+_AKK_SAMPLE  = _sample_entry("AKKADIAN_SAMPLE",  "akkadian/akkadian_embedded.txt",
+    "2300–600",  "Maqlu + Surpu + Enuma Elish embedded sample (n≈50 lines)")
+_EGY_SAMPLE  = _sample_entry("EGYPTIAN_SAMPLE",  "egyptian/egyptian_embedded.txt",
+    "2400–600",  "Pyramid Texts + Book of Dead + Coffin Texts embedded sample (n≈57 lines)")
+_UGA_SAMPLE  = _sample_entry("UGARITIC_SAMPLE",  "ugaritic/ugaritic_embedded.txt",
+    "1400–1200", "Baal Cycle KTU 1.1–1.3 embedded sample (n≈43 lines)")
+
+# ---------------------------------------------------------------------------
 # 2. Reference system structural parameters
 #    All values from published scholarship (see module docstring for sources)
 #    Format: { "metric": value }
@@ -256,6 +336,13 @@ REFERENCE_SYSTEMS = {
         "date_bce":      "~1700",
         "source":        "Sass (1988); Goldwasser (2010) approx",
     },
+
+    # --- SAMPLE entries computed from embedded corpora (2026-06-06) ----------
+    "SUMERIAN_S":     _SUM_SAMPLE,
+    "LINEAR_B_S":     _LB_SAMPLE,
+    "AKKADIAN_S":     _AKK_SAMPLE,
+    "EGYP_RITUAL_S":  _EGY_SAMPLE,
+    "UGARITIC_S":     _UGA_SAMPLE,
 }
 
 # ---------------------------------------------------------------------------
@@ -398,11 +485,55 @@ for rank, (sim, key, params) in enumerate(ranked, 1):
     print(f"     Source: {source}")
     print()
 
+# SAMPLE systems comparison (computed from embedded corpora)
+_SAMPLE_KEYS = ["SUMERIAN_S", "LINEAR_B_S", "AKKADIAN_S", "EGYP_RITUAL_S", "UGARITIC_S"]
+_SAMPLE_LABELS = ["SUMERIAN", "LINEAR_B", "AKKADIAN", "EGYP_RITUAL", "UGARITIC"]
+print(SEP)
+print("SAMPLE COMPARISON — COMPUTED FROM EMBEDDED CORPORA")
+print("(more accurate than APPROX scholarship values; replace with full corpus for EXACT)")
+print(SEP)
+print()
+print(f"  {'System':<16}  {'Tokens':>6}  {'TTR':>6}  {'Zipf':>6}  {'Entr':>6}  {'WLmn':>6}  "
+      f"{'RepD':>6}  {'WIbias':>6}  {'Sim':>6}")
+print("  " + "-"*80)
+for key, lbl in zip(_SAMPLE_KEYS, _SAMPLE_LABELS):
+    p = REFERENCE_SYSTEMS[key]
+    sim = similarity_to_disc(p)
+    sim_s = f"{sim:.3f}" if sim is not None else "—"
+    print(f"  {lbl:<16}  {str(p.get('tokens','—')):>6}  {p.get('ttr',0):.3f}  "
+          f"{p.get('zipf',0):.3f}  {p.get('entropy_bits',0):.3f}  "
+          f"{p.get('wl_mean',0):.2f}  {p.get('repeat_density',0):.3f}  "
+          f"{p.get('wi_bias',0):.3f}  {sim_s:>6}")
+print()
+print(f"  PHAISTOS (ref):        n=241    TTR=0.187  Zipf=0.946  Entr=4.988  "
+      f"WL=3.97  RepD=0.246  WI=0.311")
+print()
+print("  Note: SAMPLE values computed from small excerpts (n=40-100 lines).")
+print("  Small-sample effects inflate TTR and repeat_density. Use as order-of-magnitude.")
+print()
+
+# Full ranking including sample systems
+all_ranked = []
+for key in sys_keys[1:] + _SAMPLE_KEYS:
+    s = similarity_to_disc(REFERENCE_SYSTEMS[key])
+    if s is not None:
+        tag = " [SAMPLE]" if key in _SAMPLE_KEYS else " [APPROX]"
+        all_ranked.append((s, key + tag))
+all_ranked.sort(key=lambda x: -x[0])
+print(SEP)
+print("COMBINED RANKING (APPROX + SAMPLE)")
+print(SEP)
+print()
+for i, (sim, name_tag) in enumerate(all_ranked, 1):
+    print(f"  {i:2}. {name_tag:<30}  similarity={sim:.3f}")
+print()
+
 # Per-metric closest system
 print(SEP)
 print("PER-METRIC CLOSEST SYSTEM")
 print(SEP)
 print()
+all_sys_keys = sys_keys[1:] + _SAMPLE_KEYS
 for m in METRICS:
     disc_val = REFERENCE_SYSTEMS["PHAISTOS"].get(m)
     if disc_val is None:
@@ -411,9 +542,7 @@ for m in METRICS:
     nd = normalize(disc_val, lo, hi)
     best_key = None
     best_diff = 1e9
-    for key in sys_keys:
-        if key == "PHAISTOS":
-            continue
+    for key in all_sys_keys:
         v = REFERENCE_SYSTEMS[key].get(m)
         if v is None:
             continue
