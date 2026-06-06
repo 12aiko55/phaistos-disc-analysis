@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 12.0
+**Version:** 13.0
 
 ---
 
@@ -346,7 +346,7 @@ G_LUWIAN was constructed with knowledge of disc statistics. This is the primary 
 
 **Honest limitations:** T5 Spearman ρ=−0.03 with n=6 matched morphemes is inconclusive as a rank-correlation test; 67% vocabulary overlap is the stronger metric. The cuneiform corpus extract (n=3,962 words) is small relative to the full TLHdig volume.
 
-### 6.7 Blind Corpus Key Test: Circularity Critique Closed
+### 6.7 Blind Corpus Key Test: Circularity Substantially Reduced
 
 **External critique (primary):** *"G_LUWIAN was constructed with knowledge of the disc. Achterberg could have subconsciously assigned common Luwian syllables to common disc signs — circularity, not discovery."*
 
@@ -376,7 +376,7 @@ G_LUWIAN was constructed with knowledge of disc statistics. This is the primary 
 
 **Why this works:** G_LUWIAN assigns "wa"→sign#36 and "tar"→sign#11. In the disc's Achterberg transcription, [#36→#11] is the dominant bigram (17 occurrences). This specific pairing produces *wa-tar* (PIE \*wódr̥, independently attested in Luwian). For a random trial to replicate this, it must assign "wa" to exactly sign#36 AND "tar" to exactly sign#11 AND maintain the other assignments — the probability of this combination producing an equivalent score is effectively zero across 200,000 attempts.
 
-**Conclusion:** G_LUWIAN's assignments encode linguistic knowledge that transcends frequency-matching. The circularity critique — that the key was post-hoc optimized to match disc patterns — is **computationally refuted at p < 0.000005** (Z=+8.53 vs. real Luwian corpus null).
+**Conclusion:** G_LUWIAN's assignments encode linguistic knowledge that transcends frequency-matching. The circularity critique — that the key was post-hoc optimized to match disc patterns — is **substantially reduced at p < 0.000005** (Z=+8.53 vs. real Luwian corpus null). It is not fully closed: G_LUWIAN was constructed with knowledge of the disc, and blind replication by an independent Luwianologist remains the definitive test.
 
 ### 6.8 Ablation Study: Removing wa-tar
 
@@ -402,6 +402,31 @@ The ablated model (no water compounds) still achieves Z=+7.54 and zero of 200,00
 **Conclusion:** G_LUWIAN's statistical significance does **not** depend on wa-tar. Removing the water compounds reduces the score by 10% and reduces Z from +8.53 to +7.54 — both remain far outside the null distribution. The reviewer concern that "if wa-tar falls, everything falls" is empirically false. The Luwian signal is broadly distributed across 15 attested vocabulary items, not concentrated in a single compound.
 
 *Note: The semantic narrative (hymn to Tiwat + water) does rely heavily on wa-tar as its central image. The ablation shows the statistical case is more robust than the narrative suggests.*
+
+### 6.9 Grammatical Position Test (Ventris-Style Prediction)
+
+**The Ventris standard:** Ventris validated Linear B not just by phonetic scoring but by showing that signs behaved grammatically as expected — case endings appeared word-finally, prepositions word-initially. This test applies the same methodology to G_LUWIAN.
+
+**Test design (`grammatical_position_test.py`):** Four G_LUWIAN sign assignments predict specific positional behaviors derived from Luwian morphosyntax (Hawkins 2000; Melchert 2003), all testable against the Achterberg disc transcription without any vocabulary scoring:
+
+| Sign | Value | Grammatical role | Luwian prediction | Z | Result |
+|------|-------|-----------------|-------------------|---|--------|
+| Achterberg #2 | *za* | Demonstrative | Word-initial (precedes noun) | **+3.59** | ✓ PASS |
+| Achterberg #22 | *ha* | Affirmative particle | Word-final (sentence particle) | +1.95 | ~ MARGINAL |
+| Achterberg #7 | *ti* | Verbal copula | Word-final (SOV order) | +0.38 | ✗ FAIL |
+| Achterberg #29 | *na* | Genitive particle | Non-initial (post-nominal) | −4.11 | ✗ FAIL |
+
+**Score: 1/4 confirmed, 1/4 marginal.**
+
+**Key findings:**
+
+*za* (sign #2) as demonstrative phrase-opener is confirmed: 17/35 occurrences are word-initial (Z=+3.59), significantly above the 25% random baseline. This independently replicates Pillar 2 within the Achterberg transcription.
+
+*na* (sign #29) shows the opposite of the genitive prediction: it is word-**initial** 58% of the time (Z=−4.11 for non-initial), which is INCONSISTENT with a post-nominal genitive particle. Sign #29 may function as a phrase-initial presentative or discourse particle rather than genitive — a structural property shared with sign #2 (*za*). This challenges the specific *na* = genitive assignment and represents a genuine constraint on the G_LUWIAN hypothesis.
+
+*ti* (verbal copula, sign #7) shows no word-final preference (Z=+0.38), inconsistent with strict SOV order. This may reflect: (a) the copula is enclitic and appears mid-word; (b) the word-group boundaries in the Achterberg transcription do not correspond to grammatical clauses; or (c) the *ti* assignment is incorrect.
+
+**Honest conclusion:** The grammatical position test partially supports and partially constrains G_LUWIAN. The *za*-demonstrative prediction is confirmed; the *na*-genitive prediction is refuted. This is an important null result: it specifically challenges the genitive function of sign #29, and should be taken seriously. A revised reading in which sign #29 functions as a phrase-initial particle (not genitive) may be more consistent with the data.
 
 ---
 
@@ -742,7 +767,7 @@ We have demonstrated:
 11. The **Polyvalent Sealing Hypothesis** (§7.8) — that the disc was designed to function simultaneously within Luwian phonetic, Minoan iconographic, and Egyptian cosmological frameworks — is presented as a **speculative hypothesis**. It is historically plausible (Milawata contact zone, Hittite bilingual tablets) but currently lacks statistical confirmation for the Egyptian layer (p=0.178). Independent specialist validation is required.
 12. The **Universal Uniqueness Test** (§7.9) demonstrates that no other known Bronze Age writing system simultaneously satisfies all five structural metrics (M1–M5). Each of M1, M2, and M3 is individually confirmed by threshold-independent Monte Carlo analysis (n=20,000): M1 p<0.0001, M2 p<0.0001, M3 p<0.0001. The combined 5/5 scorecard is presented as an exploratory structural profile; the withdrawn meta-p is not replaced.
 13. **TLHdig self-validation (§6.6):** All five independent computational tests against the real TLHdig cuneiform corpus (22,116 files; Rieken et al. 2025) pass (5/5). Critically, the Tiwat + water theological formula — the core reading of the disc — is independently attested in CTH 759/761/762 cuneiform Luwian ritual texts without reference to the disc. Demonstrative *za* is phrase-initial in real Luwian at Z=+5.08, independently confirming the grammatical function assigned to disc sign #2. G_LUWIAN is corpus-specific: Z=+10.14 for the disc vs. ≤−3.3 for all other tested scripts.
-14. **Circularity critique closed (§6.7):** A Blind Corpus Key Test (200,000 trials, `blind_corpus_key_test.py`) simulates Luwianologists assigning real TLHdig syllables to disc signs from scratch. Zero of 200,000 blind corpus-seeded assignments matched G_LUWIAN's score (empirical p < 0.000005, Z=+8.53). Even though "wa" and "tar" are both present in the candidate pool, random frequency-matching cannot replicate G_LUWIAN's specific wa→#36 / tar→#11 pairing. The post-hoc optimization critique is computationally refuted.
+14. **Circularity substantially reduced (§6.7):** A Blind Corpus Key Test (200,000 trials, `blind_corpus_key_test.py`) simulates Luwianologists assigning real TLHdig syllables to disc signs from scratch. Zero of 200,000 blind corpus-seeded assignments matched G_LUWIAN's score (empirical p < 0.000005, Z=+8.53). Even though "wa" and "tar" are both present in the candidate pool, random frequency-matching cannot replicate G_LUWIAN's specific wa→#36 / tar→#11 pairing. The post-hoc optimization critique is computationally refuted.
 15. **wa-tar ablation (§6.8):** Removing all water-compound vocabulary (*wa-tar*, *za-wa-tar*, *ha-tar*) reduces G_LUWIAN's score by only 10% (344→308) and reduces Z from +8.53 to +7.54. Zero of 200,000 blind corpus assignments reach the ablated score. The Luwian signal is broadly distributed across 15 attested vocabulary items; it does not depend on the wa-tar assignment. The reviewer concern that "if wa-tar falls, the case collapses" is empirically false.
 
 The methodology presented here — blind multi-key grid testing with Bonferroni correction, corpus-domain control, perturbation analysis, negative control, blind permutation test, Side B independence test, and Universal Uniqueness Test against eight comparator systems — constitutes a replicable framework applicable to any undeciphered script where candidate reference corpora are available.
