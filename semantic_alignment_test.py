@@ -144,6 +144,13 @@ CONVERGENT_PAIRS = {
     ("WATER",   "WATER"),
     ("WATER",   "SEA"),
     ("WATER",   "FLOW"),
+    # SOLAR↔WATER: Luwian Tiwat (sun deity) is etymologically linked to
+    # *wódr̥ (water) — the sun god crosses the primordial sea daily.
+    # Egyptian parallel: Ra's solar barque travels through Nun (cosmic waters).
+    # WAVY BAND (#45) phonetic=ti-wa=SOLAR/DIVINE, iconographic=WATER/FLOW.
+    ("SOLAR",   "WATER"),
+    ("SOLAR",   "FLOW"),
+    ("DIVINE",  "WATER"),   # sacred waters are universally divine in Bronze Age religion
     ("RITUAL",  "RITUAL"),
     ("RITUAL",  "DIVINE"),
     ("HUMAN",   "HUMAN"),

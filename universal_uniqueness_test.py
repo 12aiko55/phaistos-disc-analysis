@@ -237,12 +237,15 @@ REFERENCE_SYSTEMS = [
         # M5: administrative text — no cosmological scenes; each tablet records
         # livestock, grain, personnel.
         "M5_scenes": 0, "M5_src": "EXACT",
-        "notes": "CLOSEST COMPETITOR: Knossos libation tablets achieve M2 Z=+4.96 — "
-                 "the highest M2 of any reference system, yet still 0.04 below threshold. "
-                 "M2 is the decisive discriminator: even the most positionally constrained "
-                 "sign in the most ritualized Linear B subset fails to match Phaistos "
-                 "PLUMED HEAD (#02) 19/19 word-initial (Z=+7.51). Full corpus: M1~3-4, "
-                 "M2~2-3, M3~1-3%. Source: compute_reference_metrics.py SAMPLE run 2026-06-06.",
+        "notes": "CLOSEST COMPETITOR on M2: Knossos libation tablets achieve M2 Z=+4.96 — "
+                 "highest M2 of any reference system, yet 0.04 below threshold. "
+                 "NOTE: Linear B is a DERIVED script — it was adapted from Linear A (Minoan) "
+                 "by Mycenaean Greeks. Its formulaic structure is partly inherited, not "
+                 "independently generated. A derived script inheriting structure from its "
+                 "parent does not constitute an independent occurrence of the same structural "
+                 "profile. Even so, its best subset still fails M2 (4.96 < 5.0). "
+                 "Full corpus: M1~3-4, M2~2-3, M3~1-3%. "
+                 "Source: compute_reference_metrics.py SAMPLE run 2026-06-06.",
     },
 
     {   # Sumerian (ETCSL literary corpus — hymns, laments)

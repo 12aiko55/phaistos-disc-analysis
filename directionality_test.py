@@ -210,28 +210,29 @@ for sign, wi, side, word_i, pos in ALL_TOKENS_POS:
         else: L_B += 1
 
 # ---------------------------------------------------------------------------
-# 5. Monte Carlo: random relabeling of facing directions
+# 5. Monte Carlo: 50/50 null per directional token
 # ---------------------------------------------------------------------------
-FACING_POOL = [SIGN_FACING[s][0] for s in range(1, 46) if s in SIGN_FACING]
-FACING_POOL_BINARY = [f for f in FACING_POOL if f in ("R", "L")]
+# CORRECT NULL: For each directional token, independently assign R or L with
+# probability 0.5. This tests whether the observed 92.8% rightward rate is
+# consistent with random facing.
+#
+# PREVIOUS (WRONG) NULL: shuffled the existing R/L label pool across signs.
+# The pool had 20 R and 1 L signs (95% R), so every shuffle also produced
+# ~95% R tokens — the null was identical to the signal, giving Z≈0.
+# Fix: coin-flip per token, not label-shuffle.
 
 def null_facing_ratio():
-    """Randomly reassign R/L labels to directional signs, count R fraction."""
-    pool = FACING_POOL_BINARY[:]
-    random.shuffle(pool)
-    # Map back to signs
-    dir_signs_list = [s for s in range(1, 46)
-                      if s in SIGN_FACING and SIGN_FACING[s][0] in ("R","L")]
-    null_facing = dict(zip(dir_signs_list, pool))
+    """50/50 null: each directional token independently R or L with p=0.5."""
     r_count = 0
     tot = 0
     for sign, wi, side, word_i, pos in ALL_TOKENS_POS:
-        f = null_facing.get(sign, None)
-        if f is None:
+        if sign not in SIGN_FACING:
             continue
-        if f in ("R", "L"):
-            tot += 1
-            if f == "R": r_count += 1
+        if SIGN_FACING[sign][0] not in ("R", "L"):
+            continue
+        tot += 1
+        if random.random() < 0.5:
+            r_count += 1
     return r_count, tot
 
 print("=" * 65)
