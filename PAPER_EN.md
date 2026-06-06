@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 11.0
+**Version:** 12.0
 
 ---
 
@@ -17,7 +17,7 @@ Three **key-independent** findings are established using only the Evans/Godart c
 
 The Luwian Hieroglyphic key (G_LUWIAN), scored on the Achterberg phonetic transcription, achieves the highest Bonferroni-significant score among 10 candidate keys (p<0.0001). A blind permutation test (10,000 rank-preserving shuffles) refutes Zipfian selection bias at p=0.0004. A cosmological loading test against the Egyptian corpus yielded p=0.178 — **not significant**; Egyptian scenes are qualitative observations only. Self-validation against the TLHdig v0.2 cuneiform corpus (22,116 XML files, Rieken et al. 2025) passes all five independent tests (5/5), including independent attestation of the Tiwat + water theological formula in CTH 759/761/762 ritual texts.
 
-The most historically coherent authorship model is a **Minoan scribe trained in Luwian at Milawata (Miletus)** — the documented Minoan–Anatolian contact zone ca. 1700 BCE. The **Polyvalent Sealing Hypothesis** (§7.8) — that the disc was designed to function within Luwian, Minoan, and Egyptian frameworks simultaneously — is presented as a **speculative hypothesis** requiring independent specialist validation. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence. All code and data are released open-source for independent replication.
+A **working historical hypothesis** proposes a Minoan scribe trained in Luwian at Milawata (Miletus) — the documented Minoan–Anatolian contact zone ca. 1700 BCE — as one plausible authorship model; alternative models are not excluded. The **Polyvalent Sealing Hypothesis** (§7.8) — that the disc was designed to function within Luwian, Minoan, and Egyptian frameworks simultaneously — is presented as a **speculative hypothesis** requiring independent specialist validation. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence. All code and data are released open-source for independent replication.
 
 **Keywords:** Phaistos Disc, undeciphered scripts, computational linguistics, Luwian hieroglyphics, Monte Carlo simulation, Bonferroni correction, Bronze Age Aegean, ritual text analysis, Minoan-Luwian bilingualism, Milawata scribal contact zone
 
@@ -378,6 +378,31 @@ G_LUWIAN was constructed with knowledge of disc statistics. This is the primary 
 
 **Conclusion:** G_LUWIAN's assignments encode linguistic knowledge that transcends frequency-matching. The circularity critique — that the key was post-hoc optimized to match disc patterns — is **computationally refuted at p < 0.000005** (Z=+8.53 vs. real Luwian corpus null).
 
+### 6.8 Ablation Study: Removing wa-tar
+
+**External critique:** *"Almost all semantic content rests on wa-tar, Tiwat, and za. If wa-tar falls, the hymn narrative collapses."*
+
+**Test design (`ablation_watar_test.py`):** The three water-compound vocabulary items (*wa-tar*, *za-wa-tar*, *ha-tar*) are removed from the scoring vocabulary entirely. G_LUWIAN is then re-scored on the ablated vocabulary, and the blind corpus key test (200,000 trials) is re-run without them.
+
+**Results:**
+
+| Metric | Full model | Ablated (no wa-tar) |
+|--------|-----------|---------------------|
+| G_LUWIAN score | 344 | **308** |
+| Score drop | — | −36 (−10%) |
+| Null mean ± std | 68.6 ± 32.3 | 68.3 ± 31.8 |
+| Z vs null | +8.53 | **+7.54** |
+| Trials ≥ score (200,000) | 0 | **0** |
+| Empirical p | <0.000005 | **<0.000005** |
+
+**wa-tar load-bearing fraction: 10% of total score.**
+
+The ablated model (no water compounds) still achieves Z=+7.54 and zero of 200,000 blind corpus assignments reach its score. The remaining 90% of the signal comes from non-water Luwian vocabulary: *ti-wa* (Tiwat, weight 4), *wa-na* / *na-wa* (weight 3 each), *za-na* / *za-an* / *na-ha* (weight 2), plus individual morphemes *ti*, *za*, *na*, *an*, *zi*.
+
+**Conclusion:** G_LUWIAN's statistical significance does **not** depend on wa-tar. Removing the water compounds reduces the score by 10% and reduces Z from +8.53 to +7.54 — both remain far outside the null distribution. The reviewer concern that "if wa-tar falls, everything falls" is empirically false. The Luwian signal is broadly distributed across 15 attested vocabulary items, not concentrated in a single compound.
+
+*Note: The semantic narrative (hymn to Tiwat + water) does rely heavily on wa-tar as its central image. The ablation shows the statistical case is more robust than the narrative suggests.*
+
 ---
 
 ## 7. Discussion
@@ -396,19 +421,21 @@ The reading is consistent with a **solar-water cosmological hymn**: the sun deit
 
 An extended full reading of all 61 word-groups (Tier 1 attested + Tier 2 tentative assignments) is available in the companion essay [COMPANION_ESSAY_EN.md], clearly labeled as speculative.
 
-### 7.1a Author Hypothesis: A Minoan Scribe Trained in Luwian at Milawata
+### 7.1a Working Historical Hypothesis: A Minoan Scribe Trained in Luwian at Milawata
 
-The most historically coherent authorship model is not a Luwian diplomat visiting Crete but a **Minoan scribe who had learned Luwian** — most plausibly through the Milawata (Miletus) contact zone, the documented archaeological locus of Minoan–Anatolian scribal co-existence ca. 1700 BCE.
+> ⚠ **The following is a working historical hypothesis, not an established conclusion.** It is historically plausible given current archaeological evidence but is not proven and requires independent epigraphic and archaeological confirmation before it can be considered substantiated.
+
+The working hypothesis is that the disc was produced not by a Luwian diplomat visiting Crete but by a **Minoan scribe who had acquired Luwian literacy** — most plausibly through the Milawata (Miletus) contact zone, the documented archaeological locus of Minoan–Anatolian scribal co-existence ca. 1700 BCE.
 
 | Evidence | Luwian diplomat hypothesis | **Minoan-at-Milawata hypothesis** |
 |---|---|---|
-| Disc found at Phaistos (Crete) | Weak: why deposit a Luwian doc here? | **Natural: the scribe's home palace** |
-| Spiral format, Minoan clay | Coincidental adoption | **Native aesthetic and material** |
-| B_FREQ ≈ Linear A profile (p=0.0009) | Unexplained | **Minoan mother tongue bleeding through** |
-| G_LUWIAN phonetic content | Native production | **Second language, learned at Milawata** |
-| Stamp-printing technology | External import | **Minoan innovation for standardized ritual** |
+| Disc found at Phaistos (Crete) | Unexplained: why deposit a Luwian doc here? | Consistent: the scribe's home palace |
+| Spiral format, Minoan clay | Coincidental adoption | Native Minoan aesthetic and material |
+| B_FREQ ≈ Linear A profile (p=0.0009) | Unexplained | Minoan mother tongue interference (hypothesis) |
+| G_LUWIAN phonetic content | Native production | Second language, learned at Milawata (hypothesis) |
+| Stamp-printing technology | External import | Minoan innovation for standardized ritual (hypothesis) |
 
-A Minoan official at Milawata acquired Luwian phonetic literacy — just as a Greek merchant in Istanbul acquires functional Turkish — and created the disc to function as a ritual-commercial instrument comprehensible to both his Minoan palace and his Anatolian trading partners. The disc's statistical "memory" of Linear A is the computational signature of a non-native Luwian writer thinking in his mother tongue.
+Under this working hypothesis, a Minoan official at Milawata acquired Luwian phonetic literacy and created the disc for use as a ritual instrument comprehensible in both cultural contexts. The disc's statistical overlap with Linear A (B_FREQ, p=0.0009) may reflect Minoan phonological interference in a non-native Luwian text. **This interpretation is one coherent model; alternative authorship models are not ruled out.**
 
 ### 7.2 Egyptian Structural Parallel
 
@@ -475,6 +502,7 @@ Direct Minoan–Anatolian contact at the time of the disc is archaeologically do
 | G_LUWIAN Bonferroni score (Achterberg) | p<0.0001 among 10 tested keys |
 | TLHdig real corpus self-validation (§6.6) | 5/5 tests passed; Tiwat+water attested in CTH 759/761/762 |
 | Blind Corpus Key Test (§6.7) | p<0.000005, Z=+8.53; 0/200,000 blind assignments match G_LUWIAN |
+| wa-tar Ablation (§6.8) | wa-tar = 10% of score; ablated Z=+7.54, p<0.000005 — model robust |
 | Bronze Age Crete–Anatolia contact | Archaeologically documented |
 
 ---
@@ -683,6 +711,7 @@ Each metric individually places the disc at p < 0.0001 regardless of threshold c
 ## 8. Limitations
 
 1. **Key design circularity:** G_LUWIAN constructed with awareness of disc statistics. The Blind Corpus Key Test (§6.7) computationally refutes post-hoc frequency-optimization (p<0.000005, Z=+8.53), but ultimate confirmation requires blind replication by an independent Luwianologist who derives phonetic assignments without knowledge of our key.
+2a. **Sign assignments are not proven:** This study cannot prove that Achterberg sign #36 is phonetically /wa/, sign #11 is /tar/, or sign #45 is /ti-wa/. These assignments derive from visual-formal comparison with Luwian Hieroglyphic signs (the same methodology Ventris used for Linear B), and the statistical tests demonstrate that the resulting system is highly non-random relative to real Luwian. But non-randomness of the system does not prove correctness of individual assignments. A bilingual text or an independent decipherment convergence is required to establish this.
 2. **Hapax legomenon:** No second Phaistos-type text exists for cross-validation of phonetic assignments.
 3. **Token score frequency-driven:** ~94% of score explained by marginal frequencies (negative control). Token score is not a primary claim.
 4. **Vocabulary coverage:** G_LUWIAN vocabulary covers only 19 entries. Larger Luwian corpus comparison pending.
@@ -709,11 +738,12 @@ We have demonstrated:
 7. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence.
 8. Of the 83 directionally oriented disc tokens, 77 (92.8%) face rightward — toward the spiral center — consistent with outside→center reading (Binomial Z=+7.79, p<0.0001).
 9. A cosmological loading test against the Egyptian corpus yielded **p=0.178 — not significant**. The Egyptian layer of the Polyvalent Sealing Hypothesis is a qualitative observation requiring independent Egyptologist validation.
-10. The most historically coherent authorship model is a **Minoan scribe trained in Luwian at Milawata (Miletus)** ca. 1700 BCE (§7.1a). This resolves simultaneously the disc's Minoan physical context, its B_FREQ Linear A statistical signature, and its G_LUWIAN phonetic content.
+10. A **working historical hypothesis** (§7.1a) proposes a Minoan scribe trained in Luwian at Milawata (Miletus) ca. 1700 BCE. This model is historically plausible — it is consistent with the disc's Minoan physical context, its B_FREQ Linear A overlap (p=0.0009), and its G_LUWIAN phonetic content — but it is not proven and should not be presented as the established explanation. Alternative authorship models cannot be excluded without further evidence.
 11. The **Polyvalent Sealing Hypothesis** (§7.8) — that the disc was designed to function simultaneously within Luwian phonetic, Minoan iconographic, and Egyptian cosmological frameworks — is presented as a **speculative hypothesis**. It is historically plausible (Milawata contact zone, Hittite bilingual tablets) but currently lacks statistical confirmation for the Egyptian layer (p=0.178). Independent specialist validation is required.
 12. The **Universal Uniqueness Test** (§7.9) demonstrates that no other known Bronze Age writing system simultaneously satisfies all five structural metrics (M1–M5). Each of M1, M2, and M3 is individually confirmed by threshold-independent Monte Carlo analysis (n=20,000): M1 p<0.0001, M2 p<0.0001, M3 p<0.0001. The combined 5/5 scorecard is presented as an exploratory structural profile; the withdrawn meta-p is not replaced.
 13. **TLHdig self-validation (§6.6):** All five independent computational tests against the real TLHdig cuneiform corpus (22,116 files; Rieken et al. 2025) pass (5/5). Critically, the Tiwat + water theological formula — the core reading of the disc — is independently attested in CTH 759/761/762 cuneiform Luwian ritual texts without reference to the disc. Demonstrative *za* is phrase-initial in real Luwian at Z=+5.08, independently confirming the grammatical function assigned to disc sign #2. G_LUWIAN is corpus-specific: Z=+10.14 for the disc vs. ≤−3.3 for all other tested scripts.
 14. **Circularity critique closed (§6.7):** A Blind Corpus Key Test (200,000 trials, `blind_corpus_key_test.py`) simulates Luwianologists assigning real TLHdig syllables to disc signs from scratch. Zero of 200,000 blind corpus-seeded assignments matched G_LUWIAN's score (empirical p < 0.000005, Z=+8.53). Even though "wa" and "tar" are both present in the candidate pool, random frequency-matching cannot replicate G_LUWIAN's specific wa→#36 / tar→#11 pairing. The post-hoc optimization critique is computationally refuted.
+15. **wa-tar ablation (§6.8):** Removing all water-compound vocabulary (*wa-tar*, *za-wa-tar*, *ha-tar*) reduces G_LUWIAN's score by only 10% (344→308) and reduces Z from +8.53 to +7.54. Zero of 200,000 blind corpus assignments reach the ablated score. The Luwian signal is broadly distributed across 15 attested vocabulary items; it does not depend on the wa-tar assignment. The reviewer concern that "if wa-tar falls, the case collapses" is empirically false.
 
 The methodology presented here — blind multi-key grid testing with Bonferroni correction, corpus-domain control, perturbation analysis, negative control, blind permutation test, Side B independence test, and Universal Uniqueness Test against eight comparator systems — constitutes a replicable framework applicable to any undeciphered script where candidate reference corpora are available.
 
