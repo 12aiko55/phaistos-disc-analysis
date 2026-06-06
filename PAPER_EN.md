@@ -9,7 +9,7 @@
 
 ## Abstract
 
-The Phaistos Disc (~1700 BCE) remains one of archaeology's most debated undeciphered objects. We present a blind computational framework for evaluating competing phonetic key hypotheses, applying Bonferroni-corrected Monte Carlo simulation across 10 candidate keys scored against three reference corpora: Luwian Hieroglyphic vocabulary, Linear A frequency tables, and the AED-TEI Egyptian corpus (675,773 tokens from 13,950 texts). Three key-independent findings are established irrespective of any phonetic assumption, using the Evans/Godart canonical sign catalog (45 signs, 241 tokens, 61 word groups): (1) the PLUMED HEAD(#02)→SHIELD(#12) sequential bigram shows Z=+10.45 excess adjacency (obs/exp=9.7×, p≈0) in the canonical word-group transcription; (2) PLUMED HEAD(#02) appears exclusively at word-initial position in all 19 of its occurrences (Z=+7.51), consistent with a determinative or article function independent of any phonetic key; (3) eight exact word-group repetitions across the 61-word spiral confirm a formulaic refrain structure characteristic of Bronze Age ritual texts. The Luwian Hieroglyphic key (G_LUWIAN) achieves the highest Bonferroni-significant score among 10 candidate keys, yielding a solar-water cosmological reading structurally parallel to the Egyptian Amduat. A negative control test on a synthetic disc with identical sign frequencies but randomized adjacency (Z=1.99, not significant) establishes that token-level scores are approximately 94% frequency-driven. Accordingly, only the key-independent structural findings are presented as primary publishable claims. All code and data are released open-source for independent replication.
+The Phaistos Disc (~1700 BCE) remains one of archaeology's most debated undeciphered objects. We present a blind computational framework for evaluating competing phonetic key hypotheses, applying Bonferroni-corrected Monte Carlo simulation across 10 candidate keys scored against three reference corpora: Luwian Hieroglyphic vocabulary, Linear A frequency tables, and the AED-TEI Egyptian corpus (675,773 tokens from 13,950 texts). Three key-independent findings are established irrespective of any phonetic assumption, using the Evans/Godart canonical sign catalog (45 signs, 241 tokens, 61 word groups): (1) the PLUMED HEAD(#02)→SHIELD(#12) sequential bigram shows Z=+10.45 excess adjacency (obs/exp=9.7×, p≈0) in the canonical word-group transcription; (2) PLUMED HEAD(#02) appears exclusively at word-initial position in all 19 of its occurrences (Z=+7.51), consistent with a determinative or article function independent of any phonetic key; (3) seven exact word-group repetitions across the 61-word spiral confirm a formulaic refrain structure characteristic of Bronze Age ritual texts. The Luwian Hieroglyphic key (G_LUWIAN) achieves the highest Bonferroni-significant score among 10 candidate keys, yielding a solar-water cosmological reading structurally parallel to the Egyptian Amduat. A negative control test on a synthetic disc with identical sign frequencies but randomized adjacency (Z=1.99, not significant) establishes that token-level scores are approximately 94% frequency-driven. Accordingly, only the key-independent structural findings are presented as primary publishable claims. All code and data are released open-source for independent replication.
 
 **Keywords:** Phaistos Disc, undeciphered scripts, computational linguistics, Luwian hieroglyphics, Monte Carlo simulation, Bonferroni correction, Bronze Age Aegean, ritual text analysis
 
@@ -165,8 +165,8 @@ Established using the Evans/Godart canonical sign numbering and canonical word-g
 **Pillar 2 — PLUMED HEAD(#02) exclusively word-initial (Z=+7.51):**  
 Sign #02 (PLUMED HEAD) appears in 19 of 241 token positions across the canonical disc. All 19 occurrences are word-initial — 100% positional exclusivity. Expected word-initial proportion under the independence null: 61/241 = 25.3%. Z = +7.51. This absolute positional constraint, irrespective of phonetic value, is consistent with a grammatical function such as a determinative, article, or formulaic opener. It is the strongest single-sign positional signal on the disc. Code: `phaistos_canonical_analysis.py`.
 
-**Pillar 3 — Eight exact word-group repetitions:**  
-The 61 canonical word groups contain eight pairs of exactly repeated sign sequences (confirmed in `phaistos_canonical_analysis.py`). Notable instances: [2,12,31,26] (PLUMED HEAD+SHIELD+EAGLE+HORN) appears three times (A16, A19, A22); the spiral center sequence [10,3,38] (ARROW+TATTOOED HEAD+ROSETTE) appears twice (A28, A31); and [29,45,7] appears once on each face (A03, B20), marking a cross-side refrain. Formulaic repetition at this density is a diagnostic feature of Luwian/Hittite and Egyptian ritual texts, not administrative or narrative genres.
+**Pillar 3 — Seven exact word-group repetitions:**  
+The 61 canonical word groups contain seven distinct sign sequences appearing ≥2 times (confirmed in `phaistos_canonical_dualpass.py`). Notable instances: [2,12,31,26] (PLUMED HEAD+SHIELD+EAGLE+HORN) appears three times (A16, A19, A22); the spiral center sequence [10,3,38] (ARROW+TATTOOED HEAD+ROSETTE) appears twice (A28, A31); and [29,45,7] appears once on each face (A03, B20), marking a cross-side refrain. Formulaic repetition at this density is a diagnostic feature of Luwian/Hittite and Egyptian ritual texts, not administrative or narrative genres.
 
 ### 5.3 Spiral Center Word Groups (Canonical)
 
@@ -306,7 +306,7 @@ Combining the 10 G_LUWIAN sign assignments (Tier 1, independently attested) with
 
 **Cosmological structure:**
 - Side A (outside→center): descent — *za-wa-tar* motif builds toward A31 climax
-- Side B (center→outside): ascent — B30 mirrors A31 with inverted sign order (chiasmus confirmed)
+- Side B (center→outside): ascent — B30 mirrors A31 with inverted sign order under the G_LUWIAN reading
 
 ⚠ *Tier-2 assignments are hypotheses, not attestations. Independent replication by a Luwianologist is required before any claim of decipherment.*
 
@@ -337,7 +337,7 @@ A structurally significant canonical observation: word group A28 = [10, 3, 38] (
 
 ### 7c.3 Refrain Structure (Canonical)
 
-The canonical Evans/Godart transcription contains eight pairs of exactly repeated word groups across the 61-word disc sequence (`phaistos_canonical_analysis.py`):
+The canonical Evans/Godart transcription contains seven distinct word-group sequences appearing ≥2 times across the 61-word disc (`phaistos_canonical_dualpass.py`):
 
 | Repeated sequence | Sign names | Positions |
 |------------------|------------|-----------|
@@ -347,10 +347,9 @@ The canonical Evans/Godart transcription contains eight pairs of exactly repeate
 | [2, 12, 27, 27, 35, 37, 21] | PLUMED HEAD+SHIELD+HIDE+HIDE+PLANE TREE+PAPYRUS+COMB | A17, A29 |
 | [10, 3, 38] | ARROW+TATTOOED HEAD+ROSETTE | A28, A31 (center) |
 | [22, 29, 36, 7, 8] | SLING+CAT+VINE+HELMET+GAUNTLET | B21, B26 |
-| [27, 34, 23, 25] | HIDE+BEE+COLUMN+SHIP | B22, B29 |
 | [29, 45, 7] | CAT+WAVY BAND+HELMET | A03, B20 (cross-side) |
 
-This density of exact repetition — 8 repeated sequences in 61 word groups (13%) — is consistent with an intentional formulaic structure and is the canonical foundation of the ritual-text classification hypothesis.
+This density of exact repetition — 7 repeated sequences in 61 word groups (11%) — is consistent with an intentional formulaic structure and is the canonical foundation of the ritual-text classification hypothesis.
 
 *Note: Refrain counts for the phonetic sequences za-wa-tar, wa-tar, and ti-wa (reported in earlier analyses as 8, 17, and 4 occurrences respectively, with Z=214 for za-wa-tar) were computed on pre-canonical word-group data using a custom sign numbering. These counts have not been verified in the canonical Evans/Godart transcription and are withdrawn as primary claims. The phonetic identification of the repeated sequences above requires an independently verified phonetic key.*
 
@@ -402,7 +401,7 @@ Comparanda in Luwian/Hittite ritual literature:
 |-----------------|--------|
 | Bigram PLUMED HEAD→SHIELD (canonical) | Z=+10.45, obs/exp=9.7×, p≈0 |
 | PLUMED HEAD word-initial exclusivity | 19/19, Z=+7.51, p≈0 |
-| Eight exact word-group repetitions | Formulaic refrain density 13% (8/61 groups) |
+| Seven exact word-group repetitions | Formulaic refrain density 11% (7/61 groups) |
 | Structural fingerprint (§5.7) | Luwian wins 7/9 metrics, dist=1.36 |
 | G_LUWIAN Bonferroni score | p<0.0001 among 10 tested keys |
 | Tiwat+Tarhunt theological pair | Independent corroboration (Luwian) |
@@ -428,7 +427,7 @@ The first word of Side B answers it from the same center point:
 
 > **B30: *ti-wa-wa-tar-za-ha*** = "TIWAT! water — this — YES!"
 
-The same phrase, reversed — a syllabic echo. This is not coincidence: the chiasmus is statistically demonstrated (p = 6.6 × 10⁻⁶, Phase 2 above).
+The same phrase, reversed — a syllabic echo under the G_LUWIAN reading. The canonical centers ([10,3,38] and [45,7]) share no signs; the structural parallel exists at the level of the phonetic reading, not in the canonical sign sequences directly.
 
 At a secondary level, the storm god Tarhunt (*tar-hu*, Tier-2 tentative) appears in the second word only — an opening invocation before the hymn begins. Tiwat (sun) is the protagonist; Tarhunt (storm) opens the door.
 
@@ -468,7 +467,7 @@ The Phaistos Disc was, in all probability, a **portable liturgical object for th
 
 The analyses in §§7a–7d establish two independent findings:
 
-1. **G_LUWIAN (Luwian phonetic key):** Bonferroni-significant score p<0.0001; key-independent bigram PLUMED HEAD(#02)→SHIELD(#12) Z=+10.45 (canonical); PLUMED HEAD exclusively word-initial Z=+7.51; eight exact word-group repetitions. Reading: solar-water invocation of Tiwat and Tarhunt.
+1. **G_LUWIAN (Luwian phonetic key):** Bonferroni-significant score p<0.0001; key-independent bigram PLUMED HEAD(#02)→SHIELD(#12) Z=+10.45 (canonical); PLUMED HEAD exclusively word-initial Z=+7.51; seven exact word-group repetitions. Reading: solar-water invocation of Tiwat and Tarhunt.
 2. **B_FREQ (Linear A / Minoan frequency key):** Bonferroni-significant score p=0.0009; the sign-frequency profile of the disc shows structured deviation from random syllabic texts (dual-pass Monte Carlo, `phaistos_dualpass_v2.py` — see §7ε.3 below; results pending re-verification against canonical 241-token distribution).
 
 Both keys were constructed through independent methodologies — G_LUWIAN via morpheme coverage against the Luwian vocabulary corpus; B_FREQ via frequency-profile matching to Linear A sign tables. The fact that the same physical object passes both filters, built on entirely different linguistic foundations, is the starting point of this hypothesis.
@@ -484,26 +483,26 @@ This proposal — which we term the **Milawata Scribal Bilingualism Hypothesis**
 
 Both were reading different layers of the same object. Neither had the computational tools to see that both layers coexist intentionally.
 
-### 7ε.3 Dual-Pass Monte Carlo Validation
+### 7ε.3 Canonical Dual-Pass Monte Carlo Validation
 
-To test whether any random Bronze Age syllabic text could exhibit both properties simultaneously, we generated N=100,000 synthetic texts using a Dirichlet-multinomial model (α=0.5) over the 49-sign Phaistos inventory, matched in length to the disc (241 tokens). Code: `phaistos_dualpass_v2.py`.
+To test whether any random Bronze Age–like text could simultaneously exhibit both key-independent structural signals of the disc, we generated N=100,000 synthetic texts using a Dirichlet-multinomial model (α=0.5) over the 45 Evans sign inventory, with word-group lengths fixed to the canonical disc structure (61 word groups, preserving the actual length distribution). Code: `phaistos_canonical_dualpass.py`.
 
-Each synthetic text was scored under two **independently motivated** filters:
+Each synthetic text was evaluated under two **key-independent** filters:
 
-- **G_LUWIAN (v2):** count of the attested Luwian trigram *za-wa-tar* ([old signs #2,#36,#11]) as consecutive occurrences in the flat token sequence. Threshold: ≥8.
-- **B_FREQ:** χ²-based goodness-of-fit to the Linear A sign-frequency profile (Younger 1996), expressed as 1/(1 + χ²/n). Threshold: ≥0.7184.
+- **Filter 1 — PLUMED HEAD(#02)→SHIELD(#12) bigram:** count of consecutive [#02,#12] pairs within canonical word boundaries. Disc threshold: ≥13 (obs/exp = 9.7×).
+- **Filter 2 — Repeated word groups:** number of distinct word-group sequences appearing ≥2 times across 61 canonical word groups. Disc threshold: ≥7.
 
-Results (`phaistos_dualpass_v2.py`, seed=42):
+Results (`phaistos_canonical_dualpass.py`, seed=42, N=100,000):
 
-| Filter | Disc score | Null mean ± SD | Z | p (one-tailed) |
+| Filter | Disc count | Null mean ± SD | Z | p (one-tailed) |
 |--------|-----------|----------------|---|----------------|
-| G_LUWIAN — *za-wa-tar* refrain count | 8 | 0.0017 ± 0.0412 | **+194.15** | **<1×10⁻⁵** |
-| B_FREQ — Linear A frequency fit | 0.7184 | 0.0333 ± 0.0126 | **+54.21** | **<1×10⁻⁵** |
-| **Dual-pass (both)** | — | — | — | **p < 1×10⁻⁵** |
+| F1: PLUMED HEAD→SHIELD bigram | 13 | 0.0864 ± 0.3625 | **+35.62** | **p < 1×10⁻⁵** |
+| F2: Repeated word groups | 7 | 0.1034 ± 0.3229 | **+21.36** | **p < 1×10⁻⁵** |
+| **Dual-pass (both filters)** | — | — | — | **p < 1×10⁻⁵** |
 
-**Zero of 100,000 synthetic texts passed both thresholds simultaneously.**
+**Zero of 100,000 synthetic texts passed both thresholds simultaneously.** Both filters use only canonical Evans/Godart data (241 tokens, 45 signs, 61 word groups) and require no phonetic assumption. The Phaistos Disc is the only text, among 100,000 random Dirichlet-multinomial texts with canonical word-group lengths, to pass both structural filters.
 
-> **Data provenance note (v4.0):** The za-wa-tar refrain count of 8 used as the G_LUWIAN threshold was computed from pre-canonical word-group data using a custom sign numbering. In the Evans/Godart canonical transcription (Godart 1995), the equivalent trigram has not been confirmed as appearing 8 times. The B_FREQ disc score was computed from a DISC_FREQ table containing 175 tokens under old sign numbering (not the canonical 241 tokens, 45 Evans signs). Both inputs to this dual-pass are therefore based on pre-canonical data. The Monte Carlo methodology and code (`phaistos_dualpass_v2.py`) are valid, but the threshold values require re-computation against the canonical 241-token Evans distribution before these specific p-values can be cited as primary claims. The dual-pass is reported here for methodological completeness.
+*Earlier analyses (`phaistos_dualpass_v2.py`) reported dual-pass results using pre-canonical inputs: G_LUWIAN filter = za-wa-tar count ≥8 (from pre-canonical word groups with custom sign numbering); B_FREQ filter = χ²-fit to Linear A frequency profile (from 175-token DISC_FREQ). Those results are superseded by the canonical computation above. The B_FREQ bilingual layer is a separate computation that requires a phonetic key and has not been re-run on canonical data.*
 
 ### 7ε.4 Historical Plausibility: The Milawata Contact Zone
 
@@ -523,7 +522,7 @@ The bilingual scribal design would require a physical-historical context where M
 | G_LUWIAN Bonferroni p<0.0001 | §5 | Luwian phonological layer |
 | Bigram PLUMED HEAD→SHIELD Z=+10.45 | §5.2, §7c | Luwian layer key-independent (canonical) |
 | PLUMED HEAD word-initial Z=+7.51 | §5.2 | Grammatical marker, key-independent |
-| Eight word-group repetitions | §5.2, §7c.3 | Ritual refrain structure (canonical) |
+| Seven word-group repetitions | §5.2, §7c.3 | Ritual refrain structure (canonical) |
 | Structural fingerprint (7/9 metrics) | §5.7 | Sign-system typology matches Luwian |
 | Milawata archaeological record | §7ε.4 | Historical contact zone exists |
 | KUB bilingual tablets | §7ε.4 | Bilingual scribal practice attested |
@@ -548,10 +547,10 @@ The strongest structural signals (PLUMED HEAD as grammatical marker, PLUMED HEAD
 The convergence of three independently derived analyses on a single cosmogram constitutes qualitative evidence for intentional dual design; a formal statistical test is not applicable here because the three layers are not fully independent (all three derive ultimately from the same physical object).
 
 The B_FREQ circularity objection applies only to the frequency-model component of Layer 3. It cannot explain why:
-- The structurally identified center sign (#45) is solar under *both* systems (Layer 1 is purely positional, Layer 2 is Luwian phonetics)
-- The structurally identified dominant bigram (#36→#11, Z=10) maps to WATER under *both* systems (Layer 1 is purely sequential, Layer 2 is attested Luwian morphology)
+- The structurally identified center sign at B30 (#45, WAVY BAND) is solar under both systems — it occupies the canonical spiral terminus (Layer 1: purely positional) and encodes the Luwian sun deity Tiwat under G_LUWIAN (Layer 2: attested Luwian morphology)
+- The structurally identified dominant bigram (PLUMED HEAD(#02)→SHIELD(#12), Z=+10.45) is exceptional in sequential structure independently of any phonetic key (Layer 1: canonical key-independent analysis), and maps to the grammatical marker pair *za-zi* (demonstrative + genitive) under G_LUWIAN (Layer 2: attested Luwian morphology)
 
-The convergence of these three independent methodologies on a single cosmogram constitutes evidence that the disc's creator(s) deliberately encoded the SUN + WATER theme in a form simultaneously legible to both Minoan and Luwian scribal traditions.
+The convergence of these three independent methodologies on a solar-grammatical structure constitutes qualitative evidence for intentional design. Whether this constitutes a dual-legible encoding across Minoan and Luwian scribal traditions requires independent replication by specialists in both fields.
 
 ### 7ε.7 What This Hypothesis Does and Does Not Claim
 
@@ -611,7 +610,7 @@ We have demonstrated:
 
 1. The Phaistos Disc contains statistically non-random sequential structure in the PLUMED HEAD(#02)→SHIELD(#12) bigram (Z=+10.45, obs/exp=9.7×), independent of any phonetic assumption and established on the Evans/Godart canonical sign data (241 tokens, 45 sign types, 61 word groups).
 2. PLUMED HEAD(#02) appears exclusively word-initial in all 19 of its occurrences (Z=+7.51), consistent with a determinative or grammatical marker function, independent of any phonetic assumption.
-3. Eight exact word-group repetitions in the canonical transcription confirm a formulaic refrain structure characteristic of ritual texts.
+3. Seven exact word-group repetitions in the canonical transcription confirm a formulaic refrain structure characteristic of ritual texts.
 4. Its sign-system structure (Zipf, entropy, redundancy, word-length, positional patterns) is closest to Luwian Hieroglyphic across 9 metrics (distance=1.36 vs Linear A=2.52, Egyptian=2.77), independent of any phonetic assumption.
 5. Among 10 tested phonetic keys, G_LUWIAN (Luwian Hieroglyphic) achieves the highest Bonferroni-significant score (p<0.0001).
 6. G_LUWIAN produces a coherent solar-water cosmological reading with structural parallels to the Egyptian Amduat.
@@ -710,7 +709,7 @@ Generated by `phaistos_dual_reading_table.py`. Full output in `DUAL_READING_TABL
 | B29 | za-wa-tar-na-ha | **za-wa-tar** indeed | a-sa-ra-na-ta | **REFRAIN** |
 | **B30** | **ti-wa-wa-tar-za-ha** | **TIWAT + wa-tar** (chiasmus) | **ma-sa-ra-a-ta** | **★ CENTER ★** |
 
-**Chiasmus:** A31 = [ti-wa · **za-wa-tar** · ha] ↔ B30 = [ti-wa · **wa-tar-za** · ha] — inner trigram reversed, p=6.58×10⁻⁶
+*G_LUWIAN reading note:* A31 = [ti-wa · **za-wa-tar** · ha] ↔ B30 = [ti-wa · **wa-tar-za** · ha] — inner trigram structurally mirrored under G_LUWIAN phonetic reading (canonical centers share no signs; this structural parallel is in the phonetic layer only)
 
 > *B\_FREQ column: phonetic values only — no semantic interpretation. Linear A undeciphered. The column demonstrates that the disc's sign-frequency profile passes Bonferroni p=0.0009 against Linear A frequency tables. It does not constitute a Minoan translation. Note: the reading table in this appendix was generated from pre-canonical word-group data (custom sign numbering) and the sign sequences shown require re-verification against the Evans/Godart canonical transcription.*
 
