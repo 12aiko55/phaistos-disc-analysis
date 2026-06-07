@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 13.0
+**Version:** 14.0
 
 ---
 
@@ -403,7 +403,7 @@ The ablated model (no water compounds) still achieves Z=+7.54 and zero of 200,00
 
 *Note: The semantic narrative (hymn to Tiwat + water) does rely heavily on wa-tar as its central image. The ablation shows the statistical case is more robust than the narrative suggests.*
 
-### 6.9 Grammatical Position Test (Ventris-Style Prediction)
+### 6.9 Grammatical Position Test (Ventris-Style Prediction) (Ventris-Style Prediction)
 
 **The Ventris standard:** Ventris validated Linear B not just by phonetic scoring but by showing that signs behaved grammatically as expected — case endings appeared word-finally, prepositions word-initially. This test applies the same methodology to G_LUWIAN.
 
@@ -427,6 +427,57 @@ The ablated model (no water compounds) still achieves Z=+7.54 and zero of 200,00
 *ti* (verbal copula, sign #7) shows no word-final preference (Z=+0.38), inconsistent with strict SOV order. This may reflect: (a) the copula is enclitic and appears mid-word; (b) the word-group boundaries in the Achterberg transcription do not correspond to grammatical clauses; or (c) the *ti* assignment is incorrect.
 
 **Honest conclusion:** The grammatical position test partially supports and partially constrains G_LUWIAN. The *za*-demonstrative prediction is confirmed; the *na*-genitive prediction is refuted. This is an important null result: it specifically challenges the genitive function of sign #29, and should be taken seriously. A revised reading in which sign #29 functions as a phrase-initial particle (not genitive) may be more consistent with the data.
+
+---
+
+### 6.10 Entropy Profile and Ventris Moment Tests (T-D, T-E)
+
+Two final diagnostic tests were run (`final_tests_entropy_ventris.py`) to probe the disc's information-theoretic structure and look for unexpected corpus matches beyond the predefined vocabulary.
+
+#### T-D: Bigram Mutual Information Profile
+
+**Design:** Computes the bigram mutual information MI = H(Y) − H(Y|X) for the Phaistos Disc (Evans/Godart canonical, 45 sign types, 241 tokens), the TLHdig Luwian corpus (408 unique syllable types, 3,962 word tokens), and 1,000 random shuffles of the disc token sequence.
+
+| Sequence | MI (bits) | Notes |
+|----------|-----------|-------|
+| TLHdig corpus | 5.646 | Real language: high sequential structure |
+| Phaistos Disc | 2.021 | Above random; below corpus |
+| Random shuffle (mean ± SD) | 1.557 ± 0.056 | Disc tokens randomly reordered |
+
+Disc MI is significantly above random (Z = +8.26, p < 0.0001), confirming the disc has non-random bigram structure — consistent with M1 (bigram #02→#12, Z=+12.05). However, disc MI (2.021) is substantially below the Luwian corpus MI (5.646), a gap of 3.625 bits.
+
+**Methodological limitation (honest):** The disc (45 sign types, 241 tokens) and the TLHdig corpus (408 syllable types, 3,962 tokens) have very different vocabulary sizes. MI is sensitive to inventory size: larger inventories inflate entropy by default. Direct numerical comparison of MI values across these two data sizes is not statistically valid. The Z=+8.26 vs. random is robust; the corpus-versus-disc gap is not interpretable without inventory-controlled comparison.
+
+**Result:** The disc has significant bigram structure (not random); the specific MI value cannot be directly compared to the TLHdig corpus due to inventory-size confound. This test is informative as an internal check but not as a cross-system comparison.
+
+#### T-E: Ventris Moment — Unexpected Corpus Matches
+
+**Design:** Ventris validated Linear B by showing that his key produced unexpected words (Knossos tablets: *a-mi-ni-so* = Amnisos) not in his predefined vocabulary, discovered *after* the key was fixed. This test applies the same logic: apply G_LUWIAN to all 61 disc word-groups, extract the full syllabic readings, then search the TLHdig corpus for word forms that appear in the readings but were NOT in the predefined LUWIAN_VOCAB used for scoring.
+
+**Disc readings searched:** 61 word-groups × G_LUWIAN key (10 sign assignments) → 315 attested TLHdig forms (≥3 corpus occurrences, ≥4 characters, hyphenated syllable sequences) tested for match.
+
+**Results:** 36 disc readings contain unexpected corpus matches. All matches are generic two-syllable morpheme sequences:
+
+| Corpus form | Disc occurrences | Status |
+|-------------|-----------------|--------|
+| *i-ti* | 23 | Generic morpheme fragment |
+| *a-ta* | 16 | Generic morpheme fragment |
+| *a-an* | 4 | Generic morpheme fragment |
+| *an-ta* | 4 | Generic morpheme fragment |
+| *a-na* | 3 | Generic morpheme fragment |
+| *a-ti* | 3 | Generic morpheme fragment |
+
+No specific proper names, deity names, or semantically distinct lexemes were recovered. All matches are high-frequency generic consonant-vowel pairs that appear in virtually any syllabic system.
+
+**Honest verdict:** The Ventris moment test returns a **null result**. No unexpected meaningful forms were found. The disc's G_LUWIAN readings do not spontaneously produce proper names or unique lexemes from the TLHdig corpus beyond what the scoring vocabulary already captures. This is an important negative finding: the decipherment hypothesis does not generate independent Ventris-style confirmations at this stage. Such confirmation remains a goal for future work if a bilingual text is found.
+
+**Summary of T-D and T-E:**
+
+| Test | Result | Interpretation |
+|------|--------|---------------|
+| T-D: Disc MI vs random | Z=+8.26 ✓ | Disc has real bigram structure |
+| T-D: Disc MI vs corpus | Gap 3.625 bits (not interpretable) | Inventory-size confound; no valid comparison |
+| T-E: Unexpected corpus matches | Null result (generic fragments only) | No Ventris moment; confirms honest limits of current key |
 
 ---
 
