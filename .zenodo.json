@@ -1,6 +1,6 @@
 {
   "title": "Statistical Analysis of the Phaistos Disc: A Computational Methodology for Phonetic Key Evaluation",
-  "description": "A rigorous computational and statistical framework for evaluating competing phonetic key hypotheses for the Phaistos Disc (~1700 BCE). The study applies Blind Grid Testing across 10 candidate keys, Bonferroni-corrected Monte Carlo simulation (10,000 trials), Shannon entropy analysis, corpus-control testing against the AED-TEI Egyptian corpus (675,773 tokens), sensitivity analysis (105/105 perturbations significant), and cross-validation (Spearman ρ=0.779). Three key-independent findings are established: (1) the [Sign#36→Sign#11] bigram adjacency Z=10, p≈0, ratio=7.69×; (2) corpus-domain control Z=27.16 (theological) vs Z=−0.40 (administrative), confirming ritual text classification; (3) Sign #45 (solar rosette) appearing exclusively at spiral centers A31 and B30. The Luwian Hieroglyphic key (G_LUWIAN) achieves the highest score (523, p<0.0001), yielding a solar-water cosmological reading (Tiwat + watar) structurally parallel to the Egyptian Amduat. A negative control test (Z=1.99 on synthetic disc) establishes that token-level scores are frequency-driven (~94%); only the three key-independent pillars are presented as primary publishable claims. All code and data are released open-source for independent replication.",
+  "description": "A rigorous computational and statistical framework for evaluating competing phonetic key hypotheses for the Phaistos Disc (~1700 BCE). The study applies Bonferroni-corrected Monte Carlo simulation across 10 candidate keys scored against three reference corpora: Luwian Hieroglyphic vocabulary, Linear A frequency tables, and the AED-TEI Egyptian corpus (675,773 tokens from 13,950 texts). Two strictly separated transcription systems are used: Evans/Godart canonical (45 signs, 241 tokens, 61 word-groups) for key-independent structural analysis, and Achterberg phonetic for G_LUWIAN phonetic scoring.\n\nThree key-independent findings are established: (1) PLUMED HEAD→SHIELD bigram Z=+12.05 excess adjacency (obs/exp=9.7×, p<0.0001, MC n=20,000); (2) PLUMED HEAD 100% word-initial across all 19 occurrences (Z=+7.51, p<0.0001), consistent with a determinative or article function; (3) formulaic refrain structure confirmed — 7 repeated word-group sequences (refrain density 24.6%, Z=+45.60, p<0.0001). All three are robust across all parameter thresholds tested.\n\nThe Luwian Hieroglyphic key (G_LUWIAN, Achterberg transcription) achieves the highest Bonferroni-significant score among all 10 keys (p<0.0001). A blind permutation test (10,000 shuffles) refutes Zipfian selection bias at p=0.0004. Self-validation against the TLHdig v0.2 cuneiform corpus (Rieken et al. 2025; 22,116 XML files; DOI: 10.5281/zenodo.15459134) passes all five independent tests, including independent attestation of the Tiwat + water theological formula in CTH 759/761/762 ritual texts.\n\nA blind corpus key test (200,000 trials) draws random syllable assignments from the TLHdig top-50 attested syllable pool and scores them against real Luwian vocabulary. Zero of 200,000 trials reach the G_LUWIAN score (Z=+8.53, p<0.000005), computationally substantially reducing the circularity critique. An ablation study removing all wa-tar compounds from scoring shows the signal drops by only 10% (Z=+8.53→+7.54); the result is robust to removal of the central vocabulary item.\n\nA Ventris-style grammatical position test (4 predictions from Luwian morphosyntax) yields 1/4 confirmed (za-demonstrative Z=+3.59), 1 marginal (ha-particle Z=+1.95), and 2 failed predictions — including the na-genitive assignment, which shows the opposite of the predicted pattern (Z=−4.11). This is reported as an important null result constraining the hypothesis. An entropy profile test (T-D) confirms the disc has real bigram structure above random (MI=2.021 vs random 1.557, Z=+8.26) but direct corpus MI comparison is flagged as methodologically limited. A Ventris moment test (T-E) returns a null result: no unexpected proper names or unique lexemes recovered from TLHdig beyond the predefined vocabulary.\n\nA working historical hypothesis proposes a Minoan scribe trained in Luwian at Milawata (Miletus, ca. 1700 BCE) as one plausible authorship model; alternative models are not excluded. The Egyptian cosmological loading test yielded p=0.178 (not significant). Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence. All code, data, and null results are released open-source for independent replication.",
   "upload_type": "software",
   "access_right": "open",
   "license": "cc-by-4.0",
@@ -21,16 +21,26 @@
     "Bronze Age Aegean",
     "statistical epigraphy",
     "ritual text analysis",
+    "TLHdig corpus",
+    "blind corpus key test",
+    "ablation study",
+    "Milawata scribal contact zone",
+    "Minoan civilization",
     "Egyptian corpus",
-    "blind grid test",
-    "Minoan civilization"
+    "Tiwat",
+    "working hypothesis"
   ],
-  "notes": "This work is presented as a methodology paper, not a definitive decipherment. The key design circularity (researcher awareness of disc statistics) means findings are exploratory. Independent replication by a Luwianologist is required for confirmation.",
+  "notes": "This work is presented as a methodology paper and a working hypothesis, not a definitive decipherment. The specific G_LUWIAN phonetic sign assignments are not proven and require independent epigraphic confirmation (ideally a bilingual text). A blind corpus key test with 200,000 trials substantially reduces the circularity critique but does not fully eliminate it. The na-genitive grammatical prediction fails (Z=−4.11), representing a genuine constraint on the hypothesis. All null results are reported transparently. Independent replication by a Luwianologist specialist is required for confirmation.",
   "related_identifiers": [
     {
       "identifier": "https://github.com/12aiko55/phaistos-disc-analysis",
       "relation": "isSupplementTo",
       "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.15459134",
+      "relation": "references",
+      "scheme": "doi"
     }
   ],
   "communities": [
