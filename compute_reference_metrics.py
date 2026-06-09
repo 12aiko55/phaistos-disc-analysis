@@ -298,6 +298,84 @@ def parse_linearb_transliteration(text):
     return groups_by_line, groups_by_word
 
 
+def parse_oracc_cdl_json(json_text):
+    """
+    Parse Oracc CDL JSON (ETCSRI/DCCLT format) into word groups.
+    Lemma nodes have node='l' and f.form = transliteration form.
+    """
+    try:
+        data = json.loads(json_text)
+    except Exception:
+        return [], []
+
+    groups_by_sentence = []
+    groups_by_word     = []
+
+    def get_word_signs(node):
+        if isinstance(node, dict) and node.get('node') == 'l':
+            form = node.get('f', {}).get('form', '')
+            if form:
+                form = re.sub(r'\{[^}]+\}', '', form)   # strip {det}
+                signs = [s for s in re.split(r'[-.]', form)
+                         if s and not s.isdigit() and len(s) > 0]
+                return signs or None
+        return None
+
+    def walk(node):
+        if isinstance(node, dict):
+            if node.get('type') == 'sentence':
+                sentence_signs = []
+                for child in node.get('cdl', []):
+                    ws = get_word_signs(child)
+                    if ws:
+                        groups_by_word.append(ws)
+                        sentence_signs.extend(ws)
+                if sentence_signs:
+                    groups_by_sentence.append(sentence_signs)
+            else:
+                for child in node.get('cdl', []):
+                    walk(child)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(data)
+    return groups_by_sentence, groups_by_word
+
+
+def parse_linearb_tablets_csv(csv_text):
+    """
+    Parse InsiderPhD Linear B tablets.csv (semicolon-separated).
+    Columns: identifier;location;series;inscription;original
+    inscription: comma-separated words, hyphen-separated signs.
+    """
+    groups_by_tablet = []
+    groups_by_word   = []
+
+    for line in csv_text.splitlines()[1:]:   # skip header
+        if not line.strip():
+            continue
+        parts = line.split(';')
+        if len(parts) < 4:
+            continue
+        inscription = parts[3]
+        inscription = re.sub(r'\([^)]*\)', '', inscription)   # remove uncertain ()
+        inscription = re.sub(r'\[[^\]]*\]', '', inscription)  # remove [] restorations
+        words = [w.strip() for w in inscription.split(',') if w.strip()]
+        tablet_signs = []
+        for word in words:
+            signs = [s.strip() for s in word.split('-')
+                     if s.strip() and re.search(r'[a-z0-9]', s, re.I)
+                     and not s.strip().startswith('*')]
+            if signs:
+                groups_by_word.append(signs)
+                tablet_signs.extend(signs)
+        if tablet_signs:
+            groups_by_tablet.append(tablet_signs)
+
+    return groups_by_tablet, groups_by_word
+
+
 def parse_oracc_json(json_text):
     """
     Parse Oracc JSON corpus format into word groups.
@@ -630,9 +708,75 @@ if __name__ == "__main__":
             print(f"  {key:<50}  {m1:>7}  {m2:>7}  {m3:>7}  ({passed}/3 pass)")
 
     print()
-    print("NOTE: These are SAMPLE computations on small text excerpts.")
-    print("Replace with full corpus downloads for EXACT values.")
-    print(f"  Full ETCSL:  ~24,000 tokens  → {os.path.join(CORPUS_DIR, 'etcsl/')}")
-    print(f"  Full CDLI:   ~2M tokens       → {os.path.join(CORPUS_DIR, 'cdli/')}")
-    print(f"  Full DĀMOS:  ~50,000 tokens   → {os.path.join(CORPUS_DIR, 'linearb/')}")
+    print("NOTE: Inline sample results above. Running real corpus below...")
+    print(SEP)
+
+    # -----------------------------------------------------------------------
+    # REAL CORPUS RESULTS (from downloaded files)
+    # -----------------------------------------------------------------------
+    print()
+    print(SEP)
+    print("REAL CORPUS RESULTS — FROM DOWNLOADED FILES")
+    print(SEP)
+
+    real_results = {}
+
+    # --- Linear B: full tablets.csv (InsiderPhD / Chadwick & Ventris 1973) ---
+    lb_csv = os.path.join(CORPUS_DIR, "linearb", "tablets.csv")
+    if os.path.exists(lb_csv):
+        print(f"\n[Loading] Linear B tablets.csv ({os.path.getsize(lb_csv)//1024}KB)...")
+        txt = open(lb_csv, encoding="utf-8", errors="replace").read()
+        g_tab, g_word = parse_linearb_tablets_csv(txt)
+        print(f"  Parsed: {len(g_word)} word groups, {sum(len(g) for g in g_word)} signs")
+        if g_word:
+            real_results["linearb_full"] = print_metrics(
+                f"Linear B FULL — tablets.csv ({len(g_word)} words)",
+                g_word,
+                source_note="InsiderPhD dataset; Chadwick & Ventris 1973; EXACT"
+            )
+    else:
+        print(f"  [MISSING] {lb_csv}")
+
+    # --- Sumerian ETCSRI: up to 500 royal inscription texts ---
+    etcsri_dir = os.path.join(CORPUS_DIR, "sumerian", "etcsri", "etcsri", "corpusjson")
+    if os.path.isdir(etcsri_dir):
+        files = sorted(f for f in os.listdir(etcsri_dir) if f.endswith('.json'))
+        use_n = min(500, len(files))
+        print(f"\n[Loading] Sumerian ETCSRI — {use_n}/{len(files)} texts...")
+        all_words = []
+        for fname in files[:use_n]:
+            try:
+                txt = open(os.path.join(etcsri_dir, fname),
+                           encoding="utf-8", errors="replace").read()
+                _, g_word = parse_oracc_cdl_json(txt)
+                all_words.extend(g_word)
+            except Exception:
+                pass
+        print(f"  Parsed: {len(all_words)} word groups, "
+              f"{sum(len(g) for g in all_words)} signs")
+        if all_words:
+            real_results["sumerian_etcsri"] = print_metrics(
+                f"Sumerian ETCSRI — {use_n} royal inscriptions (Oracc)",
+                all_words,
+                source_note=f"Oracc ETCSRI CC0; {use_n} texts; EXACT"
+            )
+    else:
+        print(f"  [MISSING] {etcsri_dir}")
+
+    # --- Summary: real corpus ---
+    print()
+    print(SEP)
+    print("REAL CORPUS SUMMARY")
+    print(SEP)
+    print(f"  {'System':<52}  {'M1':>7}  {'M2':>7}  {'M3':>7}  Pass")
+    print("  " + "-" * 80)
+    all_res = {**results, **real_results}
+    for key, r in all_res.items():
+        if r:
+            m1 = f"{r['M1_z']:+.2f}"
+            m2 = f"{r['M2_z']:+.2f}"
+            m3 = f"{r['M3_pct']:.1f}%"
+            src = "REAL" if key in real_results else "SAMPLE"
+            passed = sum([r['M1_z']>5, r['M2_z']>5, r['M3_pct']>8])
+            print(f"  {key:<52}  {m1:>7}  {m2:>7}  {m3:>7}  {passed}/3 [{src}]")
     print(SEP)

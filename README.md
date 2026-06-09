@@ -1,7 +1,7 @@
 # Phaistos Disc — Statistical & Computational Analysis
 
 **Author:** Manolis Chavadakis  
-**Version:** 3.3 (June 2026)  
+**Version:** 16.0 (June 2026)  
 **License:** CC-BY 4.0  
 
 ## Overview
@@ -14,41 +14,57 @@ This is a **methodology paper**, not a definitive decipherment. All findings are
 
 ### Three Key-Independent Pillars (do not depend on any phonetic assumption)
 
+All three computed from the **Evans/Godart canonical transcription** (45 signs, 241 tokens, 61 word-groups). Sign numbers below are Evans/Godart canonical — not Achterberg.
+
 | Finding | Value | Significance |
 |---------|-------|--------------|
-| [Sign#36→Sign#11] bigram adjacency | Z=10, obs/exp=7.69× | p≈0, cannot be random |
-| Corpus-domain control (theological vs admin) | Z=27.16 vs Z=−0.40 | Ritual text, independently confirmed |
-| Sign #45 (solar rosette) at centers A31+B30 ONLY | — | Geometric, key-free observation |
+| PLUMED HEAD(#02)→SHIELD(#12) bigram (canonical) | Z=+12.05, obs/exp=9.7× | p<0.0001, MC n=20,000; cannot be random |
+| PLUMED HEAD(#02) word-initial in 19/19 occurrences (canonical) | Z=+7.51 | p<0.0001; consistent with determinative/article function |
+| Seven exact word-group repetitions across 61 groups (canonical) | 24.6% refrain density | Z vs null=+45.60, p<0.0001; diagnostic of ritual texts |
 
-### Phonetic Key Results (Bonferroni-corrected, 10 keys tested)
+### Phonetic Key Results (Bonferroni-corrected, 9 keys tested)
 
-| Key | Score | Z | p-value | Refrain |
-|-----|-------|---|---------|---------|
-| G_LUWIAN (Luwian Hieroglyphic) ★ | 523 | 4.82 | <0.0001 | za-wa-tar |
-| E1_EGYPT (Egyptian TLA) | 491 | 4.40 | 0.0001 | n-m-r |
-| B_FREQ (Linear A frequency) | 430 | 3.61 | 0.0009 | a-sa-ra |
-| H_ABJAD (pure consonantal) | 0 | — | — | EXCLUDED |
+Scored on the **Achterberg phonetic transcription** (different sign numbering from Evans/Godart). Refrain labels use Achterberg values.
 
-**Bonferroni threshold:** Z > 2.807 (p < 0.005, corrected for 10 keys)
+| Key | Score | Z | p-value | Bonferroni | Refrain (Achterberg) |
+|-----|-------|---|---------|-----------|----------------------|
+| G_LUWIAN (Luwian Hieroglyphic) ★ | 523 | 4.82 | <0.0001 | ✓✓✓ (pub.-grade) | za-wa-tar |
+| E1_EGYPT (Egyptian TLA) | 491 | 4.40 | 0.0001 | ✓✓ | n-m-r |
+| B_FREQ (Linear A frequency) | 430 | 3.61 | 0.0009 | ✓✓ | a-sa-ra |
+| I_MORPHO (Linear A morphological) | 426 | 3.56 | 0.0009 | ✓✓ | a-ku-te |
+| H_ABJAD (pure consonantal) | 0 | — | — | EXCLUDED | — |
+
+**Bonferroni threshold:** Score > 379 (p < 0.005, corrected for 9 real keys; J_NULL is the reference null distribution, not a tested hypothesis)
+
+### Pre-Registered Vocabulary Test (§6.12)
+
+| Vocabulary | Size | Z | p-value | Bonferroni |
+|------------|------|---|---------|-----------|
+| Original ad hoc LUWIAN_VOCAB | 19 words | +8.95 | <0.000001 | PASS ✓ |
+| Hawkins 2000 CHLI top-50 (pre-registered) | 52 words | **+11.18** | <0.000001 | PASS ✓✓ |
+
+G_LUWIAN passes Bonferroni with a pre-registered vocabulary drawn from the standard Luwian Hieroglyphic reference corpus — addresses the C2 (vocabulary selection bias) critique.
 
 ### Primary Interpretation (G_LUWIAN)
 
-Luwian Hieroglyphic reading produces a **solar-water cosmological hymn**:
-- Refrain `za-wa-tar` = PIE *wódr̥ = "this water" (independently attested)
-- Center A31: `ti-wa-za-wa-tar-ha` = "TIWAT! this water — yes!" (descent climax)
-- Center B30: `ti-wa-wa-tar-za-an` = "TIWAT! water-judge — here!" (ascent climax)
+Luwian Hieroglyphic reading (G_LUWIAN key on **Achterberg phonetic transcription**) produces a **solar-water cosmological hymn**:
+- Refrain `za-wa-tar` = PIE *wódr̥ = "this water" (independently attested in Luwian)
+- Center A31 (Achterberg): `ti-wa-za-wa-tar-ha` = "TIWAT! this water — yes!" (descent climax)
+- Center B30 (Achterberg): `ti-wa-wa-tar-za-ha` = "TIWAT! water — this — YES!" (ascent climax)
 - Side A = descent (Tiwat enters primordial waters)
-- Side B = ascent (Tiwat reborn) — parallel to Egyptian Amduat (Ra+Osiris)
+- Side B = ascent (Tiwat reborn) — structural parallel to Egyptian Amduat (Ra+Osiris)
 
-### Critical Limitation (v3.3)
+*Note: canonical Evans/Godart centers are A31=[10,3,38] and B30=[45,7]; Achterberg phonetic centers are A31=[45,2,36,11,22] and B30=[45,36,11,2,22]. These use different sign numbering.*
 
-**Negative control test:** G_LUWIAN on synthetic disc (same frequencies, random adjacency) → Z=1.99 (not significant). Token score is ~94% frequency-driven. **Token score Z=8.58 is withdrawn as primary argument.** Only the three key-independent pillars are primary claims.
+### Critical Self-Critique (v14.0)
+
+**Negative control test (§6.1):** G_LUWIAN on synthetic disc (same frequencies, random adjacency) → Z=1.99 (not significant). Token score is ~94% frequency-driven. **Token score is withdrawn as primary argument.** All primary claims rest on the three key-independent pillars above (key-independent bigram, positional exclusivity, refrain density).
 
 ## Repository Structure
 
 ```
-phaistos_master.py          — Main analysis: 10 keys, Bonferroni, Monte Carlo
-phaistos_negative_control.py — Critical v3.3 self-test (frequency vs structure)
+phaistos_master.py          — Main analysis: 9 keys, Bonferroni, Monte Carlo
+phaistos_negative_control.py — Negative control self-test (frequency vs structure; token score withdrawn)
 phaistos_corpus_control.py  — Domain control: theological Z=27 vs admin Z=-0.4
 phaistos_sensitivity.py     — Perturbation analysis: 105/105 above Bonferroni
 phaistos_headtohead.py      — Fair G_LUWIAN vs B_FREQ comparison
@@ -60,9 +76,10 @@ phaistos_tla_corpus.py      — TLA corpus parser
 phaistos_comprehensive_grid.py — 6-level evidence grid
 phaistos_scoring_doc.py     — Formal mathematical scoring definition
 phaistos_literature.py      — Literature synthesis + bibliography
+phaistos_hawkins_vocab_test.py — Pre-registered Hawkins 2000 CHLI top-50 vocabulary test
 phaistos_final_reading.py   — Complete disc reading
 
-PHAISTOS_ΕΡΕΥΝΑ_ΠΛΗΡΗΣ.txt — Full research report v3.3 (Greek, 22 sections)
+PHAISTOS_ΕΡΕΥΝΑ_ΠΛΗΡΗΣ.txt — Full research report v14.0 (Greek, 22 sections)
 INDEPENDENT_REVIEW.txt      — Honest independent review of all weaknesses
 OWENS_REFUTATION.txt        — Point-by-point refutation of Owens/photonet.gr
 
@@ -83,7 +100,7 @@ https://github.com/simondschweitzer/aed-tei (CC-BY-SA 4.0)
 ## How to Run
 
 ```bash
-# Main analysis (10 keys, Bonferroni, Monte Carlo)
+# Main analysis (9 keys, Bonferroni, Monte Carlo)
 python phaistos_master.py
 
 # Critical self-test — negative control

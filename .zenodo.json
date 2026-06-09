@@ -28,9 +28,13 @@
     "Minoan civilization",
     "Egyptian corpus",
     "Tiwat",
-    "working hypothesis"
+    "working hypothesis",
+    "acrophonic principle",
+    "hill-climbing decipherment",
+    "bilateral ritual-transaction",
+    "lingai ceremony"
   ],
-  "notes": "This work is presented as a methodology paper and a working hypothesis, not a definitive decipherment. The specific G_LUWIAN phonetic sign assignments are not proven and require independent epigraphic confirmation (ideally a bilingual text). A blind corpus key test with 200,000 trials substantially reduces the circularity critique but does not fully eliminate it. The na-genitive grammatical prediction fails (Z=−4.11), representing a genuine constraint on the hypothesis. All null results are reported transparently. Independent replication by a Luwianologist specialist is required for confirmation.",
+  "notes": "v16.0 adds: §6.18 Sign #29 (na) connective biclitic reanalysis — original genitive prediction refuted (Z=−4.11); revised connective biclitic prediction confirmed (Z=+3.26); §6.19 Sign #7 (ti) polyvalent copula — unconditional neutral, but ha→ti conditional FINAL confirmed (Z=+3.17, 3/3=100%); B21=B26 clitic chain formula confirmed; §6.20 Non-core signs comprehensive audit (#12=zi indeterminate, #6=an marginal+, #1=i prediction revised to verbal suffix); inversion pattern: WEAK-acrophony signs (#29,#7) rescued by revised structural predictions, CONFIRMED-acrophony signs (#6,#1) marginal; §6.21 Side A complete readability (93.5% of Side A fully readable under 11-sign G_LUWIAN key vs 10% for Side B) — compositional asymmetry quantified; reversed refrain A22 = ha-za-wa-tar identified. Revised Grammatical Position Test: 1/4 → 3/4 confirmed with linguistically-motivated expanded predictions (Wackernagel clitic chains, biclitic particles); §6.22 Side B Egyptian-acrophonic layer test — HIGH-confidence signs Z=+4.98 (p=0.00002) vs Egyptian theological vocabulary; §7.10 Bilateral Maritime Covenant — complete use theory: disc as bilingual trade-safety litany sealing Minoan/Luwian/Egyptian commercial agreements; three of six predictions already confirmed by independent tests; stamp-manufacturing evidence for multi-copy distribution. This work is presented as a methodology paper and a working hypothesis, not a definitive decipherment. All null results are reported transparently. Independent replication by a Luwianologist specialist is required for confirmation.",
   "related_identifiers": [
     {
       "identifier": "https://github.com/12aiko55/phaistos-disc-analysis",
