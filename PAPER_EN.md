@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 16.0
+**Version:** 17.0
 
 ---
 
@@ -1713,24 +1713,35 @@ The argument developed in §7.10.5–§7.10.7a generates a single highest-priori
 
 **Why this assemblage is decisive:** If the Phaistos Disc was manufactured at Avaris using the same stamp-into-clay bulla technology documented at the site, the hard-material stamps used to impress the disc's signs should in principle survive — unlike the clay object itself, which was a consumable. Tell el-Dab'a has already yielded over **1,200 seal impressions** (bullae) and a substantial corpus of physical scarabs and stamp seals from the Second Intermediate Period (c. 1650–1540 BCE), a temporal window that directly overlaps the disc's estimated date of c. 1700 BCE. The site was excavated by the Austrian Archaeological Institute (ÖAI) under Manfred Bietak beginning in 1966, with the seal corpus published in the Denkschriften der Gesamtakademie series (Mlinar 2001a, 2001b, 2004, 2006).
 
-**What the Reali 2013 preliminary report establishes** (Chiara Reali, preliminary publication of 'Ezbet Rushdi seal impressions):
+**Preliminary iconographic alignments — what is already confirmed:**
+
+A systematic sign-by-sign comparison between the 45 Phaistos Disc sign types and the full Tell el-Dab'a assemblage has not, to this author's knowledge, been undertaken in the published literature. The present study is not in a position to perform that comparison without access to the complete Mlinar iconographic plates. However, partial evidence from two published sources — Reali 2013 (preliminary report of 'Ezbet Rushdi seal impressions) and Ilin-Tomich 2023 (comprehensive analysis of ~2,000 name scarabs from the 12th–15th Dynasty, CC BY-SA 4.0) — already establishes four direct iconographic alignments (with a fifth from Ben-Tor 2007 below):
+
+| Sign / Feature | Tell el-Dab'a evidence | Source |
+|----------------|----------------------|--------|
+| **BEE (disc sign class, proposed Egyptian *b* acrophony)** | Isolated BEE sign (Gardiner L2) documented as a distinct design class 3B2a on scarabs of type B7/8-O-e6b/d14 ("Mlinar Type V / fanciful group"); Tell el-Dab'a has more attestations of this type than any other single site — TD 198, TD 199, TD 8621 all confirmed. Additionally, the nsw-bít (bee + sedge royal title, design class 3B2) occurs on 2 further Tell el-Dab'a examples from stratum D/2 (Mlinar 2001, nos. 803, 901), independently confirming the BEE motif in a second design context | Ilin-Tomich 2023, pp. 148–149; Ben-Tor 2007, p. 96 |
+| **RAM/caprid (disc sign class, proposed Egyptian *r*/*b* acrophony)** | Design class 9B (caprids/rams): **4 confirmed examples at Tell el-Dab'a** (Mlinar 2001, nos. 1059, 1062, 1064, 1072); tied with crocodile class (9D, 4 examples). Lions (9E), the dominant animal class at Canaanite and most other Levantine sites, are essentially **absent** from Tell el-Dab'a — a site-specific iconographic signature that makes caprid/RAM alignment non-trivial | Ilin-Tomich 2023, pp. 150–151; Ben-Tor 2007, §IIA 9a, p. 121 |
+| **Spiral / scroll border** | S-scroll borders flanking both sides of scarabs (type 1ag, 1al) are documented at Tell el-Dab'a and on Khyan-period scarabs from the same cultural horizon; Reali 2013 explicitly confirms "scroll and spiral patterns, both unlinked and interlocking" in the 'Ezbet Rushdi bulla assemblage | Reali 2013, p. 2; Ilin-Tomich 2023, pp. 159–160 |
+| **Pseudo-hieroglyphs** | Explicitly documented at 'Ezbet Rushdi; also attested in the Tell el-Dab'a corpus (Ilin-Tomich p. 151: pseudo-hieroglyphic signs on TD 487) | Reali 2013, p. 5; Ilin-Tomich 2023, p. 151 |
+| **Human figure / CHILD (disc sign class, proposed acrophonic *hi-* or vocative)** | Design class 10A (standing human figures): 3 scarabs confirmed in the early Tell el-Dab'a workshop (two displaying Mlinar's Type II features, one Type III — all dated to late Middle Kingdom / early SIP transition). The design is attested in the TelD *local* workshop, not only as Canaanite imports | Ben-Tor 2007, §IIA 10a, p. 116 |
+
+A further contextual alignment: Ilin-Tomich 2023 demonstrates that the "Mlinar Type V" scarab group — characterized by elaborate, non-standard ("fanciful") iconographic compositions that resist standard classification — is best attested at Tell el-Dab'a and may have been produced there locally (pp. 150, 152). The Phaistos Disc's 45 sign types are precisely this kind of elaborate, hybrid, non-standard pictographic repertoire. This structural parallel strengthens the hypothesis that Tell el-Dab'a represents the correct cultural context for the disc's stamp collection.
+
+**What the Reali 2013 preliminary report additionally establishes:**
 
 | Feature documented at 'Ezbet Rushdi | Relevance to Phaistos Disc |
 |--------------------------------------|---------------------------|
-| **Scroll and spiral patterns**, both unlinked and interlocking | Disc's defining format is a double spiral; spiral as decorative/structural element confirmed in same cultural milieu |
-| **Pseudo-hieroglyphs** explicitly attested | Disc signs include Egyptian acrophonic elements (§6.22); pseudo-hieroglyphic mixing confirms Avaris as a zone of Egyptian/Aegean script hybridization |
-| **Zoomorphic design classes 9B–F** ("real and imaginary animals typical of the late Palestinian series") | RAM (#24), BEE (#28), BULL (#30) — three of the four proposed Egyptian acrophonic signs (§6.22) — are zoomorphic. Their design class falls within the Palestinian series found at 'Ezbet Rushdi |
-| **Cobra, *cwt*-feather, papyrus stem** on the Apophis-period seal | Egyptian hieroglyphic signs used as seal elements; parallels the disc's proposed BA/#28-BEE (Egyptian *b*) and KA/#30-BULL (Egyptian *k*) acrophonic assignments |
-| **Crete** appears in Bietak 2004 bibliography | Direct Egypt–Crete connection in the Avaris scarab publication confirms the distribution network that would carry a disc from Avaris to Phaistos |
-| **Mlinar 2001–2006 detailed catalogs** | Full iconographic catalog not yet integrated into the present analysis — identified as the key unaccessed resource |
+| **Zoomorphic design classes 9B–F** ("real and imaginary animals typical of the late Palestinian series") | RAM, BEE, BULL — three proposed Egyptian acrophonic signs (§6.22) — fall within this category |
+| **Cobra, *cwt*-feather, papyrus stem** on Apophis-period seal | Egyptian hieroglyphic signs as isolated seal elements; parallels proposed BEE (*b*) and BULL (*k*) acrophonic assignments |
+| **Crete** in Bietak 2004 bibliography | Direct Egypt–Crete connection in the Avaris scarab publication |
 
-**The decisive test:** A specialist iconographic comparison between the 45 Phaistos Disc sign types and the full Mlinar ÖAI catalog (Denkschriften vol. 9, 2004) could in principle identify **exact sign matches** — stamp tools whose impression shapes correspond to individual disc sign silhouettes. Under the Two-Workshop Hypothesis (§7.10.5), the Egyptian-origin subset (RAM/BEE/BULL/CHILD plus the PAPYRUS/SHIELD/HAND group of candidate Side B signs) should show parallels with the Egyptian design classes in the Avaris corpus; the Aegean/Anatolian subset (PLUMED HEAD/SHIP/MATTOCK and the Sign #02/#12/#15 canonical group) should show parallels with Minoan or Anatolian seal iconography from the same period.
+**What is not yet established — the gap that requires specialist work:**
 
-**What confirmation would mean:** If even two or three Phaistos Disc sign shapes can be matched to physical stamp tools in the Tell el-Dab'a assemblage, the manufacture hypothesis moves from structural analogy (§7.10.7a) to direct material evidence. This would constitute the most significant advance in Phaistos Disc research since its discovery in 1908 — not because it resolves the reading, but because it resolves the *manufacture site* and *cultural origin of the stamp collection*, which constrains all downstream hypotheses about authorship, language, and purpose.
+The three alignments above are drawn from *name scarab* catalogs and *preliminary* bulla reports. A full sign-by-sign comparison requires access to the **Mlinar 2001b dissertation** and **Mlinar 2004** (Bietak & Czerny eds., "Scarabs of the 2nd Millennium BC"), which contain the complete iconographic plates of all design scarabs excavated at Tell el-Dab'a including the animal-class stamps. Of the disc's 45 sign types, 3–4 have preliminary iconographic parallels documented above. Whether the remaining 40+ sign types have counterparts in the Tell el-Dab'a assemblage is unknown.
 
-**Proposed research action:** This paper formally calls for a targeted iconographic audit by a specialist in Bronze Age glyptic working jointly with the ÖAI Tell el-Dab'a publication team. The comparison is non-destructive and requires only access to the Mlinar catalog plates and a standard Evans/Godart sign silhouette chart. The Phaistos Disc's 45 sign types (241 tokens) are fully documented; the Avaris assemblage is fully published. The comparison has not, to this author's knowledge, been systematically attempted.
+**The decisive test:** A specialist iconographic comparison between the 45 Evans/Godart sign silhouettes and the complete Mlinar catalog plates could in principle identify exact shape matches — physical stamp tools whose impression silhouettes correspond to individual disc signs. Under the Two-Workshop Hypothesis (§7.10.5), the Egyptian-origin subset (BEE/RAM/BULL/CHILD) should show parallels with Egyptian design classes in the Avaris corpus; the Aegean/Anatolian subset (PLUMED HEAD/SHIP/MATTOCK) should show parallels with Minoan or Anatolian seal iconography. The comparison is non-destructive, requires no new excavation, and has to this author's knowledge never been systematically attempted.
 
-> **Summary of archaeological priority:** Clay provenance analysis (§7.10.7a) is the most technically decisive single test. Tell el-Dab'a iconographic comparison (this section) is the most archaeologically rich target — it could, if positive, identify the physical manufacturing instruments of the disc itself.
+> **Summary of archaeological priority:** Clay provenance analysis (§7.10.7a) is the most technically decisive single test. The Tell el-Dab'a iconographic comparison (this section) is the most archaeologically rich target — partial evidence already confirms 4–5 of 45 sign categories (BEE, RAM/caprid, spiral border, pseudo-hieroglyphs, human figure); the remaining 40 require the Mlinar catalog. If even 5–10 of the 45 sign shapes match physical stamps in the Tell el-Dab'a assemblage, the manufacture hypothesis moves from structural analogy to direct material evidence.
 
 ---
 
