@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 17.0
+**Version:** 19.0
 
 ---
 
@@ -19,7 +19,11 @@ The Luwian Hieroglyphic key (G_LUWIAN), scored on the Achterberg phonetic transc
 
 A **working historical hypothesis** proposes a Minoan scribe trained in Luwian at Milawata (Miletus) — the documented Minoan–Anatolian contact zone ca. 1700 BCE — as one plausible authorship model; alternative models are not excluded. The **Polyvalent Sealing Hypothesis** (§7.8) — that the disc was designed to function within Luwian, Minoan, and Egyptian frameworks simultaneously — is presented as a **speculative hypothesis** requiring independent specialist validation. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence. All code and data are released open-source for independent replication.
 
-**Keywords:** Phaistos Disc, undeciphered scripts, computational linguistics, Luwian hieroglyphics, Monte Carlo simulation, Bonferroni correction, Bronze Age Aegean, ritual text analysis, Minoan-Luwian bilingualism, Milawata scribal contact zone
+A **Decipherment Arena** framework (§7.11) is introduced as an open benchmark: any proposed phonetic key for the Phaistos Disc — past or future — can be submitted as a Python sign-to-syllable mapping and scored against all three reference corpora under identical conditions. The framework provides a minimum standard for field-wide key evaluation independent of the G_LUWIAN result. A key that does not outperform the J_NULL random baseline under this framework provides no statistical evidence for its language identification.
+
+A **Multi-Language Computational Arena** (§6.23) extends the framework to 7 full language corpora (Luwian/Hittite, Linear B, Akkadian, Egyptian, Sumerian, Late Babylonian, Ugaritic; 85k–438k tokens each) and 28 hybrid language entities (21 pairs + 7 triples), evaluated across four independent judges: MCTS vocabulary matching, MDL bigram compression, and Expected Information Gain — 35 language hypotheses in total. All 35 pass significance (Z>+13, p<0.000001). Late Babylonian achieves the most consistent cross-judge performance (avg rank 4.8/7). The highest-scoring hybrid is **Anatolio-Babylonian** (Luwian/Hittite + Late Babylonian, Z=+27.04) — the phonological profile characteristic of Bronze Age Kizzuwatna (Cilicia) — outperforming all 7 pure languages after vocabulary-size normalization. This result is compatible with a Luwian scribal tradition under strong Mesopotamian phonological influence.
+
+**Keywords:** Phaistos Disc, undeciphered scripts, computational linguistics, Luwian hieroglyphics, Monte Carlo simulation, Bonferroni correction, Bronze Age Aegean, ritual text analysis, Minoan-Luwian bilingualism, Milawata scribal contact zone, decipherment benchmark, open evaluation framework, multi-language arena, hybrid phonotactics, Kizzuwatna, Late Babylonian, MCTS optimization
 
 ---
 
@@ -1207,6 +1211,162 @@ This sequence (Ka confirmation → royal seal → primordial emergence → Ba re
 
 ---
 
+### 6.23 Multi-Language Computational Arena (Master Analysis)
+
+A comprehensive four-judge framework was applied across 7 pure languages and 28 hybrid language entities (21 pairs + 7 triples), totalling 35 competing hypotheses, all evaluated under identical conditions against the same disc data. Code: `phaistos_master.py`. Runtime: 24.4 minutes on an 11-worker machine (AMD/Intel, Python multiprocessing).
+
+**Corpora:**
+
+| Language | Source | Tokens |
+|---|---|---|
+| Luwian/Hittite | TLHdig v0.2.0-beta (Rieken et al. 2025), 500 XML files | 85,361 |
+| Linear B | DĀMOS Linear B corpus (Oslo), words.csv | 8,163 |
+| Akkadian | SAAO + RINAP + RIBO gloss files (ORACC), cf-field extraction | 14,951 |
+| Egyptian | AED-TEI (bbawpyramidentexte + sawlit + bbawtotenlit) | 438,362 |
+| Sumerian | ETCSRI cuneiform (ORACC), CDL P/Q JSON | 27,316 |
+| Late Babylonian | HBTIN (Hellenistic Babylonia: Texts, Iconography, Names), akk-x-ltebab | 135,754 |
+| Ugaritic | CUC auto-parsing TSV files | 35,515 |
+
+**Vocabulary normalization (key methodological control):** Every entity — pure or hybrid — receives exactly 200 bigrams. For a hybrid, the raw syllable lists of all parent languages are concatenated and the top-200 most-frequent bigrams of the merged corpus are taken. This eliminates the vocabulary-size advantage that raw union would confer on larger hybrids.
+
+**MCTS+Hill-Climb optimizer:** UCB1-guided sign–phoneme assignment over N=9 signs, followed by 500-step hill-climb refinement. Scores the fraction of disc word-groups whose phonetic bigrams match the language's top-200 bigram set.
+
+#### 6.23.1 Pure Language Arena
+
+10,000 Monte Carlo null samples + 2,000 MCTS simulations per language, vocab=200 bigrams.
+
+| Rank | Language | MCTS opt | Null μ | σ | Z | p |
+|---|---|---|---|---|---|---|
+| 1 | Egyptian | 40 | 0.79 | 1.59 | +24.71 | <0.000001 |
+| 2 | Late Babylonian | 35 | 0.73 | 1.41 | +24.27 | <0.000001 |
+| 3 | Sumerian | 31 | 0.73 | 1.38 | +21.95 | <0.000001 |
+| 4 | Luwian/Hittite | 35 | 0.82 | 1.57 | +21.71 | <0.000001 |
+| 5 | Linear B | 37 | 0.94 | 1.70 | +21.26 | <0.000001 |
+| 6 | Ugaritic | 29 | 1.12 | 1.43 | +19.48 | <0.000001 |
+| 7 | Akkadian | 14 | 0.64 | 1.01 | +13.29 | <0.000001 |
+
+All seven languages pass at p<0.000001. The Z-score range (13–25) demonstrates real discriminating power: the disc is not equally compatible with all Bronze Age phonologies. Akkadian's lower Z reflects its smaller corpus (14,951 tokens) producing sparser bigram coverage; its MDL rank (§6.23.3) is higher, suggesting structural affinity that the corpus size masks at the vocabulary level.
+
+#### 6.23.2 Hybrid Arena (Normalized vocab=200)
+
+5,000 null samples + 1,000 MCTS simulations per entity.
+
+| Rank | Name | Parents | MCTS opt | Null μ | σ | Z |
+|---|---|---|---|---|---|---|
+| 1 | **Anatolio-Babylonian** | Luwian/Hittite + Late Babylonian | 39 | 0.73 | 1.42 | **+27.04** |
+| 2 | Classic Babylonian | Sumerian + Late Babylonian | 39 | 0.73 | 1.44 | +26.60 |
+| 3 | Mesopotamian Continuum | Akkadian + Sumerian + Late Babylonian | 38 | 0.73 | 1.41 | +26.38 |
+| 4 | Eastern Mediterranean | Luwian/Hittite + Linear B + Egyptian | 38 | 0.73 | 1.44 | +25.82 |
+| 5 | Aegean-Sumerian | Linear B + Sumerian | 35 | 0.62 | 1.33 | +25.81 |
+| 6 | Late Babylonian *(pure)* | — | 37 | 0.73 | 1.41 | +25.80 |
+| 7 | Sumer-Levantine | Sumerian + Ugaritic | 31 | 0.70 | 1.18 | +25.74 |
+| 8 | Akkadian Dialects | Akkadian + Late Babylonian | 36 | 0.72 | 1.41 | +25.04 |
+| 9 | Levanto-Babylonian | Late Babylonian + Ugaritic | 36 | 0.78 | 1.44 | +24.53 |
+| 10 | Sumerian *(pure)* | — | 34 | 0.73 | 1.37 | +24.30 |
+| 11 | Egypto-Akkadian | Egyptian + Akkadian | 39 | 0.78 | 1.58 | +24.23 |
+| 12 | Levantine Sea Peoples | Linear B + Egyptian + Ugaritic | 39 | 0.80 | 1.59 | +24.04 |
+| 13 | Egypto-Babylonian | Egyptian + Late Babylonian | 34 | 0.76 | 1.39 | +23.87 |
+| 14 | Mitanni Court | Akkadian + Egyptian + Ugaritic | 39 | 0.80 | 1.60 | +23.86 |
+| 15 | Aegean-Egyptian | Linear B + Egyptian | 38 | 0.78 | 1.57 | +23.65 |
+| 16 | Egyptian *(pure)* | — | 38 | 0.78 | 1.58 | +23.60 |
+| 17 | Anatolio-Akkadian | Luwian/Hittite + Akkadian | 37 | 0.81 | 1.55 | +23.31 |
+| 18 | Egypto-Sumerian | Egyptian + Sumerian | 37 | 0.77 | 1.56 | +23.22 |
+| 19 | Aegean-Akkadian | Linear B + Akkadian | 37 | 0.87 | 1.56 | +23.15 |
+| 20 | Aegean-Babylonian | Linear B + Late Babylonian | 34 | 0.73 | 1.44 | +23.07 |
+
+Complete table (35 entities):
+
+| Rank | Name | Type | Z |
+|---|---|---|---|
+| 21 | Anatolio-Egyptian | pair | +23.06 |
+| 22 | Levanto-Anatolian | pair | +23.02 |
+| 23 | Egypto-Levantine | pair | +22.61 |
+| 24 | Anatolio-Sumerian | pair | +22.54 |
+| 25 | West Asiatic | triple | +22.28 |
+| 26 | Sumero-Akkadian | pair | +22.16 |
+| 27 | Levanto-Akkadian | pair | +22.14 |
+| 28 | Anatolian Scribal Mix | triple | +22.09 |
+| 29 | Luwian/Hittite *(pure)* | pure | +21.75 |
+| 30 | Aegean Trade Lingua | pair | +21.65 |
+| 31 | Aegeo-Anatolian | pair | +21.29 |
+| 32 | Linear B *(pure)* | pure | +21.24 |
+| 33 | Bronze Age Koine | triple | +21.09 |
+| 34 | Ugaritic *(pure)* | pure | +19.46 |
+| 35 | Akkadian *(pure)* | pure | +17.22 |
+
+All 35 entities pass significance (minimum Z=+17.22 for Akkadian). Every pure language is outperformed by at least one hybrid partner, confirming that the disc's phonotactic bigram space is not fully captured by any single attested Bronze Age language.
+
+**Key structural observation:** Late Babylonian appears as a parent or member in 4 of the top 5 configurations (Anatolio-Babylonian #1, Classic Babylonian #2, Mesopotamian Continuum #3, and Late Babylonian pure #6). The disc's top-performing phonotactics consistently include Babylonian syllable-pair patterns.
+
+#### 6.23.3 MDL Judge (Bigram Language Model)
+
+Score = negative log-probability of the disc's phonetic sequences under a bigram LM P(s₂|s₁) built from each language corpus, with add-ε smoothing. Higher (less negative) = better compression = greater phonotactic affinity with the language's bigram transitions. 10,000 null samples, 2,000 optimization steps per language.
+
+| Rank | Language | MDL opt | Null μ | σ | Z |
+|---|---|---|---|---|---|
+| 1 | Egyptian | −43.2 | −377.2 | 127.0 | +2.63 |
+| 2 | Luwian/Hittite | −45.0 | −353.1 | 121.0 | +2.55 |
+| 3 | Akkadian | −79.7 | −626.2 | 216.8 | +2.52 |
+| 4 | Ugaritic | −49.4 | −510.2 | 196.4 | +2.35 |
+| 5 | Linear B | −43.2 | −363.6 | 137.6 | +2.33 |
+| 6 | Sumerian | −46.2 | −437.0 | 170.4 | +2.29 |
+| 7 | Late Babylonian | −40.6 | −468.4 | 191.5 | +2.23 |
+
+All seven pass Z>2. Z-scores cluster tightly (range: 2.23–2.63) because disc words are short (~3 signs on average), limiting the number of bigram transitions available per word. The MDL ranking notably diverges from the Arena ranking for two languages: (a) **Akkadian** rises from Arena rank 7 to MDL rank 3 — its bigram *transitions* fit the disc's phonotactics well despite its small corpus, suggesting structural phonotactic affinity that vocabulary-level coverage cannot express; (b) **Late Babylonian** drops from Arena rank 2 to MDL rank 7 — its vocabulary coverage is broad, but its specific bigram *transitions* are less distinctive on short disc words.
+
+#### 6.23.4 IG Judge (Expected Information Gain)
+
+E[IG] computed as the average information gain over 20,000 random key assignments. The "language pull" (avg posterior) measures how often a random key assigns the highest score to each language — i.e., how distinctively a language's vocabulary attracts sign assignments.
+
+- H(prior) = 2.807 bits (7 languages, uniform prior)
+- E[IG] = 0.1495 bits = **5.3% of prior entropy**
+
+| Rank | Language | Avg Posterior (pull) |
+|---|---|---|
+| 1 | **Ugaritic** | 0.1702 |
+| 2 | Akkadian | 0.1539 |
+| 3 | Sumerian | 0.1361 |
+| 4 | Late Babylonian | 0.1354 |
+| 5 | Luwian/Hittite | 0.1353 |
+| 6 | Egyptian | 0.1347 |
+| 7 | Linear B | 0.1343 |
+
+The IG winner (Ugaritic, pull=0.1702) diverges from the Arena winner (Egyptian). The IG judge measures *exclusive pull* — how non-overlapping a language's vocabulary is with competitors. Ugaritic contains unusual consonant clusters (ġ, ṭ, ṣ, ẓ, ʿ) that produce distinctive bigrams; when a random key happens to match these, Ugaritic wins the posterior strongly. The MCTS optimizer, however, cannot reliably *find* such keys in 2,000 simulations, explaining the Arena/IG divergence. E[IG]=5.3% of prior entropy indicates genuine but modest discrimination — the disc is not maximally ambiguous across languages, but no single language dominates under random assignment.
+
+#### 6.23.5 Master Scoreboard
+
+Average rank across the four judges. Arena rank = position in §6.23.1 (pure languages only, 1–7); Hybrid rank = position of the pure language in the full 35-entity §6.23.2 table.
+
+| Language | Arena rank | Hybrid rank | MDL rank | IG rank | **Avg rank** |
+|---|---|---|---|---|---|
+| **Late Babylonian** | 2 | 6 | 7 | 4 | **4.8** |
+| **Sumerian** | 3 | 10 | 6 | 3 | **5.5** |
+| **Egyptian** | 1 | 16 | 1 | 6 | **6.0** |
+| Luwian/Hittite | 4 | 29 | 2 | 5 | 10.0 |
+| Ugaritic | 6 | 34 | 4 | 1 | 11.2 |
+| Akkadian | 7 | 35 | 3 | 2 | 11.8 |
+| Linear B | 5 | 32 | 5 | 7 | 12.2 |
+
+Late Babylonian is the most consistent performer: it is never ranked below 7th on any single judge and never below 6th in any hybrid configuration. Consistency across four methodologically independent judges — MCTS vocabulary matching, bigram language model compression, probabilistic information gain — is a stronger signal of genuine phonotactic affinity than winning any single judge.
+
+#### 6.23.6 Scientific Interpretation
+
+**Finding 1 — Normalization confirms genuine hybrid advantage.** Before the vocabulary normalization fix, hybrids had 383–598 bigrams vs. 200 for pure languages, creating an artificial size advantage. After normalization (top-200 bigrams from the merged corpus for all entities), hybrids still outperform pure languages by ~1–2σ. This residual advantage is real: the disc's bigram distribution is not fully captured by any single language's top-200 phonotactic patterns. The disc's phonotactics appear to draw on more than one language family's syllable-pair space.
+
+**Finding 2 — Anatolio-Babylonian (#1, Z=+27.04) and the Kizzuwatna hypothesis.** The merger of Luwian/Hittite and Late Babylonian phonotactics produces the highest score of all 35 configurations. This is precisely the phonological profile expected from **Kizzuwatna** — the Late Bronze Age kingdom of southeast Anatolia (Cilicia, ca. 1650–1200 BCE) where Luwian-speaking populations absorbed Mesopotamian and Hurrian scribal culture. Kizzuwatna was the documented cultural intermediary zone for Anatolian-Babylonian exchange and produced bilingual ritual texts in both Luwian and Akkadian. The result does not prove Kizzuwatna origin; it establishes that a Luwian-Babylonian mixed phonology outperforms all pure and all other hybrid configurations on the disc's bigram patterns.
+
+**Finding 3 — Late Babylonian's consensus dominance.** Egyptian wins two individual judges (Arena, MDL) but Late Babylonian wins the master scoreboard (avg rank 4.8 vs. Egyptian's 6.0). The difference reflects Late Babylonian's stability across all four judges rather than dominance on any single metric. Late Babylonian's 135,754-token corpus (Hellenistic cuneiform, akk-x-ltebab) provides dense, reliable bigram coverage; its top-200 bigrams reflect open-CV syllable structure that matches the disc's sign sequences — which are also predominantly open-CV (most Minoan/Aegean scripts encode CVC as CV+V, producing adjacent open syllables).
+
+**Finding 4 — MDL/Arena divergence for Akkadian (ranks 7→3).** Akkadian ranks last in the Arena (small corpus → sparse vocabulary coverage) but 3rd in the MDL judge. This divergence indicates that Akkadian's bigram *transition patterns* match the disc's phonotactics well at the structural level, even though its corpus is too small to provide vocabulary-level word coverage. This is a falsifiable prediction: a larger Akkadian corpus (e.g., full CDLI download) should substantially improve its Arena ranking while leaving its MDL rank approximately stable.
+
+**Finding 5 — IG/Arena divergence for Ugaritic (ranks 1 vs. 6).** Ugaritic wins the IG judge but ranks 6th in the Arena. This is consistent with a language whose vocabulary contains structurally exclusive sign combinations — hard for the optimizer to find, but statistically unmistakable when encountered by random sampling. From a Bayesian perspective, Ugaritic is the language that would most surprise you if the disc turned out not to be Ugaritic; it is the "dark horse" hypothesis most strongly excluded by the prior but most dramatically supported by a well-targeted key.
+
+**Finding 6 — The disc passes all 35 language tests (minimum Z=+17.22).** No language family is categorically incompatible with the disc at the bigram level. This is a feature of the disc's short words (~3 signs) and limited alphabet (45 signs): any sufficiently rich Bronze Age corpus can be fit to some degree by an optimized key. The Arena tests phonotactic affinity, not language identity. A language achieving Z=+20 is more compatible with the disc's phonotactics than a language achieving Z=+15 — but neither constitutes a decipherment claim.
+
+**Caveat — what these results do not show.** The MCTS+Hill-Climb optimizer scores the fraction of disc word-groups whose transliterated bigrams appear in the language's vocabulary. It does not test grammatical correctness, semantic coherence, or phonological plausibility of the assigned readings. High Z-scores reflect phonotactic compatibility; they are necessary but not sufficient evidence for language identification. Independent validation — matching specific disc word-groups to attested vocabulary items with etymological support — remains the required follow-up step, as demonstrated for the G_LUWIAN key by the blind corpus test (§6.7), TLHdig self-validation (§6.6), and wa-tar ablation study (§6.8).
+
+---
+
 ## 7. Discussion
 
 ### 7.1 Primary Interpretation: G_LUWIAN Phonetic Reading (Achterberg Transcription)
@@ -1742,6 +1902,70 @@ The three alignments above are drawn from *name scarab* catalogs and *preliminar
 **The decisive test:** A specialist iconographic comparison between the 45 Evans/Godart sign silhouettes and the complete Mlinar catalog plates could in principle identify exact shape matches — physical stamp tools whose impression silhouettes correspond to individual disc signs. Under the Two-Workshop Hypothesis (§7.10.5), the Egyptian-origin subset (BEE/RAM/BULL/CHILD) should show parallels with Egyptian design classes in the Avaris corpus; the Aegean/Anatolian subset (PLUMED HEAD/SHIP/MATTOCK) should show parallels with Minoan or Anatolian seal iconography. The comparison is non-destructive, requires no new excavation, and has to this author's knowledge never been systematically attempted.
 
 > **Summary of archaeological priority:** Clay provenance analysis (§7.10.7a) is the most technically decisive single test. The Tell el-Dab'a iconographic comparison (this section) is the most archaeologically rich target — partial evidence already confirms 4–5 of 45 sign categories (BEE, RAM/caprid, spiral border, pseudo-hieroglyphs, human figure); the remaining 40 require the Mlinar catalog. If even 5–10 of the 45 sign shapes match physical stamps in the Tell el-Dab'a assemblage, the manufacture hypothesis moves from structural analogy to direct material evidence.
+
+---
+
+## 7.11 Decipherment Arena: An Open Benchmark for Undeciphered Scripts
+
+### 7.11.1 The Core Problem in Phaistos Disc Scholarship
+
+The field has no shared standard for evaluating competing phonetic keys. Every proposed decipherment operates under its own criteria, its own reference material, and its own definition of "success." The result is that no hypothesis can be fairly compared to any other. A researcher proposing a Minoan key and a researcher proposing a Hittite key are not competing on the same playing field — they are playing different games.
+
+This is not a criticism of individual researchers. It is a structural problem: the field has never agreed on what a valid decipherment test looks like.
+
+### 7.11.2 What This Study Contributes Beyond G_LUWIAN
+
+The primary contribution of this paper is not the result that G_LUWIAN scores highest. That result depends on sign assignments that remain unproven (§8, Limitation 2) and may be overturned by a better-informed Luwianologist or by new archaeological evidence.
+
+The primary contribution is the **framework itself**: a reproducible, objective scoring system applicable to *any* proposed phonetic key for any undeciphered script where a reference corpus exists.
+
+Specifically, the framework provides:
+
+1. **A fixed target corpus** for each reference language (Luwian Hieroglyphic vocabulary, Linear A frequency tables, AED-TEI Egyptian corpus)
+2. **A fixed scoring function** (token-level corpus match with Bonferroni-corrected Monte Carlo significance testing)
+3. **A fixed null distribution** (J_NULL random key as lower bound; Zipfian permutation test as upper bound for frequency-only explanations)
+4. **A fixed dataset** (Evans/Godart canonical, 241 tokens, 61 word-groups — publicly available and non-controversial)
+5. **Open source code** (all scripts released at github.com/12aiko55/phaistos-disc-analysis; reproducible in full)
+
+Any researcher who proposes a new phonetic key — Minoan, proto-Greek, Phoenician, Eteocretan, or any future candidate — can submit it to this framework and receive a Bonferroni-corrected score against all three reference corpora. The score is objective: it does not require the researcher's interpretation of what the disc "means," only the sign-to-syllable mappings they propose.
+
+### 7.11.3 Why This Is Novel
+
+To this author's knowledge, no standardized, open-source benchmark framework exists for any undeciphered script. The closest analogue is the comparative structural analysis in §7.9 (Universal Uniqueness Test), but that test evaluates the disc's structural profile, not individual phonetic keys.
+
+The **Decipherment Arena** concept — a shared evaluation platform where competing keys are ranked under identical conditions — fills a gap that has existed for over a century of Phaistos Disc scholarship. It transforms the question from *"whose reading sounds most convincing?"* to *"which mapping produces the most non-random overlap with attested language corpora?"*
+
+This does not resolve the decipherment. It establishes a minimum bar for any future claim to be taken seriously: a proposed key that does not outperform the J_NULL random baseline under this framework provides no statistical evidence for its language identification, regardless of its semantic plausibility.
+
+### 7.11.4 How to Submit a Key
+
+A candidate key is a mapping from the 45 Evans/Godart sign numbers to phonetic values (syllables, consonants, or morpheme labels). Partial keys — covering only a subset of the 45 signs — are acceptable; the framework scores only the signs that have assignments. The minimum viable submission is a Python dictionary of the form:
+
+```python
+MY_KEY = {
+    2:  "za",   # PLUMED HEAD = demonstrative 'za'
+    12: "wa",   # SHIELD = syllable 'wa'
+    # ... remaining assignments
+}
+```
+
+The complete scoring pipeline (`phaistos_convergence_test.py`, `compute_reference_metrics.py`) takes this dictionary as input and returns a Z-score against each reference corpus with Bonferroni correction for the number of keys tested. All code is documented for independent use.
+
+### 7.11.5 What the Arena Cannot Prove
+
+The Decipherment Arena is a ranking tool, not a proof tool. A high score demonstrates that a key produces non-random overlap with a reference corpus. It does not prove:
+
+- That the phonetic assignments are correct
+- That the disc is written in the reference language
+- That the scored vocabulary items represent the disc's actual content
+
+The arena is a filter: it identifies which hypotheses are statistically worth investigating further. It eliminates hypotheses that perform at or below chance. It does not crown a winner.
+
+The decisive test remains what it has always been: a bilingual text, or independent convergence by a specialist who derives the same assignments from first principles without knowledge of any prior key.
+
+### 7.11.6 Long-Term Vision
+
+If adopted by the broader field, the Decipherment Arena could serve as the standard evaluation tool for any future undeciphered script where reference corpora become available — Linear A, Proto-Elamite, Rongorongo, or others. The framework is language-agnostic: it requires only a candidate phonetic key, a reference corpus, and a fixed scoring function. The Phaistos Disc implementation is the first instantiation of this approach.
 
 ---
 

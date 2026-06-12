@@ -1,710 +1,646 @@
 """
-phaistos_master.py  —  ΠΛΗΡΗΣ ΕΠΙΣΤΗΜΟΝΙΚΟΣ ΕΛΕΓΧΟΣ
-======================================================
-Keys F–J  +  Bonferroni Correction  +  Monte Carlo  +  Shannon Entropy
+phaistos_master.py
+══════════════════════════════════════════════════════════════════════════════
+MASTER RUNNER — Arena + Hybrid Arena + MDL + IG  (one script)
+Chavadakis 2026
 
-KEY F: Κυπριακό Συλλαβολόγιο  (Cypriot → Cypro-Minoan → Linear A → Phaistos)
-KEY G: Λουβικά Ιερογλυφικά    (Anatolian neighbor, same era)
-KEY H: Consonantal Abjad       (Semitic/Afroasiatic — consonants only)
-KEY I: Linear A Morphological  (Επιβεβαιωμένα prefixes/suffixes)
-KEY J: Monte Carlo Null        (10,000 shuffled keys — Bonferroni control)
+  §1  Build corpora (once, shared across all judges)
+  §2  Arena          — MCTS, 7 pure languages, vocab=200 each
+  §3  Hybrid Arena   — 7 pure + 21 pairs + 7 triples, NORMALIZED vocab=200
+  §4  MDL Judge      — Bigram LM compression score
+  §5  IG Judge       — Expected information gain over 20k keys
+  §6  Master scoreboard
 
-Σύγκριση με Keys A–E (από προηγούμενα runs).
-Bonferroni-corrected threshold: p < 0.005 (10 keys, α=0.05)
+NORMALIZATION (key fix):
+  Every entity (pure AND hybrid) gets exactly 200 bigrams.
+  Hybrid corpus = concatenated raw syllables of both parents → top-200.
+  Eliminates the vocabulary-size advantage hybrids had before.
+
+python phaistos_master.py
 """
 
-import sys, random, math, re
-from collections import Counter
+import json, re, csv, zipfile, sys, time
+import numpy as np
+from pathlib import Path
+from collections import Counter, defaultdict
+from itertools import combinations
+from math import log, log2, sqrt
+import multiprocessing as mp
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
+
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-SEP  = "=" * 76
-SEP2 = "─" * 76
-N_MC = 10_000   # Monte Carlo trials for KEY J
-ALPHA = 0.05
-N_KEYS = 10     # Keys A–J
-BONFERRONI_THRESHOLD = ALPHA / N_KEYS   # = 0.005
+SEP  = "═" * 70
+SEP2 = "─" * 70
+VOCAB_SIZE = 200
+N_ASSIGN   = 9
+T_IG       = 1.0
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PHAISTOS DISC
+# §0  DISC DATA
 # ══════════════════════════════════════════════════════════════════════════════
-SIDE_A = [
-    [2,12,7,1,29],   [2,6,25,6,22],   [1,7,29,3,22],   [29,6,2,7,22],
-    [36,2,12,7],     [2,36,12,11,22], [2,29,7,22],     [29,2,7,36,22,11],
-    [2,12,7,36],     [29,7,22,2],     [12,2,36,7,22],  [2,7,29,36,22],
-    [7,22,2,36,12],  [2,29,36,11],    [29,7,22,36],    [2,36,7,11,22],
-    [29,2,22,7],     [36,7,22,2,11],  [2,7,36,22],     [29,36,2,7,11,22],
-    [7,2,36,29],     [22,2,36,11],    [29,7,36,2,22],  [2,7,22,29],
-    [36,29,2,22,7],  [2,11,36],       [7,22,36,2],     [29,2,36],
-    [2,7,22,36,11],  [36,2,11],       [45,2,36,11,22],
-]
-SIDE_B = [
-    [2,12,36,6,11],      [2,12,7,2,11],    [24,2,36,11,29],
-    [2,29,22,36,12,11],  [2,36,11],        [2,1,12,36,11],
-    [29,2,22,11],        [2,36,29,22,11,29],[2,29,12,2,11],
-    [36,11,29,2,33],     [2,22,36,12],     [29,36,11,2,22,12],
-    [2,36,11,45],        [22,2,36,11,44],  [2,29,36,12,11],
-    [29,2,12,36],        [2,2,36,12,11,29],[36,45,11,2],
-    [2,12,36,11],        [29,2,36,11,22],  [2,36,12,29,11],
-    [36,2,11,29],        [2,29,36,11,24],  [12,36,2,11],
-    [2,36,29,11,22],     [29,36,2,11],     [2,11,36,22,29],
-    [36,11,2,29],        [2,36,11,29,22],  [45,36,11,2,22],
-]
+DATA_PATH = Path("hp4k1h5_phaistos_disc/src/phaistos_disc/data/phaistos-disc_outside-in.json")
+with open(DATA_PATH, encoding="utf-8") as f:
+    _raw = json.load(f)
+
+SIDE_A    = [[int(s) for s in w if s != "??"] for w in _raw["side_a"]]
+SIDE_B    = [[int(s) for s in w if s != "??"] for w in _raw["side_b"]]
 ALL_WORDS = SIDE_A + SIDE_B
-SIGN_FREQ_ORDER = [2,36,11,29,22,7,12,6,45,1,24,25,33,44,3]
-ALL_SIGNS = [s for w in ALL_WORDS for s in w]
-SIGN_COUNTS = Counter(ALL_SIGNS)
-N_SIGNS = len(ALL_SIGNS)
-N_WORDS = len(ALL_WORDS)
+ALL_SIGNS = sorted(set(s for w in ALL_WORDS for s in w if s != 46))
 
 # ══════════════════════════════════════════════════════════════════════════════
-# VOCABULARY DATABASES
+# §1  CORPUS HELPERS
 # ══════════════════════════════════════════════════════════════════════════════
+def _gdl_syls(gdl):
+    out = []
+    for g in gdl:
+        if g.get("det"): continue
+        v = g.get("v", "")
+        if v:
+            c = re.sub(r'[₀₁₂₃₄₅₆₇₈₉\d]', '', str(v))
+            c = re.sub(r'[^a-zāīūšḫṭqḥŋ]', '', c.lower())
+            if c and 1 <= len(c) <= 6: out.append(c)
+        if "seq" in g: out.extend(_gdl_syls(g["seq"]))
+    return out
 
-# Linear A confirmed sequences
-LINEAR_A = {
-    "a-sa-sa-ra":    "Asasara — κύρια Μινωική θεά (17×)",
-    "a-sa-sa-ra-me": "Asasara + κατάληξη -me",
-    "ku-ro":         "σύνολο (accounting — ΕΠΙΒΕΒΑΙΩΜΕΝΟ)",
-    "ki-ro":         "παρόμοιο με ku-ro",
-    "a-du":          "άγνωστο, συχνό",
-    "da-du-mi-ne":   "άγνωστο",
-    "su-ki-ri-te-ja":"θρησκευτικός όρος",
-    "i-da-ma-te":    "Ίδα-Μήτηρ?",
-    "pa-ja-re":      "άγνωστο",
-    "ja-sa-sa-ra":   "παραλλαγή asasara",
-    "a-mi-da-o":     "κύριο όνομα",
-    "na-da-re":      "άγνωστο",
-    "mi-nu-te":      "Μίνωτης?",
-    "a-ra-na-re":    "άγνωστο",
-    "ku-pa-nu":      "άγνωστο",
-    "a-ti-mi-te":    "Άρτεμις proto-form?",
-    "si-ru-te":      "θρησκευτικό",
-    "wa-ja":         "συχνό, άγνωστο",
-}
+def _walk_cdl(obj, lp, out):
+    if isinstance(obj, list):
+        for x in obj: _walk_cdl(x, lp, out)
+    elif isinstance(obj, dict):
+        if obj.get("node") == "l" and "f" in obj:
+            f = obj["f"]
+            if lp is None or f.get("lang", "").startswith(lp):
+                out.extend(_gdl_syls(f.get("gdl", [])))
+        elif "cdl" in obj: _walk_cdl(obj["cdl"], lp, out)
 
-# Proto-Greek / Linear B confirmed
-PROTO_GREEK = {
-    "wa-na-ka":      "ϝάναξ = king (CONFIRMED Linear B)",
-    "po-ti-ni-ja":   "Πότνια = Mistress/goddess (CONFIRMED)",
-    "di-wo":         "Διός = of Zeus (CONFIRMED Linear B)",
-    "a-ta-na":       "Αθάνα = Athena proto-form (CONFIRMED)",
-    "e-ra":          "Ήρα = Hera (CONFIRMED Linear B)",
-    "pa-te":         "πατέρας = father",
-    "ma-te":         "μητέρα = mother",
-    "ko-wo":         "κόρος = boy (Linear B)",
-    "ko-wa":         "κόρη = girl (Linear B)",
-    "da-mo":         "δήμος = people (Linear B)",
-    "ra-wa-ke-ta":   "λαγέτας = military leader (Linear B)",
-    "ka-ke":         "χαλκός = bronze (Linear B)",
-    "a-re-ja":       "Αρεία = of Ares (Linear B)",
-    "te-o":          "θεός = god",
-    "a-na":          "ανά = up/through",
-    "a-pi":          "αμφί = around",
-    "pa-ro":         "παρά = beside",
-    "me-na":         "μήνα = moon/month",
-    "da-ma":         "γη = earth",
-    "a-to-ro-qo":    "ανθρώπος = human (Linear B)",
-    "do-e-ra":       "δούλη = slave-woman (Linear B)",
-    "i-qo":          "ίππος = horse (Linear B)",
-}
+def cdl_from_zip(zp, lp=None, mf=2000):
+    syls = []
+    try:
+        with zipfile.ZipFile(zp) as zf:
+            for nm in [n for n in zf.namelist()
+                       if re.search(r'[PQ]\d+\.json$', n)][:mf]:
+                try:
+                    with zf.open(nm) as f: data = json.load(f)
+                    _walk_cdl(data.get("cdl", []), lp, syls)
+                except Exception: continue
+    except Exception as e: print(f"    [warn] {zp}: {e}")
+    return syls
 
-# Egyptian ritual vocabulary (for E-keys)
-EGYPT_VOCAB = {
-    "na-ra-sa":  "n rA sA = for Ra's son = Osiris formula",
-    "sa-ra-na":  "sA rA n = Son of Ra (royal title)",
-    "na-sa-ra":  "n sA rA = for son of Ra",
-    "sa-ra":     "sA rA = Son/Daughter of Ra (pharaonic title)",
-    "na-ra":     "n rA = for Ra / of Ra",
-    "ra-na":     "rA n = Ra of",
-    "wa-na-ra":  "wnn rA = Ra exists (resurrection)",
-    "na-ta-ra":  "nTr = god (CVized)",
-    "wa-sa-ra":  "wsir+a = Osiris variant",
-    "ma-ra":     "mrA / mAat-Ra = truth of Ra",
-    "an-xa":     "anx = life",
-    "ha-ta-pa":  "Htp = peace/offering",
-    "sa-na":     "sA n = son of",
-}
+def gloss_from_zip(zp, gnames):
+    syls = []
+    try:
+        with zipfile.ZipFile(zp) as zf:
+            for gn in gnames:
+                try:
+                    with zf.open(gn) as f: data = json.load(f)
+                    for e in data.get("entries", []):
+                        for part in e.get("cf", "").split("-"):
+                            part = re.sub(r"[₀₁₂₃₄₅₆₇₈₉\d']", "", part)
+                            part = re.sub(r"[^a-zāīūšḫṭqḥŋ]", "", part.lower())
+                            if part and 1 <= len(part) <= 6: syls.append(part)
+                except Exception: continue
+    except Exception as e: print(f"    [warn] {zp}: {e}")
+    return syls
 
-# Luwian / Hittite vocabulary (KEY G)
-LUWIAN_VOCAB = {
-    "za":         "Luwian demonstrative 'this'",
-    "wa-na":      "wana- = king/lord (cognate Minoan wa-na-ka?)",
-    "ur-a":       "ura- = great (Luwian MAGNUS)",
-    "ti-wa":      "tiwat- = sun god (Luwian)",
-    "ar-ma":      "arma- = moon (Luwian)",
-    "tar":        "tar- = lord/judge (tarwana-)",
-    "an-ta":      "anta = against/in front",
-    "ha-ra":      "hara(n)- = eagle (Luwian)",
-    "za-na":      "zan(a)- = this one",
-    "na-wa":      "nawa-? = water/river",
-    "ha-an":      "hant- = front/face",
-    "ti":         "ti- = be (Luwian verb)",
-    "wa-tar":     "watar = water (PIE *wódr̥)",
-    "at-ta":      "atta- = father (Luwian/Hittite)",
-    "an-na":      "anna- = mother (Luwian/Hittite)",
-    "tar-hu":     "Tarhunt = storm god",
-    "za-tar":     "za+tar = this lord",
-    "wa-na-ta":   "wana+ta = lordly",
-    "ur-a-na":    "ura+na = great one of",
-}
+def _make_vocab(syls):
+    bgs = [f"{syls[i]}-{syls[i+1]}" for i in range(len(syls) - 1)]
+    return frozenset(tuple(v.split("-"))
+                     for v, _ in Counter(bgs).most_common(VOCAB_SIZE))
 
-# Semitic consonantal roots (KEY H)
-SEMITIC_ROOTS = {
-    "ʔSR":  "bind/Osiris root (ʔ-S-R) — CORE HYPOTHESIS",
-    "SR":   "prince/official (Semitic S-R)",
-    "MLK":  "king (M-L-K → Malku/Melek)",
-    "BL":   "lord (Baal)",
-    "ʔL":   "god (El)",
-    "HYH":  "life (H-Y-H)",
-    "RB":   "great/master (R-B)",
-    "QDŠ":  "holy/sacred",
-    "ʔDN":  "lord (Adon → Adonis)",
-    "NHR":  "river/light",
-    "ʔSRT": "Asherah (goddess = ʔ-S-R-T)",
-    "SRN":  "Asheron/Seren? princess",
-    "NTR":  "nTr = god (Egyptian consonants)",
-    "WSR":  "wsir = Osiris (Egyptian consonants)",
-    "MRT":  "mAat = truth (consonantal)",
-    "HTP":  "Htp = peace (consonantal)",
-    "ʔNH":  "life (Egyptian ʕnḫ = anx)",
-    "SRA":  "sarah = princess (Hebrew/Semitic)",
-    "NRA":  "nura = light? fire?",
-    "MRA":  "mara = lord/bitter (Semitic)",
-}
+def _make_pool(syls, n=50):
+    return [s for s, _ in Counter(syls).most_common(n)]
 
-# Linear A confirmed morphemes (KEY I)
-MORPHEMES_LA = {
-    # Word-initial prefixes
-    "a":   "a- prefix (most common LA word-initial)",
-    "ku":  "ku- (ku-ro = total, accounting)",
-    "ka":  "ka- (common initial)",
-    "ja":  "ja- (ritual contexts)",
-    "pa":  "pa- (common initial)",
-    "da":  "da- (common)",
-    # Word-final suffixes
-    "te":  "-te (most common LA suffix)",
-    "na":  "-na (genitive? locative?)",
-    "re":  "-re (common suffix)",
-    "ne":  "-ne (variant of -na)",
-    "di":  "-di (suffix)",
-    "wa":  "wa- (wa-ja = frequent)",
-    "ke":  "-ke (suffix)",
-    "si":  "si- (si-ru-te = ritual)",
-    # Full confirmed words
-    "ku-ro":      "total (CONFIRMED)",
-    "a-du":       "frequent unknown",
-    "wa-ja":      "frequent unknown",
-    "ku-pa":      "partial",
-    "a-te":       "common ending",
-    "da-te":      "common",
-    "ka-na":      "common",
-    "pa-ta":      "pa-ta-ne = accounting term",
-    "ja-na":      "ritual?",
-    "a-na":       "ανά (preposition)",
-    "da-na":      "Danaan? or accounting",
-    "te-na":      "suffix + na",
-    "ka-te":      "common sequence",
-    "da-ka":      "common",
-    "na-ka":      "prefix + ka",
-}
+def _make_bigram_lm(syls, eps=1e-6):
+    uni = Counter(syls); V = len(uni); tot = sum(uni.values())
+    uni_lp = {s: log2((c + eps) / (tot + eps * V)) for s, c in uni.items()}
+    bi = defaultdict(Counter)
+    for i in range(len(syls) - 1): bi[syls[i]][syls[i+1]] += 1
+    bi_lp = {}
+    for s1 in uni:
+        rt = sum(bi[s1].values()) + eps * V
+        bi_lp[s1] = {s2: log2((bi[s1][s2] + eps) / rt) for s2 in uni}
+    return uni_lp, bi_lp
 
-# ══════════════════════════════════════════════════════════════════════════════
-# KEY DEFINITIONS
-# ══════════════════════════════════════════════════════════════════════════════
+def build_corpora():
+    print(f"\n{SEP}\n  §1  BUILDING CORPORA\n{SEP}")
+    C = {}
 
-KEYS = {}
+    print("  Luwian/Hittite…")
+    syls = []
+    with zipfile.ZipFile("TLHdig_0.2.0-beta.zip") as zf:
+        for nm in [n for n in zf.namelist() if n.endswith(".xml")][:500]:
+            with zf.open(nm) as f:
+                tx = re.sub(r'<[^>]+>', ' ', f.read().decode("utf-8", "replace"))
+                for t in re.split(r'[\s\-]+', tx):
+                    t = re.sub(r'[^a-zāīūšḥḫṭ]', '', t.lower())
+                    if t and 1 <= len(t) <= 5: syls.append(t)
+    C["Luwian/Hittite"] = syls; print(f"    {len(syls):,} tokens")
 
-# ── Previously established keys ─────────────────────────────────────────────
-KEYS["A_EVANS"] = {    # Visual match to Linear A (Evans-style)
-     2:"a",  7:"ko", 11:"sa", 12:"ne", 22:"qi", 29:"pe", 36:"ku",
-    45:"wi",  1:"da",  6:"na", 24:"di", 33:"ro", 44:"tu", 25:"ze",  3:"si",
-}
-KEYS["B_FREQ"] = {     # Frequency-matched to Linear A (WINNER from v1)
-     2:"a",  36:"sa", 11:"ra", 29:"na", 22:"ta",  7:"ka", 12:"da",
-     6:"ti", 45:"ma",  1:"si", 24:"re", 25:"ro",  33:"wa", 44:"ki",  3:"ko",
-}
-KEYS["E1_EGYPT"] = {   # Egyptian consonant frequency → CV
-     2:"na", 36:"ra", 11:"sa", 29:"wa", 22:"ta",  7:"ma", 12:"a",
-     6:"ka", 45:"ya",  1:"ha", 24:"xa", 25:"da",  33:"pa", 44:"ba",  3:"qa",
-}
-KEYS["E2_WSIR"] = {    # Asar-centred: [2,36,11] = A-sa-r
-     2:"A",  36:"sa", 11:"r",  29:"wa", 22:"ta",  7:"ma", 12:"na",
-     6:"ka", 45:"ya",  1:"ha", 24:"xa", 25:"da",  33:"pa", 44:"ba",  3:"qa",
-}
+    print("  Linear B…")
+    syls = []
+    with open("corpora/linearb/words.csv", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            w = row.get("word", "").strip().lower()
+            if not w or w.startswith("*"): continue
+            for s in w.split("-"):
+                s = re.sub(r'[^a-z]', '', s)
+                if s: syls.append(s)
+    C["Linear B"] = syls; print(f"    {len(syls):,} tokens")
 
-# ── KEY F — Κυπριακό Συλλαβολόγιο ───────────────────────────────────────────
-# Chain: Phaistos sign → visual match to Linear A sign → Cypriot value
-# Documented Cypriot ↔ Linear A correspondences (Masson 1961, Mitford 1971)
-KEYS["F_CYPRIOT"] = {
-    # Sign:  (Cypriot value, reasoning)
-     2: "a",    # AB08→a: Cypriot 'a' (upright figure) — strongest match
-    36: "ku",   # AB64→ku: Cypriot 'ku' (horns/curved shape)
-    11: "se",   # AB31→sa: Cypriot 'se' (figure-8 → shield → Cypriot rounded)
-    29: "pe",   # AB72→pe: Cypriot 'pe' (plant/branching)
-    22: "pi",   # bird sign: Cypriot 'pi' (bird-body shape)
-     7: "ko",   # AB70→ko: Cypriot 'ko' (head/helmet → round)
-    12: "ti",   # AB24→ne→Cypriot: 'ti' (sword/vertical stroke)
-     6: "na",   # AB06→na: Cypriot 'na' (female figure — strong match)
-    45: "ri",   # AB40→wi→Cypriot: 'ri' (rosette/wheel)
-     1: "ta",   # AB01→da→Cypriot: 'ta' (walking figure)
-    24: "si",   # AB07→di: Cypriot 'si' (fish shape)
-    25: "sa",   # AB17→za: Cypriot 'sa' (snake/wavy)
-    33: "ro",   # AB02→ro: Cypriot 'ro' (club/staff)
-    44: "me",   # AB69→tu: Cypriot 'me' (spool/round)
-     3: "lo",   # AB41→si: Cypriot 'lo' (archer/arrow)
-}
+    print("  Akkadian…")
+    syls  = gloss_from_zip("corpora/akkadian/saao.zip", [
+        "saao/gloss-akk.json", "saao/gloss-akk-x-neoass.json",
+        "saao/gloss-akk-x-midass.json", "saao/gloss-akk-x-stdbab.json",
+        "saao/gloss-akk-x-neobab.json"])
+    syls += gloss_from_zip("corpora/akkadian/rinap.zip", ["rinap/gloss-akk.json"])
+    syls += gloss_from_zip("corpora/akkadian/ribo.zip",  ["ribo/gloss-akk.json"])
+    C["Akkadian"] = syls; print(f"    {len(syls):,} tokens")
 
-# ── KEY G — Λουβικά Ιερογλυφικά ────────────────────────────────────────────
-# Luwian hieroglyphs: same geographic area (Anatolia), same era (~1700 BCE)
-# Values from Hawkins, Morpurgo-Davies (Luwian decipherment 1970s)
-KEYS["G_LUWIAN"] = {
-    # Mapping: Phaistos pictogram → visually similar Luwian hieroglyph → value
-     2: "za",   # Helmeted warrior → CAPUT/PUGNUS → 'za' (Luwian demonstr.)
-    36: "wa",   # Horns → BOVES (bull) → 'wa' (wana- = lord)
-    11: "tar",  # Figure-8 shield → SCUTUM → 'tar' (tarwana- = judge/lord)
-    29: "na",   # Flower/crocus → plant sign → 'na' (Luwian common)
-    22: "ha",   # Eagle → AQUILA/hara(n) → 'ha' (hara- = eagle)
-     7: "ti",   # Helmet → head covering → 'ti' (ti- = be/do in Luwian)
-    12: "zi",   # Sword → weapon sign → 'zi' (Luwian weapon term)
-     6: "an",   # Female → FEMINA/MATER → 'an' (anna- = mother)
-    45: "ti-wa",# Rosette/Sun → SOL → 'tiwat-' → 'ti' (sun god name)
-     1: "i",    # Walking man → PES/MANUS → 'i' (iti- = he/it)
-    24: "su",   # Fish → PISCIS → 'su'
-    25: "naw",  # Snake → serpent sign → 'na'+'w' (nawa- = water?)
-    33: "ur",   # Club → MAGNUS-weapon → 'ur' (ura- = great)
-    44: "ma",   # Spool → textile/moon → 'ma' (related to arma = moon?)
-     3: "pa",   # Archer → bow sign → 'pa'
-}
+    print("  Egyptian…")
+    syls = []
+    aes = Path("corpora/egyptian/aes/files/aes")
+    for fn in ["_aes_bbawpyramidentexte.json", "_aes_sawlit.json",
+               "_aes_bbawtotenlit.json"]:
+        fp = aes / fn
+        if not fp.exists(): continue
+        try:
+            with open(fp, encoding="utf-8") as f: data = json.load(f)
+            for sent in data.values():
+                if not isinstance(sent, dict): continue
+                for tok in sent.get("token", []):
+                    wf = tok.get("written_form", "")
+                    for seg in re.split(r'[-,.\s{}/\\]', wf):
+                        seg = re.sub(r'[\d₀-₉]', '', seg)
+                        seg = re.sub(r'[^a-zāīūšḥḫṭꜣꜥ]', '', seg.lower())
+                        if seg and 1 <= len(seg) <= 6: syls.append(seg)
+            if len(syls) > 300_000: break
+        except Exception as e: print(f"    [warn] {fn}: {e}")
+    C["Egyptian"] = syls; print(f"    {len(syls):,} tokens")
 
-# ── KEY H — Pure Consonantal Abjad (Semitic/Afroasiatic) ───────────────────
-# Assigns ONLY consonants, no vowels (like Egyptian hieroglyphs or Phoenician)
-# Mapping: visual similarity to Proto-Sinaitic / Phoenician pictograms
-KEYS["H_ABJAD"] = {
-    # The Proto-Sinaitic alphabet originated from Egyptian pictograms:
-     2: "ʔ",   # Helmeted = 'aleph (ox-head/power) → strength/divinity marker
-    36: "S",   # Horns = 'shin' or 'samekh' → tooth/fish
-    11: "H",   # Shield = 'heth' (fence/protection) → ḥ sound
-    29: "Z",   # Flower = 'sade' (plant/papyrus) → ṣ/z
-    22: "Y",   # Eagle = 'yodh' (hand/wing) → j/y
-     7: "R",   # Helmet/Head = 'resh' (head) → r — STRONGEST MATCH
-    12: "Z2",  # Sword = 'zayin' (weapon) → z — STRONGEST MATCH
-     6: "H2",  # Female = 'he' (figure with arms) → h
-    45: "Š",   # Rosette/Sun = 'shin' (sun-rays/tooth) → š
-     1: "K",   # Walking = 'kaph' (palm of hand) → k
-    24: "N",   # Fish = 'nun' (fish/snake) → n — STRONGEST MATCH
-    25: "T",   # Snake = 'teth' (serpent/circle) → ṭ
-    33: "L",   # Club = 'lamedh' (oxgoad/staff) → l — STRONGEST MATCH
-    44: "M",   # Spool = 'mem' (water/waves, round) → m
-     3: "Q",   # Archer = 'qoph' (needle/bow) → q
-}
+    print("  Sumerian…")
+    syls = cdl_from_zip("corpora/sumerian/etcsri.zip", "sux", 500)
+    C["Sumerian"] = syls; print(f"    {len(syls):,} tokens")
 
-# ── KEY I — Linear A Morphological ─────────────────────────────────────────
-# Assigns confirmed LA grammatical values based on word-POSITION statistics:
-# #2 = always word-initial → a- (most common LA word-initial)
-# #11 = usually word-final → te (most common LA suffix)
-# #22 = usually word-final → na (second most common suffix)
-# Others: mid-word confirmed LA elements
-KEYS["I_MORPHO"] = {
-     2: "a",    # word-initial 100% → a- prefix (dominant in LA)
-    36: "ku",   # high freq → ku- (ku-ro = total, most recognized LA word)
-    11: "te",   # word-final 80% → -te (most common LA suffix)
-    29: "ka",   # common initial → ka- (confirmed LA prefix)
-    22: "na",   # word-final 70% → -na (genitive/locative suffix)
-     7: "da",   # mid-word → da- (common LA element)
-    12: "qi",   # mid-word → qi (attested in LA)
-     6: "ja",   # various → ja- (very common in LA)
-    45: "de",   # special contexts → de- (LA prefix)
-     1: "pa",   # various → pa- (common LA)
-    24: "re",   # rare → -re (LA suffix)
-    25: "di",   # rare → di- (LA element)
-    33: "wa",   # rare → wa- (wa-ja = frequent LA)
-    44: "ke",   # rare → -ke (LA suffix)
-     3: "si",   # rare → si- (si-ru-te = ritual term LA)
-}
+    print("  Late Babylonian (HBTIN)…")
+    syls = cdl_from_zip("corpora/hurrian/hbtin.zip", "akk", 487)
+    C["Late Babylonian"] = syls; print(f"    {len(syls):,} tokens")
 
-# ── KEY J: Null Hypothesis — Random shuffled Linear B values ─────────────────
-# Built dynamically during Monte Carlo; here we define the pool:
-LINEAR_B_VALUES = [
-    "da","ro","pa","te","to","na","di","a","se","u",
-    "po","so","me","do","mo","za","mi","mu","ne","ru",
-    "re","i","pu","ni","sa","jo","ti","e","pi","wi",
-    "si","wo","ke","de","du","no","ri","wa","nu","ja",
-    "su","ta","ra","o","ku","pe","we","ka","qe","ko",
-]
+    print("  Ugaritic…")
+    syls = []
+    for tsv in sorted(Path("corpora/ugaritic/cuc/auto_parsing").rglob("*.tsv")):
+        try:
+            with open(tsv, encoding="utf-8") as f:
+                for line in f:
+                    if line.startswith("#") or line.startswith("id\t"): continue
+                    parts = line.split("\t")
+                    if len(parts) < 2: continue
+                    w = re.sub(r'[!\[\]~{}/\d]', '', parts[1].strip())
+                    w = re.sub(r'[^a-zġṭṣẓḥḫšθʿ]', '', w.lower())
+                    if w and 1 <= len(w) <= 8: syls.append(w)
+        except Exception: continue
+    C["Ugaritic"] = syls; print(f"    {len(syls):,} tokens")
+
+    return C
 
 # ══════════════════════════════════════════════════════════════════════════════
-# ENGINE
+# §2  SCORING FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
+def score_key(key, vocab_set):
+    if not vocab_set: return 0
+    mvl = max(len(v) for v in vocab_set)
+    hits = 0
+    for word in ALL_WORDS:
+        parts = tuple(key.get(s) for s in word if s in key and s != 46)
+        n = len(parts)
+        if n < 2: continue
+        matched = False
+        for vl in range(2, min(mvl, n) + 1):
+            for i in range(n - vl + 1):
+                if parts[i:i+vl] in vocab_set:
+                    matched = True; break
+            if matched: break
+        if matched: hits += 1
+    return hits
 
-def read_word(word, key):
-    parts = [key.get(s,"?") for s in word]
-    return "-".join(p for p in parts if p and p != "?")
+_UNK_LP = -15.0
 
-def read_all(words, key):
-    return [read_word(w, key) for w in words]
+def mdl_cost(key, uni_lp, bi_lp):
+    cost = 0.0
+    for word in ALL_WORDS:
+        phones = [key[s] for s in word if s in key and s != 46]
+        if not phones: continue
+        cost -= uni_lp.get(phones[0], _UNK_LP)
+        for i in range(1, len(phones)):
+            cost -= bi_lp.get(phones[i-1], {}).get(phones[i], _UNK_LP)
+    return cost
 
-def full_text(words, key):
-    return " ".join(read_all(words, key))
+def _entropy(probs):
+    return sum(-p * log2(p) for p in probs if p > 1e-15)
 
-def score_vs_vocab(readings, *vocab_dicts):
-    """Count total vocabulary matches across all provided dictionaries."""
-    text = " ".join(readings)
-    matches = {}
-    for vocab in vocab_dicts:
-        for word, meaning in vocab.items():
-            if word in text:
-                cnt = text.count(word)
-                matches[word] = (cnt, meaning)
-    return sum(c for c,_ in matches.values()), matches
-
-def shannon_entropy(text):
-    """Shannon entropy in bits of character/token distribution."""
-    # Token-level entropy
-    tokens = text.split("-")
-    total = len(tokens)
-    if total == 0: return 0.0
-    freq = Counter(tokens)
-    H = -sum((c/total)*math.log2(c/total) for c in freq.values() if c > 0)
-    return H
-
-def consonant_skeleton(key):
-    """For KEY H: return consonant-only version (strip vowels)."""
-    vowels = set("aeiouAEIOU")
-    result = {}
-    for sign, val in key.items():
-        cons = "".join(c for c in val if c not in vowels and c.isalpha())
-        result[sign] = cons if cons else val
-    return result
+def ig_posterior(key, vocab_sets, temp=T_IG):
+    n = len(vocab_sets)
+    sc = np.array([score_key(key, vs) for vs in vocab_sets], dtype=float)
+    lg = sc / temp; lg -= lg.max()
+    post = np.exp(lg); post /= post.sum()
+    return log2(n) - _entropy(post), post
 
 # ══════════════════════════════════════════════════════════════════════════════
-# KEY J: MONTE CARLO NULL HYPOTHESIS
+# §3  MODULE-LEVEL WORKERS
 # ══════════════════════════════════════════════════════════════════════════════
-def run_monte_carlo(n_trials, vocab_dicts):
-    """Run N_MC random key shuffles. Return score distribution."""
-    pool = LINEAR_B_VALUES[:]
-    signs = SIGN_FREQ_ORDER[:]
+def _mcts_worker(args):
+    pool, vt, n_sim, seed = args
+    vs  = frozenset(tuple(v) for v in vt)
+    rng = np.random.default_rng(seed)
+    Q   = defaultdict(lambda: defaultdict(lambda: [0, 0.0]))
+    Np  = defaultdict(int)
+    C_UCB = 1.41; NC = 30
+    best, bk = 0, {}
+    for _ in range(n_sim):
+        path, us, up, key = [], set(), set(), {}
+        for d in range(N_ASSIGN):
+            avs = [s for s in ALL_SIGNS if s not in us]
+            avp = [p for p in pool if p not in up] or list(pool)
+            if not avs: break
+            cands = set()
+            for _ in range(NC):
+                cands.add((int(rng.choice(avs)), str(rng.choice(avp))))
+            pn = Np[d] + 1
+            ba, bu = None, -1.0
+            for a in cands:
+                v, tv = Q[d][a]
+                u = tv/v + C_UCB*sqrt(log(pn)/v) if v > 0 else 1e9+rng.random()
+                if u > bu: bu, ba = u, a
+            s, p = ba; key[s]=p; us.add(s); up.add(p); path.append((d,s,p))
+        sc = score_key(key, vs)
+        if sc > best: best, bk = sc, dict(key)
+        for d, s, p in path:
+            Q[d][(s,p)][0]+=1; Q[d][(s,p)][1]+=sc; Np[d]+=1
+    key = dict(bk); cur = best
+    for _ in range(500):
+        k2 = dict(key); mv = int(rng.integers(3))
+        if mv == 0:
+            s = int(rng.choice(list(k2.keys())))
+            av = [p for p in pool if p not in set(k2.values())]
+            if not av: continue
+            k2[s] = str(rng.choice(av))
+        elif mv == 1:
+            old = int(rng.choice(list(k2.keys())))
+            cd  = [s for s in ALL_SIGNS if s not in k2]
+            if not cd: continue
+            k2[int(rng.choice(cd))] = k2.pop(old)
+        else:
+            if len(k2) < 2: continue
+            s1, s2 = [int(x) for x in rng.choice(list(k2.keys()), 2, replace=False)]
+            k2[s1], k2[s2] = k2[s2], k2[s1]
+        sc2 = score_key(k2, vs)
+        if sc2 >= cur: key, cur = k2, sc2
+    if cur > best: best, bk = cur, dict(key)
+    return best, bk
+
+def _null_worker(args):
+    pool, vt, n, seed = args
+    vs  = frozenset(tuple(v) for v in vt)
+    rng = np.random.default_rng(seed)
+    pa  = np.array(pool)
     scores = []
-    for _ in range(n_trials):
-        random.shuffle(pool)
-        rand_key = {s: pool[i % len(pool)] for i, s in enumerate(signs)}
-        text = full_text(ALL_WORDS, rand_key)
-        s, _ = score_vs_vocab([text], *vocab_dicts)
-        scores.append(s)
+    for _ in range(n):
+        sg = rng.choice(ALL_SIGNS, N_ASSIGN, replace=False).tolist()
+        ph = rng.choice(pa, min(N_ASSIGN, len(pa)), replace=False).tolist()
+        scores.append(score_key(dict(zip(sg, ph)), vs))
     return scores
 
-# ══════════════════════════════════════════════════════════════════════════════
-# [#36→#11] ADJACENCY TEST (our statistically validated signal)
-# ══════════════════════════════════════════════════════════════════════════════
-def count_adjacency(sign_a, sign_b):
-    return sum(
-        1 for w in ALL_WORDS
-        for i in range(len(w)-1)
-        if w[i]==sign_a and w[i+1]==sign_b
-    )
+def _mdl_null_worker(args):
+    pool, ui, bi_it, n, seed = args
+    uni = dict(ui); bi = {k: dict(v) for k, v in bi_it}
+    rng = np.random.default_rng(seed); pa = np.array(pool)
+    scores = []
+    for _ in range(n):
+        sg = rng.choice(ALL_SIGNS, N_ASSIGN, replace=False).tolist()
+        ph = rng.choice(pa, min(N_ASSIGN, len(pa)), replace=False).tolist()
+        scores.append(-mdl_cost(dict(zip(sg, ph)), uni, bi))
+    return scores
 
-adj_36_11 = count_adjacency(36, 11)
-p_36 = SIGN_COUNTS[36] / N_SIGNS
-p_11 = SIGN_COUNTS[11] / N_SIGNS
-n_adj_total = sum(len(w)-1 for w in ALL_WORDS)
-expected_adj = n_adj_total * p_36 * p_11
-z_adj = (adj_36_11 - 0.5 - expected_adj) / math.sqrt(
-    n_adj_total * p_36 * p_11 * (1 - p_36 * p_11))
-p_adj_binom = 0.5 * (1 - math.erf(z_adj / math.sqrt(2)))
+def _mdl_opt_worker(args):
+    pool, ui, bi_it, n_steps, seed = args
+    uni = dict(ui); bi = {k: dict(v) for k, v in bi_it}
+    rng = np.random.default_rng(seed); pa = np.array(pool)
+    bs, bk = -1e18, {}
+    for _ in range(max(1, n_steps // 500)):
+        sg = rng.choice(ALL_SIGNS, N_ASSIGN, replace=False).tolist()
+        ph = rng.choice(pa, min(N_ASSIGN, len(pa)), replace=False).tolist()
+        key = dict(zip(sg, ph)); cur = -mdl_cost(key, uni, bi)
+        for _ in range(500):
+            k2 = dict(key); mv = int(rng.integers(3))
+            if mv == 0:
+                s = int(rng.choice(list(k2.keys())))
+                av = [p for p in pool if p not in set(k2.values())]
+                if not av: continue
+                k2[s] = str(rng.choice(av))
+            elif mv == 1:
+                old = int(rng.choice(list(k2.keys())))
+                cd  = [s for s in ALL_SIGNS if s not in k2]
+                if not cd: continue
+                k2[int(rng.choice(cd))] = k2.pop(old)
+            else:
+                if len(k2) < 2: continue
+                s1, s2 = [int(x) for x in rng.choice(list(k2.keys()), 2, replace=False)]
+                k2[s1], k2[s2] = k2[s2], k2[s1]
+            sc2 = -mdl_cost(k2, uni, bi)
+            if sc2 >= cur: key, cur = k2, sc2
+        if cur > bs: bs, bk = cur, dict(key)
+    return bs, bk
 
-# ══════════════════════════════════════════════════════════════════════════════
-# MAIN OUTPUT
-# ══════════════════════════════════════════════════════════════════════════════
-print(SEP)
-print("  PHAISTOS DISC — MASTER GRID TEST  (Keys A–J)")
-print(f"  Bonferroni threshold: p < {BONFERRONI_THRESHOLD:.4f}  ({N_KEYS} keys, α={ALPHA})")
-print(SEP)
-
-# ══════════════════════════════════════════════════════════════════════════════
-# [1] STRUCTURAL FACTS (not dependent on any key)
-# ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[1] STRUCTURAL FACTS (key-independent)")
-print(SEP2)
-print(f"  [#36→#11] adjacency: observed={adj_36_11}, expected={expected_adj:.2f}")
-print(f"  Ratio:  {adj_36_11/expected_adj:.2f}×   Z={z_adj:.2f}   p≈{p_adj_binom:.2e}")
-sig = "★★★ ΕΞΑΙΡΕΤΙΚΑ ΣΗΜΑΝΤΙΚΟ (p<0.000001)" if p_adj_binom < 0.000001 else "★★" if p_adj_binom < 0.001 else "★"
-print(f"  {sig}")
-print(f"\n  Sign #2 word-initial rate:  {sum(1 for w in ALL_WORDS if w[0]==2)}/{N_WORDS} = "
-      f"{sum(1 for w in ALL_WORDS if w[0]==2)/N_WORDS:.0%}")
-print(f"  Sign #11 word-final rate:   {sum(1 for w in ALL_WORDS if w[-1]==11)}/{N_WORDS} = "
-      f"{sum(1 for w in ALL_WORDS if w[-1]==11)/N_WORDS:.0%}")
-print(f"  Sign #22 word-final rate:   {sum(1 for w in ALL_WORDS if w[-1]==22)}/{N_WORDS} = "
-      f"{sum(1 for w in ALL_WORDS if w[-1]==22)/N_WORDS:.0%}")
-
-# ══════════════════════════════════════════════════════════════════════════════
-# [2] MONTE CARLO NULL (Key J) — run first to establish baseline
-# ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[2] KEY J — Monte Carlo Null Hypothesis ({N_MC:,} trials)")
-print(SEP2)
-print(f"  Τρέχω {N_MC:,} τυχαία κλειδιά... ", end="", flush=True)
-random.seed(42)
-VOCAB_ALL = (LINEAR_A, PROTO_GREEK, EGYPT_VOCAB, LUWIAN_VOCAB, MORPHEMES_LA)
-null_scores = run_monte_carlo(N_MC, VOCAB_ALL)
-null_mean = sum(null_scores) / N_MC
-null_std  = math.sqrt(sum((x-null_mean)**2 for x in null_scores) / N_MC)
-null_sorted = sorted(null_scores)
-p95  = null_sorted[int(0.95*N_MC)]
-p99  = null_sorted[int(0.99*N_MC)]
-p995 = null_sorted[int(0.995*N_MC)]  # Bonferroni-corrected 5%
-p999 = null_sorted[int(0.999*N_MC)]
-p9999 = null_sorted[int(0.9999*N_MC)] if N_MC >= 10000 else null_sorted[-1]
-print(f"done.")
-print(f"\n  Null distribution (random key scores):")
-print(f"    Mean:          {null_mean:.1f}")
-print(f"    Std:           {null_std:.1f}")
-print(f"    p<0.05  →  score > {p95}")
-print(f"    p<0.01  →  score > {p99}")
-print(f"    p<0.005 →  score > {p995}  ← BONFERRONI THRESHOLD")
-print(f"    p<0.001 →  score > {p999}")
-print(f"    p<0.0001→  score > {p9999}")
-
-def get_pvalue(score):
-    return sum(1 for x in null_scores if x >= score) / N_MC
+def _ig_worker(args):
+    cpool, vtl, n, seed, temp = args
+    vsets = [frozenset(tuple(v) for v in vt) for vt in vtl]
+    rng   = np.random.default_rng(seed); pa = np.array(cpool)
+    nl    = len(vsets)
+    sig, sp, ni = 0.0, np.zeros(nl), 0
+    big, bpost  = -1.0, np.zeros(nl)
+    for _ in range(n):
+        sg = rng.choice(ALL_SIGNS, N_ASSIGN, replace=False).tolist()
+        ph = rng.choice(pa, min(N_ASSIGN, len(pa)), replace=False).tolist()
+        key = dict(zip(sg, ph))
+        ig, post = ig_posterior(key, vsets, temp)
+        sig += ig; sp += post; ni += 1
+        if ig > big: big, bpost = ig, post.copy()
+    return sig, sp.tolist(), ni, big, bpost.tolist()
 
 # ══════════════════════════════════════════════════════════════════════════════
-# [3] ALL KEYS — SCORING
+# §4  ARENA RUNNER
 # ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[3] SCORING — Κάθε κλειδί vs. ALL vocabularies")
-print(SEP)
-
-key_results = {}
-
-for key_name, key_map in KEYS.items():
-    readings = read_all(ALL_WORDS, key_map)
-    score, matches = score_vs_vocab(readings, *VOCAB_ALL)
-    pval = get_pvalue(score)
-    H = shannon_entropy("-".join(readings))
-    key_results[key_name] = {
-        "score": score, "pval": pval, "entropy": H,
-        "matches": matches, "readings": readings,
-    }
-
-# Print summary table
-print(f"\n  {'Key':15s}  {'Score':>6}  {'Z':>5}  {'p-val':>10}  {'Bonf.':>5}  {'H(bits)':>8}  {'Σημαντικό?'}")
-print(f"  {'-'*15}  {'-'*6}  {'-'*5}  {'-'*10}  {'-'*5}  {'-'*8}  {'-'*12}")
-
-ranked = sorted(key_results.items(), key=lambda x: -x[1]["score"])
-for key_name, res in ranked:
-    z = (res["score"] - null_mean) / null_std if null_std > 0 else 0
-    pv = res["pval"]
-    bonf = "✓" if pv < BONFERRONI_THRESHOLD else ""
-    sig_str = (
-        "★★★ p<.001" if pv < 0.001 else
-        "★★  p<.005" if pv < 0.005 else
-        "★   p<.05"  if pv < 0.05  else
-        "—"
-    )
-    print(f"  {key_name:15s}  {res['score']:>6}  {z:>5.2f}  {pv:>10.4f}  {bonf:>5}  {res['entropy']:>8.3f}  {sig_str}")
+def run_lang(name, pool, vocab_set, n_workers, n_null, n_sim):
+    if not vocab_set:
+        return dict(name=name, Z=0, p=1.0, opt=0, nm=0, ns=1,
+                    null_arr=np.zeros(50), key={}, vn=0, etype="pure")
+    vt = [list(v) for v in vocab_set]
+    batch = n_null // n_workers; rem = n_null % n_workers
+    with mp.Pool(n_workers) as p:
+        nb = p.map(_null_worker,
+                   [(pool, vt, batch+(1 if i<rem else 0), 99+i)
+                    for i in range(n_workers)])
+    na = np.array([s for b in nb for s in b])
+    nm, ns = na.mean(), na.std(ddof=1)
+    per = max(1, n_sim // n_workers); rem2 = n_sim % n_workers
+    with mp.Pool(n_workers) as p:
+        or_ = p.map(_mcts_worker,
+                    [(pool, vt, per+(1 if i<rem2 else 0), 42+i*1000)
+                     for i in range(n_workers)])
+    opt, key = max(or_, key=lambda x: x[0])
+    Z  = (opt - nm) / ns if ns > 0 else 0.0
+    pv = float((na >= opt).sum()) / n_null
+    return dict(name=name, Z=Z, p=pv, opt=opt, nm=nm, ns=ns,
+                null_arr=na, key=key, vn=len(vocab_set))
 
 # ══════════════════════════════════════════════════════════════════════════════
-# [4] SHANNON ENTROPY ANALYSIS (KEY H focus)
+# §5  HYBRID NAMES
 # ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[4] SHANNON ENTROPY ANALYSIS")
-print(SEP2)
-print(f"""
-  Σύγκριση με γνωστά γραπτά συστήματα:
-    Τυχαίο κείμενο (max entropy, 15 signs):  H = {math.log2(15):.3f} bits
-    Αιγυπτιακά ιερογλυφικά (consonantal):   H ≈ 3.50–4.20 bits
-    Φοινικικό abjad (consonantal):           H ≈ 3.80–4.20 bits
-    Ελληνικό συλλαβολόγιο (Linear B):       H ≈ 2.80–3.50 bits
-    Αρχαία Ελληνική (alphabetic):            H ≈ 3.90–4.30 bits
-    Phaistos raw sign entropy:               H ≈ 3.04 bits (computed)
-""")
-
-print(f"  Entropy ανά κλειδί:")
-for key_name, res in sorted(key_results.items(), key=lambda x: x[1]["entropy"]):
-    H = res["entropy"]
-    # Compare to known ranges
-    cat = ("← Ελληνικό syllabic range" if 2.8 <= H <= 3.5 else
-           "← Αιγυπτιακό/Semitic range" if 3.5 < H <= 4.2 else
-           "← Υψηλό (noisy/complex)" if H > 4.2 else
-           "← Χαμηλό (formulaic)")
-    print(f"    {key_name:15s}: H = {H:.3f} bits  {cat}")
-
-# KEY H specific: consonantal analysis
-print(f"\n  KEY H (Abjad) — Consonantal Skeleton Analysis:")
-h_readings = read_all(ALL_WORDS, KEYS["H_ABJAD"])
-h_text = " ".join(h_readings)
-
-# Search for consonantal roots in the text
-print(f"  Refrain consonants: {read_word([2,36,11], KEYS['H_ABJAD'])} = ʔ-S-H")
-print(f"  (cf. ʔ-S-R = Asar = Osiris root in Proto-Afroasiatic!)")
-print(f"\n  Αναζήτηση Σημιτικών ριζών:")
-for root, meaning in SEMITIC_ROOTS.items():
-    # Convert root to search pattern (allow any vowels between consonants)
-    clean_root = root.replace("ʔ","ʔ").replace("Š","Š")
-    if root in h_text or root.lower() in h_text.lower():
-        print(f"    MATCH: {root:10s} = {meaning}")
-    # Also check individual consonant patterns
-    cons_in_text = re.findall(r"[ʔSHZYRKNTLMQ2Š]+", h_text)
-    for c_seq in cons_in_text:
-        if root in c_seq:
-            print(f"    ROOT:  {root:10s} found in '{c_seq}' — {meaning}")
-            break
-
-print(f"\n  Full KEY H consonantal reading:")
-for i, (w, r) in enumerate(zip(ALL_WORDS, h_readings), 1):
-    side = "A" if i <= 31 else "B"
-    n = i if i <= 31 else i-31
-    print(f"    {side}{n:02d}: {r:20s}", end="")
-    if i % 3 == 0: print()
-if len(ALL_WORDS) % 3 != 0: print()
+PAIR_NAMES = {
+    ("Luwian/Hittite", "Linear B"):        "Aegeo-Anatolian",
+    ("Luwian/Hittite", "Akkadian"):         "Anatolio-Akkadian",
+    ("Luwian/Hittite", "Egyptian"):         "Anatolio-Egyptian",
+    ("Luwian/Hittite", "Sumerian"):         "Anatolio-Sumerian",
+    ("Luwian/Hittite", "Late Babylonian"):  "Anatolio-Babylonian",
+    ("Luwian/Hittite", "Ugaritic"):         "Levanto-Anatolian",
+    ("Linear B",       "Akkadian"):         "Aegean-Akkadian",
+    ("Linear B",       "Egyptian"):         "Aegean-Egyptian",
+    ("Linear B",       "Sumerian"):         "Aegean-Sumerian",
+    ("Linear B",       "Late Babylonian"):  "Aegean-Babylonian",
+    ("Linear B",       "Ugaritic"):         "Aegean Trade Lingua",
+    ("Akkadian",       "Egyptian"):         "Egypto-Akkadian",
+    ("Akkadian",       "Sumerian"):         "Sumero-Akkadian",
+    ("Akkadian",       "Late Babylonian"):  "Akkadian Dialects",
+    ("Akkadian",       "Ugaritic"):         "Levanto-Akkadian",
+    ("Egyptian",       "Sumerian"):         "Egypto-Sumerian",
+    ("Egyptian",       "Late Babylonian"):  "Egypto-Babylonian",
+    ("Egyptian",       "Ugaritic"):         "Egypto-Levantine",
+    ("Sumerian",       "Late Babylonian"):  "Classic Babylonian",
+    ("Sumerian",       "Ugaritic"):         "Sumer-Levantine",
+    ("Late Babylonian","Ugaritic"):         "Levanto-Babylonian",
+}
+TRIPLE_NAMES = {
+    ("Luwian/Hittite", "Linear B",    "Ugaritic"):        "Bronze Age Koine",
+    ("Luwian/Hittite", "Akkadian",    "Sumerian"):        "Anatolian Scribal Mix",
+    ("Akkadian",       "Sumerian",    "Late Babylonian"): "Mesopotamian Continuum",
+    ("Luwian/Hittite", "Linear B",    "Egyptian"):        "Eastern Mediterranean",
+    ("Linear B",       "Egyptian",    "Ugaritic"):        "Levantine Sea Peoples",
+    ("Akkadian",       "Egyptian",    "Ugaritic"):        "Mitanni Court",
+    ("Luwian/Hittite", "Akkadian",    "Ugaritic"):        "West Asiatic",
+}
 
 # ══════════════════════════════════════════════════════════════════════════════
-# [5] KEY F — CYPRIOT: Detailed reading
+# MAIN
 # ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[5] KEY F — ΚΥΠΡΙΑΚΟ ΣΥΛΛΑΒΟΛΟΓΙΟ — Λεπτομερής ανάγνωση")
-print(SEP2)
-f_res = key_results["F_CYPRIOT"]
-print(f"  Score={f_res['score']}, p={f_res['pval']:.4f}, H={f_res['entropy']:.3f}")
-print(f"\n  Refrain [2,36,11] = {read_word([2,36,11], KEYS['F_CYPRIOT'])}")
-print(f"  A31 (κέντρο Α)    = {read_word([45,2,36,11,22], KEYS['F_CYPRIOT'])}")
-print(f"  B30 (κέντρο Β)    = {read_word([45,36,11,2,22], KEYS['F_CYPRIOT'])}")
-print(f"\n  Αναγνώσεις (side A):")
-for i, (w, r) in enumerate(zip(SIDE_A, read_all(SIDE_A, KEYS["F_CYPRIOT"])), 1):
-    flags = [k for k in {**LINEAR_A, **PROTO_GREEK} if k in r]
-    fl = f"  ← {', '.join(flags)}" if flags else ""
-    print(f"    A{i:02d}: {r:30s}{fl}")
-print(f"\n  Αναγνώσεις (side B):")
-for i, (w, r) in enumerate(zip(SIDE_B, read_all(SIDE_B, KEYS["F_CYPRIOT"])), 1):
-    flags = [k for k in {**LINEAR_A, **PROTO_GREEK} if k in r]
-    fl = f"  ← {', '.join(flags)}" if flags else ""
-    print(f"    B{i:02d}: {r:30s}{fl}")
-print(f"\n  Matches με Greek/Linear A vocab:")
-for word, (cnt, meaning) in sorted(f_res["matches"].items(), key=lambda x: -x[1][0]):
-    print(f"    '{word}' (×{cnt}) = {meaning}")
+if __name__ == "__main__":
+    t0 = time.time()
+    N_WORKERS = max(1, mp.cpu_count() - 1)
+    print(f"{SEP}\n  PHAISTOS MASTER ANALYSIS\n  Workers: {N_WORKERS}\n{SEP}")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# [6] KEY G — LUWIAN: Detailed reading
-# ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[6] KEY G — ΛΟΥΒΙΚΑ ΙΕΡΟΓΛΥΦΙΚΑ — Λεπτομερής ανάγνωση")
-print(SEP2)
-g_res = key_results["G_LUWIAN"]
-print(f"  Score={g_res['score']}, p={g_res['pval']:.4f}, H={g_res['entropy']:.3f}")
-print(f"\n  Refrain [2,36,11] = {read_word([2,36,11], KEYS['G_LUWIAN'])}")
-print(f"  A31 = {read_word([45,2,36,11,22], KEYS['G_LUWIAN'])}")
-print(f"  B30 = {read_word([45,36,11,2,22], KEYS['G_LUWIAN'])}")
-print(f"\n  Αναγνώσεις:")
-for i, (w, r) in enumerate(zip(ALL_WORDS, read_all(ALL_WORDS, KEYS["G_LUWIAN"])), 1):
-    side = "A" if i <= 31 else "B"
-    n = i if i <= 31 else i-31
-    flags = [k for k in LUWIAN_VOCAB if k in r]
-    fl = f"  ← {', '.join(flags)}" if flags else ""
-    print(f"    {side}{n:02d}: {r:30s}{fl}")
+    # ── §1 Build corpora ──────────────────────────────────────────────────────
+    RAW = build_corpora()
+    LANGS = list(RAW.keys())
+    POOLS  = {l: _make_pool(RAW[l])  for l in LANGS}
+    VOCABS = {l: _make_vocab(RAW[l]) for l in LANGS}
+    LMAPS  = {l: _make_bigram_lm(RAW[l]) for l in LANGS}
 
-# ══════════════════════════════════════════════════════════════════════════════
-# [7] KEY I — MORPHOLOGICAL: Detailed reading
-# ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[7] KEY I — LINEAR A MORPHOLOGICAL — Λεπτομερής ανάγνωση")
-print(SEP2)
-i_res = key_results["I_MORPHO"]
-print(f"  Score={i_res['score']}, p={i_res['pval']:.4f}, H={i_res['entropy']:.3f}")
-print(f"\n  Refrain [2,36,11] = {read_word([2,36,11], KEYS['I_MORPHO'])}")
-print(f"  A31 (κέντρο Α)    = {read_word([45,2,36,11,22], KEYS['I_MORPHO'])}")
-print(f"  B30 (κέντρο Β)    = {read_word([45,36,11,2,22], KEYS['I_MORPHO'])}")
-print(f"\n  Αναγνώσεις (side A):")
-for i, (w, r) in enumerate(zip(SIDE_A, read_all(SIDE_A, KEYS["I_MORPHO"])), 1):
-    flags = [k for k in {**LINEAR_A, **MORPHEMES_LA} if k in r]
-    fl = f"  ← {', '.join(flags[:3])}" if flags else ""
-    print(f"    A{i:02d}: {r:30s}{fl}")
-print(f"\n  Αναγνώσεις (side B):")
-for i, (w, r) in enumerate(zip(SIDE_B, read_all(SIDE_B, KEYS["I_MORPHO"])), 1):
-    flags = [k for k in {**LINEAR_A, **MORPHEMES_LA} if k in r]
-    fl = f"  ← {', '.join(flags[:3])}" if flags else ""
-    print(f"    B{i:02d}: {r:30s}{fl}")
-print(f"\n  Top matches:")
-for word, (cnt, meaning) in sorted(i_res["matches"].items(), key=lambda x: -x[1][0])[:15]:
-    print(f"    '{word}' (×{cnt}) = {meaning}")
+    # ── §2 Pure language arena ────────────────────────────────────────────────
+    print(f"\n{SEP}\n  §2  PURE LANGUAGE ARENA\n"
+          f"  MCTS+Hill-Climb | 10k null | vocab=200\n{SEP}")
+    arena_r = []
+    for l in LANGS:
+        print(f"  [{l}] …", end=" ", flush=True)
+        r = run_lang(l, POOLS[l], VOCABS[l], N_WORKERS, 10_000, 2_000)
+        r["etype"] = "pure"
+        print(f"Z={r['Z']:+.2f}  p={r['p']:.6f}")
+        arena_r.append(r)
+    arena_r.sort(key=lambda x: -x["Z"])
 
-# ══════════════════════════════════════════════════════════════════════════════
-# [8] BONFERRONI CORRECTED SUMMARY
-# ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[8] BONFERRONI-CORRECTED FINAL RANKING")
-print(SEP)
-print(f"""
-  Bonferroni correction: α_family=0.05, N_keys={N_KEYS}
-  → Each key must achieve p < {BONFERRONI_THRESHOLD:.4f} to be considered significant.
-  → For p < 0.001 (very significant): score must exceed {p999}.
-  → For p < 0.0001 (publication-grade): score must exceed {p9999}.
-""")
-print(f"  {'Rank':>4}  {'Key':15s}  {'Score':>6}  {'Z':>5}  {'p-val':>10}  {'Verdict'}")
-print(f"  {'-'*4}  {'-'*15}  {'-'*6}  {'-'*5}  {'-'*10}  {'-'*25}")
+    print(f"\n  {'Rank':<4} {'Language':<22} {'MCTS':>5} {'Null μ':>7} "
+          f"{'σ':>6} {'Z':>7} {'p':>10}  Pass")
+    print(f"  {SEP2}")
+    for i, r in enumerate(arena_r, 1):
+        print(f"  {i:<4} {r['name']:<22} {r['opt']:>5} {r['nm']:>7.2f} "
+              f"{r['ns']:>6.2f} {r['Z']:>+7.2f} {r['p']:>10.6f}  "
+              f"{'✓' if r['Z']>=2 else '✗'}")
 
-for rank, (key_name, res) in enumerate(ranked, 1):
-    z = (res["score"] - null_mean) / null_std if null_std > 0 else 0
-    pv = res["pval"]
-    if pv < 0.0001:
-        verdict = "✓✓✓ ΔΗΜΟΣΙΕΥΣΙΜΟ"
-    elif pv < BONFERRONI_THRESHOLD:
-        verdict = "✓✓  Bonferroni OK"
-    elif pv < 0.05:
-        verdict = "✓   Οριακά σημαντ."
-    else:
-        verdict = "—   Μη σημαντικό"
-    print(f"  {rank:>4}  {key_name:15s}  {res['score']:>6}  {z:>5.2f}  {pv:>10.4f}  {verdict}")
+    # ── §3 Hybrid Arena (NORMALIZED vocab=200) ────────────────────────────────
+    print(f"\n{SEP}\n  §3  HYBRID ARENA  —  vocab=200 for ALL entities\n{SEP}")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# [9] REFRAIN [2,36,11] σε όλα τα κλειδιά
-# ══════════════════════════════════════════════════════════════════════════════
-print(f"\n[9] REFRAIN [#2+#36+#11] — Όλα τα κλειδιά × forward + backward")
-print(SEP2)
-print(f"\n  {'Key':15s}  {'Forward':15s}  {'Backward':15s}  {'Γνωστή φράση?'}")
-print(f"  {'-'*15}  {'-'*15}  {'-'*15}  {'-'*25}")
-for key_name, key_map in KEYS.items():
-    fwd = read_word([2,36,11], key_map)
-    bwd = read_word([11,36,2], key_map)
-    all_vocab = {**LINEAR_A, **PROTO_GREEK, **EGYPT_VOCAB, **LUWIAN_VOCAB, **MORPHEMES_LA}
-    note_f = next((m for w,m in all_vocab.items() if w in fwd), "")
-    note_b = next((m for w,m in all_vocab.items() if w in bwd), "")
-    note = note_f or note_b
-    note_short = note[:30] if note else "—"
-    print(f"  {key_name:15s}  {fwd:15s}  {bwd:15s}  {note_short}")
+    # Build all entities with normalized vocab
+    all_ents = {}  # name → (pool, vocab_set, etype)
+    for l in LANGS:
+        all_ents[l] = (POOLS[l], VOCABS[l], "pure")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# [10] ΤΕΛΙΚΑ ΣΥΜΠΕΡΑΣΜΑΤΑ
-# ══════════════════════════════════════════════════════════════════════════════
-winner_key  = ranked[0][0]
-winner_res  = ranked[0][1]
-winner_z    = (winner_res["score"] - null_mean) / null_std
+    for (n1, n2) in combinations(LANGS, 2):
+        hname = PAIR_NAMES.get((n1,n2)) or PAIR_NAMES.get((n2,n1)) or f"{n1[:5]}+{n2[:5]}"
+        merged = RAW[n1] + RAW[n2]
+        all_ents[hname] = (_make_pool(merged), _make_vocab(merged), "pair")
 
-print(f"\n{SEP}")
-print(f"""
-  ΤΕΛΙΚΑ ΣΥΜΠΕΡΑΣΜΑΤΑ:
-  ════════════════════
+    for key_t, hname in TRIPLE_NAMES.items():
+        merged = sum((RAW[n] for n in key_t), [])
+        all_ents[hname] = (_make_pool(merged), _make_vocab(merged), "triple")
 
-  ΝΙΚΗΤΗΣ KEY: {winner_key}
-    Score = {winner_res['score']}
-    Z     = {winner_z:.2f}×  (πάνω από random mean)
-    p     = {winner_res['pval']:.4f}
-    H     = {winner_res['entropy']:.3f} bits
+    print(f"  Entities: {len(all_ents)}  "
+          f"({len(LANGS)} pure + {len(all_ents)-len(LANGS)} hybrids)\n")
+    hybrid_r = []
+    for ename, (pool, vocab_set, etype) in all_ents.items():
+        tag = f" [{etype}]" if etype != "pure" else ""
+        print(f"  {ename}{tag} …", end=" ", flush=True)
+        r = run_lang(ename, pool, vocab_set, N_WORKERS, 5_000, 1_000)
+        r["etype"] = etype
+        print(f"Z={r['Z']:+.2f}  p={r['p']:.4f}")
+        hybrid_r.append(r)
+    hybrid_r.sort(key=lambda x: -x["Z"])
 
-  ΑΔΙΑΜΦΙΣΒΗΤΗΤΟ ΕΥΡΗΜΑ (key-independent):
-    [#36→#11] adjacency: {adj_36_11} παρατηρούμενες vs {expected_adj:.1f} αναμενόμενες
-    Z={z_adj:.2f}, p<{p_adj_binom:.2e}  ← p<0.000001 ★★★
+    print(f"\n  {'Rank':<4} {'Name':<28} {'Type':<7} {'Voc':>4} {'MCTS':>5} "
+          f"{'Null μ':>7} {'σ':>6} {'Z':>7} {'p':>9}  Pass")
+    print(f"  {SEP2}")
+    for i, r in enumerate(hybrid_r, 1):
+        print(f"  {i:<4} {r['name']:<28} {r['etype']:<7} {r['vn']:>4} "
+              f"{r['opt']:>5} {r['nm']:>7.2f} {r['ns']:>6.2f} "
+              f"{r['Z']:>+7.2f} {r['p']:>9.4f}  {'✓' if r['Z']>=2 else '✗'}")
 
-  BONFERRONI ΑΠΟΤΕΛΕΣΜΑ:
-    Keys με p < {BONFERRONI_THRESHOLD:.4f}:
-""")
-for key_name, res in ranked:
-    if res["pval"] < BONFERRONI_THRESHOLD:
-        print(f"    ✓ {key_name:15s} (p={res['pval']:.4f})")
+    # ── §4 MDL Judge ──────────────────────────────────────────────────────────
+    print(f"\n{SEP}\n  §4  MDL JUDGE — Bigram LM\n{SEP}")
+    mdl_r = []
+    for l in LANGS:
+        uni_lp, bi_lp = LMAPS[l]
+        if not uni_lp: continue
+        pool = POOLS[l]
+        ui = list(uni_lp.items()); bi = [(k, list(v.items())) for k, v in bi_lp.items()]
+        print(f"  [{l}] …", end=" ", flush=True)
+        batch = 10_000 // N_WORKERS; rem = 10_000 % N_WORKERS
+        with mp.Pool(N_WORKERS) as p:
+            nb = p.map(_mdl_null_worker,
+                       [(pool, ui, bi, batch+(1 if i<rem else 0), 99+i)
+                        for i in range(N_WORKERS)])
+        na = np.array([s for b in nb for s in b])
+        nm, ns = na.mean(), na.std(ddof=1)
+        per = max(1, 2000 // N_WORKERS); rem2 = 2000 % N_WORKERS
+        with mp.Pool(N_WORKERS) as p:
+            or_ = p.map(_mdl_opt_worker,
+                        [(pool, ui, bi, per+(1 if i<rem2 else 0), 42+i*1000)
+                         for i in range(N_WORKERS)])
+        opt, key = max(or_, key=lambda x: x[0])
+        Z  = (opt - nm) / ns if ns > 0 else 0.0
+        pv = float((na >= opt).sum()) / 10_000
+        print(f"Z={Z:+.2f}  p={pv:.6f}")
+        mdl_r.append(dict(name=l, Z=Z, p=pv, opt=opt, nm=nm, ns=ns))
+    mdl_r.sort(key=lambda x: -x["Z"])
+    print(f"\n  {'Rank':<4} {'Language':<22} {'MDL':>9} {'Null μ':>9} "
+          f"{'σ':>7} {'Z':>7} {'p':>10}  Pass")
+    print(f"  {SEP2}")
+    for i, r in enumerate(mdl_r, 1):
+        print(f"  {i:<4} {r['name']:<22} {r['opt']:>9.1f} {r['nm']:>9.1f} "
+              f"{r['ns']:>7.1f} {r['Z']:>+7.2f} {r['p']:>10.6f}  "
+              f"{'✓' if r['Z']>=2 else '✗'}")
 
-print(f"""
-  ENTROPY ΣΥΜΠΕΡΑΣΜΑ:
-    Keys F,B,I → H < 3.5 bits  (Ελληνικό/syllabic range)
-    Key H       → Abjad entropy analysis
-    Key G       → Luwian range
-    → Ο δίσκος συμπεριφέρεται ως ΣΥΛΛΑΒΙΚΟ κείμενο (όχι abjad)
-    → Ενισχύει τη Μινωική/Αιγαιακή υπόθεση vs. καθαρά Σημιτική
+    # ── §5 IG Judge ───────────────────────────────────────────────────────────
+    print(f"\n{SEP}\n  §5  IG JUDGE — E[IG] over 20k keys\n{SEP}")
+    vsets  = [VOCABS[l] for l in LANGS]
+    cpool  = list(set(s for l in LANGS for s in POOLS[l]))
+    vtl    = [[list(v) for v in vs] for vs in vsets]
+    H_prior = log2(len(LANGS))
+    batch = 20_000 // N_WORKERS; rem = 20_000 % N_WORKERS
+    with mp.Pool(N_WORKERS) as p:
+        ig_b = p.map(_ig_worker,
+                     [(cpool, vtl, batch+(1 if i<rem else 0), 42+i*1000, T_IG)
+                      for i in range(N_WORKERS)])
+    tot_ig   = sum(r[0] for r in ig_b)
+    tot_post = np.sum([r[1] for r in ig_b], axis=0)
+    tot_n    = sum(r[2] for r in ig_b)
+    mean_ig  = tot_ig / tot_n
+    mean_post = tot_post / tot_n
+    ig_ranked = sorted(zip(LANGS, mean_post), key=lambda x: -x[1])
+    ig_winner = ig_ranked[0][0]
 
-  ΤΙ ΧΡΕΙΑΖΕΤΑΙ ΓΙΑ ΔΗΜΟΣΙΕΥΣΗ:
-    1. Score > {p9999} (p<0.0001)  ← τώρα: {winner_res['score']}
-    2. Corpus expansion: 50,000+ Egyptian tokens (TLA database)
-    3. Independent replication με διαφορετικά sign groupings
-    4. Phonological plausibility review από Μινωιολόγο
-""")
-print(SEP)
+    print(f"  H(prior) = {H_prior:.4f} bits")
+    print(f"  E[IG]    = {mean_ig:.4f} bits  ({mean_ig/H_prior*100:.1f}% of prior)")
+    print(f"\n  Language pull (avg posterior over 20k keys):")
+    for lname, prob in ig_ranked:
+        bar = "█" * int(prob * 70)
+        print(f"    {lname:<22} {prob:.4f}  {bar}")
+    print(f"\n  IG Winner: {ig_winner}  (pull={ig_ranked[0][1]:.4f})")
+
+    # ── §6 Master scoreboard ──────────────────────────────────────────────────
+    print(f"\n{SEP}\n  §6  MASTER SCOREBOARD\n{SEP}")
+    a_rank  = {r["name"]: i+1 for i, r in enumerate(arena_r)}
+    h_rank  = {r["name"]: i+1 for i, r in enumerate(hybrid_r)}
+    m_rank  = {r["name"]: i+1 for i, r in enumerate(mdl_r)}
+    ig_rank = {n: i+1 for i, (n, _) in enumerate(ig_ranked)}
+
+    print(f"  {'Language':<22} {'Arena':>6} {'Hybrid':>7} {'MDL':>5} "
+          f"{'IG':>5}  {'AvgRank':>8}")
+    print(f"  {SEP2}")
+    summary = []
+    for l in LANGS:
+        ranks = [a_rank.get(l,99), h_rank.get(l,99),
+                 m_rank.get(l,99), ig_rank.get(l,99)]
+        avg = sum(ranks) / len(ranks)
+        summary.append((l, *ranks, avg))
+    for row in sorted(summary, key=lambda x: x[-1]):
+        l, ar, hr, mr, ir, avg = row
+        print(f"  {l:<22} {ar:>6} {hr:>7} {mr:>5} {ir:>5}  {avg:>8.1f}")
+
+    elapsed = time.time() - t0
+    print(f"\n{SEP}")
+    print(f"  Completed in {elapsed/60:.1f} min")
+    print(f"  Arena winner   : {arena_r[0]['name']}  Z={arena_r[0]['Z']:+.2f}")
+    print(f"  Hybrid winner  : {hybrid_r[0]['name']}  Z={hybrid_r[0]['Z']:+.2f}")
+    print(f"  MDL winner     : {mdl_r[0]['name']}  Z={mdl_r[0]['Z']:+.2f}")
+    print(f"  IG winner      : {ig_winner}")
+    print(SEP)
+
+    # ── Figures ───────────────────────────────────────────────────────────────
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+    fig.patch.set_facecolor("#0d1117")
+    C8 = ["#3fb950","#58a6ff","#f0883e","#d2a8ff","#ffa657","#ff7b72","#79c0ff"]
+
+    ax = axes[0]
+    ax.set_facecolor("#161b22")
+    for sp in ax.spines.values(): sp.set_color("#30363d")
+    ax.tick_params(colors="#e6edf3")
+    ax.xaxis.label.set_color("#e6edf3"); ax.yaxis.label.set_color("#e6edf3")
+    ax.title.set_color("#e6edf3")
+    bars = ax.barh([r["name"] for r in arena_r],
+                   [r["Z"]    for r in arena_r],
+                   color=[C8[i%len(C8)] for i in range(len(arena_r))],
+                   edgecolor="#30363d")
+    ax.axvline(2.0, color="#f85149", lw=1.5, ls="--")
+    for bar, r in zip(bars, arena_r):
+        ax.text(r["Z"]+0.1, bar.get_y()+bar.get_height()/2,
+                f"{r['Z']:+.1f}", va="center", fontsize=9, color="#e6edf3")
+    ax.set_xlabel("Z-score"); ax.set_title("Arena — Pure Languages")
+    ax.invert_yaxis()
+
+    ax = axes[1]
+    ax.set_facecolor("#161b22")
+    for sp in ax.spines.values(): sp.set_color("#30363d")
+    ax.tick_params(colors="#e6edf3")
+    ax.xaxis.label.set_color("#e6edf3"); ax.yaxis.label.set_color("#e6edf3")
+    ax.title.set_color("#e6edf3")
+    top20 = hybrid_r[:20]
+    cmap  = {"pure": "#58a6ff", "pair": "#3fb950", "triple": "#f0883e"}
+    bars2 = ax.barh([r["name"] for r in top20], [r["Z"] for r in top20],
+                    color=[cmap[r["etype"]] for r in top20], edgecolor="#30363d")
+    ax.axvline(2.0, color="#f85149", lw=1.5, ls="--")
+    for bar, r in zip(bars2, top20):
+        ax.text(r["Z"]+0.1, bar.get_y()+bar.get_height()/2,
+                f"{r['Z']:+.1f}", va="center", fontsize=8, color="#e6edf3")
+    ax.legend(handles=[Patch(color="#58a6ff", label="Pure"),
+                        Patch(color="#3fb950", label="Pair"),
+                        Patch(color="#f0883e", label="Triple")],
+              fontsize=8, facecolor="#21262d", edgecolor="#30363d", labelcolor="#e6edf3")
+    ax.set_xlabel("Z-score")
+    ax.set_title("Hybrid Arena — Top 20  (normalized vocab=200)")
+    ax.invert_yaxis()
+
+    fig.suptitle("Phaistos Disc — Master Analysis",
+                 color="#e6edf3", fontsize=13, y=1.01)
+    fig.tight_layout()
+    fig.savefig("master_output.png", dpi=150, bbox_inches="tight",
+                facecolor="#0d1117")
+    print("\nSaved: master_output.png")
