@@ -18,9 +18,9 @@ All three computed from the **Evans/Godart canonical transcription** (45 signs, 
 
 | Finding | Value | Significance |
 |---------|-------|--------------|
-| PLUMED HEAD(#02)→SHIELD(#12) bigram (canonical) | Z=+12.05, obs/exp=9.7× | p<0.0001, MC n=20,000; cannot be random |
-| PLUMED HEAD(#02) word-initial in 19/19 occurrences (canonical) | Z=+7.51 | p<0.0001; consistent with determinative/article function |
-| Seven exact word-group repetitions across 61 groups (canonical) | 24.6% refrain density | Z vs null=+45.60, p<0.0001; diagnostic of ritual texts |
+| PLUMED HEAD(#02)→SHIELD(#12) bigram (canonical) | Z=+12.05, obs/exp=9.7× | p<0.0001, MC n=20,000 (null: sign frequencies preserved, adjacency randomised); highly unlikely under this null model |
+| PLUMED HEAD(#02) word-initial in 19/19 occurrences (canonical) | Z=+7.51 | p<0.0001 (binomial null: word-initial probability = 61/241 = 25.3%); consistent with a word-initial grammatical function (determinative, article, or particle) |
+| Seven exact word-group repetitions across 61 groups (canonical) | 24.6% refrain density | Z vs null=+45.60, p<0.0001; consistent with ritual text classification (corpus domain control: theological texts Z=+27 vs administrative texts Z=−0.4) |
 
 ### Phonetic Key Results (Bonferroni-corrected, 9 keys tested)
 
