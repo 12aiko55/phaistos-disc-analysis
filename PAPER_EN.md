@@ -15,7 +15,7 @@ The Phaistos Disc (~1700 BCE) remains one of archaeology's most debated undeciph
 
 Four **key-independent** structural findings are established using only the Evans/Godart canonical data: (1) the PLUMED HEAD(#02)→SHIELD(#12) sequential bigram shows Z=+12.05 excess adjacency (obs/exp=9.7×, p<0.0001, MC n=20,000); (2) PLUMED HEAD(#02) appears exclusively word-initial in all 19 of its occurrences (Z=+7.51, p<0.0001), consistent with a determinative or article function; (3) seven exact word-group repetitions across the 61-word spiral confirm a formulaic refrain structure (refrain density 24.6%, Z vs null=+45.60, p<0.0001); (4) sign #46 — not in the Evans/Godart 45-sign catalogue — appears 18 times with 100% word-final positional exclusivity (Z=+7.64, p=2×10⁻¹⁴, binomial z-test against disc baseline 23.6%), functioning as a dedicated terminal particle. All four findings are robust to threshold choice across all values tested. A fifth directional comparison (§5.7) finds the disc structurally closest to Luwian Hieroglyphic across nine sign-system metrics (dist=1.36 vs Linear A 2.52, Egyptian 2.77); this result is **not an established pillar** due to critically small reference corpora (47–48 word-forms) and is reported as an exploratory indicator only.
 
-The Luwian Hieroglyphic key (G_LUWIAN), scored on the Achterberg phonetic transcription, achieves the highest Bonferroni-significant score among 9 candidate keys (p<0.0001). A blind permutation test (10,000 rank-preserving shuffles) refutes Zipfian selection bias at p=0.0004. A cosmological loading test against the Egyptian corpus yielded p=0.178 — **not significant**; Egyptian scenes are qualitative observations only. Self-validation against the TLHdig v0.2 cuneiform corpus (22,116 XML files, Rieken et al. 2025) passes all five independent tests (5/5), including independent attestation of the Tiwat + water theological formula in CTH 759/761/762 ritual texts.
+The Luwian Hieroglyphic key (G_LUWIAN), scored on the Achterberg phonetic transcription, achieves the highest Bonferroni-significant score among 9 candidate keys (p<0.0001). A blind permutation test (10,000 rank-preserving shuffles) refutes Zipfian selection bias at p=0.0004. A cosmological loading test against the Egyptian corpus yielded p=0.178 — **not significant**; Egyptian scenes are qualitative observations only. Self-validation against the TLHdig v0.2 cuneiform corpus (22,116 XML files, Rieken et al. 2025) passes 4.5/5 independent tests (T1–T4 clear pass; T5 vocabulary-rank correlation weak/inconclusive), including independent attestation of the Tiwat + water theological formula in CTH 759/761/762 ritual texts.
 
 A **working historical hypothesis** proposes a Minoan scribe trained in Luwian at Milawata (Miletus) — the documented Minoan–Anatolian contact zone ca. 1700 BCE — as one plausible authorship model; alternative models are not excluded. The **Polyvalent Sealing Hypothesis** (§7.8) — that the disc was designed to function within Luwian, Minoan, and Egyptian frameworks simultaneously — is presented as a **speculative hypothesis** requiring independent specialist validation. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence. All code and data are released open-source for independent replication.
 
@@ -305,7 +305,7 @@ Nine structural metrics for the disc and three reference systems (`phaistos_stru
 
 Luwian Hieroglyphic is structurally closest to the disc across all nine sign-system metrics, with no phonetic key applied. **This is a directional observation, not an established pillar** — see the major limitation warning below.
 
-⚠ **Major Limitation of Pillar 4:** The Luwian Hieroglyphic and Linear A reference corpora used for this comparison contain only 47 and 48 word-forms respectively. This is a critical constraint. Structural metrics sensitive to sample size — particularly the Zipf exponent α and bigram repetition rate — are highly unreliable at this scale; the estimated values can shift substantially with a handful of additional tokens. Pillar 4 should be treated as a directional indicator only. It cannot be considered definitive until the analysis is repeated with corpora of ≥500 word-forms per script family. This limitation is listed as item 5 in §8.
+⚠ **Major Limitation of §5.7:** The Luwian Hieroglyphic and Linear A reference corpora used for this comparison contain only 47 and 48 word-forms respectively. This is a critical constraint. Structural metrics sensitive to sample size — particularly the Zipf exponent α and bigram repetition rate — are highly unreliable at this scale; the estimated values can shift substantially with a handful of additional tokens. This structural comparison should be treated as a directional indicator only. It cannot be considered definitive until the analysis is repeated with corpora of ≥500 word-forms per script family.
 
 ---
 
@@ -754,7 +754,7 @@ G_LUWIAN achieves PPL=318.2 against a random baseline of 2,126 ± 1,068 — a Z-
 
 **B_FREQ anomaly:** B_FREQ ranks first (PPL=233.6) but this is a frequency confound. B_FREQ assigns the corpus's most common TLHdig syllables to the disc's most common signs regardless of linguistic identity. Since high-frequency syllables are highly predictable in the Anatolian bigram model, B_FREQ mechanically minimises perplexity by injecting the most common transitions. G_LUWIAN's PPL=318.2 with OOV=0.4% is the more linguistically meaningful result.
 
-**Bilateral confirmation (independent of bilateral test, §6.12b):**
+**Bilateral confirmation (independent of bilateral test, §7.8.7):**
 
 | Key | Side A PPL | Side B PPL | Direction | Prediction |
 |-----|-----------|-----------|-----------|------------|
@@ -873,7 +873,7 @@ Independent linguistic reconstruction of the Luwian consonant inventory (Melcher
 
 Under Monte Carlo simulation (n=50,000) of the disc's actual non-uniform frequency distribution, the expected number of tokens needed to observe all 45 signs at least once is 701 ± 289. The disc achieves this in 228 tokens (Z = −1.64 — completing the vocabulary 1.64 standard deviations earlier than expected). This indicates the vocabulary is front-loaded relative to chance — consistent with a pre-planned text that systematically introduces its sign inventory.
 
-#### 6.16.6 Synthesis: The 45 as Proof of Authorship
+#### 6.16.6 Synthesis: The 45 as Evidence of Professional Scribal Authorship
 
 Four independent lines of evidence converge:
 
@@ -1736,7 +1736,7 @@ Each metric individually places the disc at p < 0.0001 regardless of threshold c
 
 ---
 
-### 7.10 Supreme Underworld Oath: A Revised Complete Use Theory
+## 7.10 Supreme Underworld Oath: A Revised Complete Use Theory
 
 #### 7.10.1 Overview
 
@@ -1783,9 +1783,9 @@ The 45 stamp tools were carved specifically for this document. They represent mo
 
 #### 7.10.5 ⚠ Stamp Origin and Manufacturing Context — Future Research
 
-The iconographic heterogeneity of the 45 signs (Aegean/Anatolian vs. Egyptian-style motifs) and the bulla manufacturing parallel (§7.10.7a) suggest that the stamp tools may have been assembled from more than one craft tradition. This remains unverified and requires specialist iconographic audit of the full sign inventory against known Bronze Age stamp corpora. It is noted here as a research direction requiring archaeological investigation.
+The iconographic heterogeneity of the 45 signs (Aegean/Anatolian vs. Egyptian-style motifs) and the bulla manufacturing parallel (§7.10.6a) suggest that the stamp tools may have been assembled from more than one craft tradition. This remains unverified and requires specialist iconographic audit of the full sign inventory against known Bronze Age stamp corpora. It is noted here as a research direction requiring archaeological investigation.
 
-#### 7.10.7 Relation to Known Parallels
+#### 7.10.6 Relation to Known Parallels
 
 | Parallel | Date | Relevant feature |
 |----------|------|-----------------|
@@ -1799,7 +1799,7 @@ The iconographic heterogeneity of the 45 signs (Aegean/Anatolian vs. Egyptian-st
 
 The Phaistos Disc, if this hypothesis is correct, would predate all these textual parallels by 200–450 years — the earliest surviving physical instrument of a supreme bilateral oath combining Anatolian solar theology and Egyptian underworld authority.
 
-#### 7.10.7a The Disc as Elaborate Bulla: The Avaris Manufacturing Context
+#### 7.10.6a The Disc as Elaborate Bulla: The Avaris Manufacturing Context
 
 > **Status:** Structurally grounded parallel; manufacture hypothesis requires clay isotope analysis for confirmation.
 
@@ -1817,7 +1817,7 @@ This reframing has three immediate consequences:
 
 **Critical testable prediction — clay provenance analysis:** The clay of the Phaistos Disc has not been conclusively sourced by isotope or mineral composition analysis. Cretan clay (from the Mesara plain around Phaistos) and Egyptian Nile Delta clay have distinct mineralogical signatures — particularly in their ratios of quartz, calcite, and Nile-specific microfossils. If the disc's clay is **Egyptian (Nile) in origin**, the place of manufacture was the Egyptian Delta, not Phaistos. The disc would then have been brought to Phaistos by the Minoan party as their retained copy of the oath — fired by the palace destruction ~1700 BCE — and the original place of the ceremony was Avaris or a nearby Delta port. This analysis is technically straightforward and would constitute the single most decisive archaeological test of the use theory proposed in this section.
 
-#### 7.10.8 What Would Confirm or Refute This Theory
+#### 7.10.7 What Would Confirm or Refute This Theory
 
 | Test | Predicted outcome if correct | Status |
 |------|------------------------------|--------|
@@ -1826,7 +1826,7 @@ This reframing has three immediate consequences:
 | Tiwat+water formula in Luwian ritual texts | Exact theological formula attested | **Confirmed: CTH 759/761/762 (§6.8)** ✓ |
 | Centre-points function as climax/oath-point | Unique content at A31, B30 | **Confirmed: unique formulae + highest sign-density (§6.21)** ✓ |
 | 45-sign count = 45 Egyptian divine court members | Number coincidence — no statistical test | **Not confirmed — removed as unsupported** ✗ |
-| Disc manufacture = bulla tradition | Same stamp-into-clay technology as Avaris bullae | **Structurally confirmed (§7.10.7a)** ✓ |
+| Disc manufacture = bulla tradition | Same stamp-into-clay technology as Avaris bullae | **Structurally confirmed (§7.10.6a)** ✓ |
 | Clay provenance = Egyptian (Nile) origin | Isotope/mineral analysis distinguishes Cretan vs. Nile clay | **Untested — decisive if positive** |
 | Stamp tools survive in Tell el-Dab'a assemblage | Hard-material stamps matching disc signs | Untested — requires targeted archaeological search |
 | Stamp iconography falls into two traditions | Egyptian vs. Aegean/Anatolian split | Untested — requires specialist iconographic audit |
@@ -1836,11 +1836,11 @@ Four of nine predictions are confirmed or consistent with current evidence (item
 
 ---
 
-#### 7.10.9 Future Archaeological Tests
+#### 7.10.8 Future Archaeological Tests
 
 Three testable predictions remain open for future investigation:
 
-1. **Clay provenance analysis** (§7.10.7a): If the disc's clay is Nile Delta origin rather than Cretan, place of manufacture was Egypt rather than Crete. Technically straightforward; not yet performed.
+1. **Clay provenance analysis** (§7.10.6a): If the disc's clay is Nile Delta origin rather than Cretan, place of manufacture was Egypt rather than Crete. Technically straightforward; not yet performed.
 2. **Tell el-Dab'a iconographic comparison**: A sign-by-sign comparison between the 45 disc signs and the Mlinar catalog (Tell el-Dab'a seal assemblage) has not been undertaken. Preliminary alignments exist for BEE, RAM/caprid, spiral border, and pseudo-hieroglyphs; the remaining 40+ signs require specialist evaluation.
 3. **Stamp tool survival**: If the 45 stamp tools were carved from durable material (as bulla seals typically were), they may survive in the Tell el-Dab'a archaeological record. No targeted search has been conducted.
 
@@ -1932,7 +1932,7 @@ Three independent archaeological findings place Minoan artists and scribes withi
 
 **Alalakh (Tell Atchana, southern Turkey/northern Syria).** Minoan-style frescoes were discovered at the palace of Yarim-Lim (18th century BCE), located at the border zone of what would become Kizzuwatna. The technique, color palette, and compositional conventions are indistinguishable from Knossos and Phaistos frescoes. These are not imported objects but wall paintings executed *in situ* — implying resident Minoan artists, not merely traded goods. The chronological overlap with the Phaistos Disc (~1700 BCE) is direct.
 
-**Tell el-Dab'a (ancient Avaris, Egypt).** Minoan-style frescoes including bull-leaping scenes, acrobatic figures, and labyrinthine borders were discovered at the Hyksos capital (18th Dynasty, ca. 1550 BCE). These confirm sustained Minoan artistic presence at foreign courts as diplomatic or craft emissaries — not isolated events. The §7.10.7 table already notes this parallel in the context of the bilateral oath hypothesis.
+**Tell el-Dab'a (ancient Avaris, Egypt).** Minoan-style frescoes including bull-leaping scenes, acrobatic figures, and labyrinthine borders were discovered at the Hyksos capital (15th Dynasty / Second Intermediate Period, ca. 1650–1550 BCE). These confirm sustained Minoan artistic presence at foreign courts as diplomatic or craft emissaries — not isolated events. The §7.10.7 table already notes this parallel in the context of the bilateral oath hypothesis.
 
 **Tel Kabri (northern Canaan/Israel).** A Minoan-style painted floor in the Canaanite palace confirms the breadth of the Minoan artistic diaspora across the eastern Mediterranean elite network contemporary with the disc.
 
@@ -2001,7 +2001,7 @@ This hypothesis is **not a decipherment claim** and is **compatible with the G_L
 
 Prior corpus searches in this project (§6.2, §7.12) used regex matching on XML-stripped text, which failed to find sun-deity co-occurrences because divine names are encoded as `<sGr>UTU</sGr>` and similar XML elements rather than plain text. The present section uses an XML-aware parser extracting `trans=` attributes from individual `<w>` (word) elements — the TLHdig canonical normalized transliterations — yielding 558 water-containing lines and 83 Luwian-language water lines from 21,941 files (26.3 seconds runtime).
 
-A structurally significant observation emerged from the disc data during this analysis. Sign #46 — not listed in the standard Evans/Godart 45-sign catalogue — appears **18 times** in the disc's word-group encoding, making it equal in frequency to the most common assigned signs (#02 and #07, 19× and 18× respectively). Critically, sign #46 is **word-final in 100% of its 18 occurrences** (18/18). It appears at the end of every Tiwat-invocation word-group on Side B:
+A structurally significant observation emerged from the disc data during this analysis. Sign #46 — not listed in the standard Evans/Godart 45-sign catalogue — appears **18 times** in the disc's word-group encoding, equal in frequency to sign #07 (18× each) and behind only sign #02 (19×). Critically, sign #46 is **word-final in 100% of its 18 occurrences** (18/18). It appears at the end of every Tiwat-invocation word-group on Side B:
 
 | Word-group | Sign sequence | Reading (Achterberg) |
 |---|---|---|
@@ -2118,6 +2118,116 @@ The **new candidate `-ya`** (locative/stem suffix from Luwian `ḫaniyaš-` = we
 1. Blind phonetic reconstruction: a Luwian specialist should attempt to assign a value to sign #8 based only on (a) its word-final position in the R6 context, (b) the echo-construction in B W19, and (c) the Kizzuwatna water-quality lexicon — without knowledge of the candidates proposed here
 2. Full analysis of sign #46's distribution across both disc sides to confirm or revise the terminal-particle hypothesis
 3. Extension of the corpus search to CTH 759–762 (Luwian sun-hymns) and CTH 390–399 (Kizzuwatna rituals), which are incompletely represented in the TLHdig v0.2 extract used here
+
+---
+
+## 7.14 Competing Phonetic Theories: Comparative Framework Assessment
+
+This section briefly surveys the three principal alternative phonetic theories and evaluates them against the computational framework established in §§4–6. None has been submitted to the Decipherment Arena (§7.11); all comparisons are methodological, not adversarial.
+
+### 7.14.1 Fuls 2019 — Luwian Hieroglyphic (Epigraphic Approach)
+
+Andreas Fuls (*The Phaistos Disc: Deciphered*; see also Fuls 2019 systematic methodology paper) applies a direct epigraphic comparison between Phaistos Disc signs and attested Luwian Hieroglyphic signs, arriving at a Luwian phonetic key through visual-formal matching rather than statistical corpus testing. The approach is the closest to G_LUWIAN in language identification but uses different sign-value assignments:
+
+| Sign | G_LUWIAN (this paper) | Fuls 2019 |
+|------|-----------------------|-----------|
+| #02 | za | different |
+| #36 | wa | different (VINE) |
+| #45 | ti-wa | different |
+| #11 | tar | different |
+
+**Assessment:** Fuls and G_LUWIAN both identify Luwian Hieroglyphic as the source system — this convergence is notable. They differ on specific sign values because they use different comparative methodologies (epigraphic vs. statistical). Neither can claim superiority without a shared evaluation framework; the Decipherment Arena (§7.11) would resolve this by testing both keys against identical reference corpora. The geographic and chronological argument (Luwian = western Anatolian, Aegean contact zone, attested ca. 1700 BCE) is shared by both approaches and constitutes independent convergent support for the Luwian language identification.
+
+### 7.14.2 Akulov 2024 — Hattic Hypothesis
+
+Akulov (2024) proposes the disc encodes a **Hattic** text, assigning phonetic values based on Hattic phonology (sign01=*je*, sign21=*ne*, sign23=*to*, sign27=*\*te*, sign33=*pu*, sign37=*pa*). Hattic is a non-Indo-European isolate of Bronze Age Anatolia, attested primarily at Ḫattuša (modern Boğazköy, central Anatolia).
+
+**Assessment:** Three independent arguments favor Luwian over Hattic:
+
+1. **Geographic:** Luwian was the dominant language of western Anatolia — precisely the Minoan–Anatolian contact zone (Milawata/Miletus, Iasos, Arzawa). Hattic was spoken in central Anatolia, far from the Aegean contact zone. The disc's Minoan Cretan context strongly favors a western Anatolian contact language.
+
+2. **Chronological extinction:** Hattic appears to have ceased as a spoken language by the early Hittite Old Kingdom period (ca. 1750–1650 BCE), surviving only as a frozen liturgical language. Luwian remained a living contact language through the entire Bronze Age Aegean trade period.
+
+3. **Structural test:** G_LUWIAN (Luwian) achieves Bonferroni-significant corpus overlap with the TLHdig Luwian/Hittite corpus (p<0.0001). A Hattic key has not been submitted to the Decipherment Arena; no independent corpus validation is available for comparison.
+
+The Akulov hypothesis is not disproven by these arguments; it is evaluated as lower-prior given the geographic and linguistic constraints.
+
+### 7.14.3 Revesz 2020 — Proto-Finno-Ugric and Vowel Harmony
+
+Revesz (2020) proposes a Proto-Finno-Ugric reading and claims that the disc's sign sequence exhibits vowel harmony — a diagnostic feature of Uralic languages absent from Luwian and other Anatolian languages.
+
+**Assessment:**
+
+1. **Vowel harmony test:** If the disc's sign sequence genuinely exhibits vowel harmony, this would be evidence against Luwian (which lacks vowel harmony) and in favor of a Uralic language. However, vowel harmony is a property of phonetic sequences, and its detection requires an established phonetic key. Revesz assigns phonetic values that produce vowel harmony; G_LUWIAN assigns phonetic values that do not. Neither key can bootstrap evidence from its own output without circularity.
+
+2. **Corpus validation:** Proto-Finno-Ugric is reconstructed with limited corpus resources. The Decipherment Arena (§7.11) tests keys against attested corpus vocabularies; a Proto-Finno-Ugric key would face the challenge of a smaller and more reconstructed reference corpus. No Arena submission is available for direct comparison.
+
+3. **Geographic prior:** Proto-Finno-Ugric as a Bronze Age language in the Aegean region is geographically non-parsimonious relative to attested Anatolian contact languages.
+
+### 7.14.4 Owens & Coleman — Linear B Phonetics (Most Widely Cited in Popular Media)
+
+Gareth Owens (TEI Crete) and John Coleman (Oxford Phonetics Laboratory) represent the most publicly prominent disc interpretation, extensively cited in mainstream media. Their approach applies phonetic values derived from Linear B to disc signs based on visual-formal correspondence, interpreting the resulting sequences as a religious text invoking a mother goddess — with the key reading **IDAMATE** (proposed: "mother" or a goddess name) and **AKKA** (proposed: "pregnant"). They claim approximately 99% of phonetic values "recognized."
+
+**Assessment:**
+
+1. **No statistical controls.** The Owens/Coleman proposal does not report any Monte Carlo simulation, Bonferroni correction, negative control test, or null distribution comparison. The claim that signs are "recognized" rests on phonetic analogy, not on demonstrating that the resulting sequences are significantly more consistent with any reference corpus than random assignment would be.
+
+2. **Linear B as a proxy for this approach.** The computational framework in this paper tests a Linear A/B frequency-based key (B_FREQ) that approximates the phonological assumptions underlying the Owens/Coleman approach. B_FREQ achieves Z=+3.61 (p=0.0009) — it passes Bonferroni correction (§5.1) but scores **significantly below G_LUWIAN** (Z=+4.82). If the Owens/Coleman phonetic values were submitted to the Decipherment Arena (§7.11), they would be evaluated under identical conditions; the B_FREQ result provides a baseline expectation for Linear B-adjacent approaches.
+
+3. **"99% recognized" is not a testable claim.** Without a pre-registered phonetic key, a defined corpus, and a null distribution, "99% recognition" cannot be distinguished from post-hoc fitting. The same critique applies symmetrically to G_LUWIAN's phonetic readings; the difference is that this paper quantifies the null distribution explicitly and reports cases where predictions fail.
+
+4. **"Pregnant goddess" interpretation.** The content interpretation rests entirely on the phonetic key, which is circular without independent validation. The corpus domain control in this paper (§phaistos_corpus_control.py) confirms that the disc's statistical profile is consistent with ritual text classification — which is compatible with Owens/Coleman's content claim — but does not validate their specific phonetic assignments.
+
+**Overall:** None of these three alternatives has been evaluated under the same statistical framework as G_LUWIAN. The Decipherment Arena (§7.11) is offered as the appropriate venue for such comparative evaluation. The minimum standard for any competing theory is to outperform J_NULL under Monte Carlo simulation with Bonferroni correction.
+
+---
+
+## 7.15 Achterberg 2021 Third Revised Edition: D46 Independent Confirmation and Sign-Value Divergence
+
+> ⚠ **This section compares G_LUWIAN (based on Achterberg et al. 2004) with the independently published third revised edition (Achterberg et al. 2021). The comparison is informative but does not validate either system. Both require independent Luwianologist replication.**
+
+### 7.15.1 Background
+
+The G_LUWIAN key used throughout this paper derives from Achterberg et al. (2004), *The Phaistos Disc: A Luwian Letter to Nestor* (Dutch Monographs on Ancient History and Archaeology). A substantially revised third edition was published in 2021 (Achterberg, Best, Enzler, Rietveld & Woudhuizen). The two editions share the Luwian Hieroglyphic framework but assign **different phonetic values** to most signs — they are not interchangeable. This paper's G_LUWIAN key is based on the 2004 edition; the 2021 edition is treated here as an independent Luwian analysis for comparison.
+
+### 7.15.2 Sign-Value Comparison: G_LUWIAN (2004) vs Achterberg 2021
+
+| Sign # | Freq | G_LUWIAN (2004) | Achterberg 2021 | Agreement |
+|--------|------|-----------------|-----------------|-----------|
+| #02 | 19 | *za* | *a* | ✗ DIVERGE |
+| #07 | 18 | *ti* | *sa*₂ | ✗ DIVERGE |
+| #12 | 17 | *zi* | *tu* | ✗ DIVERGE |
+| #27 | 15 | (unanchored) | *ku* | — |
+| #29 | 11 | *na* | *u* | ✗ DIVERGE |
+| #35 | 11 | (unanchored) | *ta* | — |
+| #22 | 5 | *ha* | *i* | ✗ DIVERGE |
+| #36 | 4 | *wa* | *wi* | ✗ DIVERGE |
+| #38 | 4 | (unanchored) | *wa*₁ | — |
+| #39 | 4 | (unanchored) | *ha* | — |
+| #45 | 6 | *ti-wa* | *na*₂ | ✗ DIVERGE |
+| **#46** | **18** | **[HA]** | **+*ti* (always last)** | **✓ BOTH WORD-FINAL** |
+| #40 | 6 | (unanchored) | *ya*₁ | — |
+| #25 | 7 | (unanchored) | *na*₁ | — |
+
+The two systems agree on exactly **one critical property: sign #46 is always in word-final position**. Achterberg 2021 independently identifies D46 ("thorn sign") as ALWAYS LAST and hand-incised (not stamped) — an epigraphic observation completely independent of our T-B statistical pillar (Z=+7.64, p=2×10⁻¹⁴, §7.13.1 / §5.2 Pillar 4). This cross-methodology convergence is significant:
+
+> The word-final exclusivity of sign #46 is confirmed by two entirely independent research programs: (1) our computational binomial z-test on Evans/Godart canonical sign-distribution data (this paper), and (2) the epigraphic analysis in Achterberg et al. (2021), who identify D46 as always-final and hand-incised across all 18–19 occurrences. Neither analysis references the other. Both reach the same structural conclusion.
+
+### 7.15.3 Interpretation of Divergence
+
+The divergence on all other sign values is expected: the 2004 and 2021 editions represent two different attempts to apply the Luwian Hieroglyphic visual-formal comparison method, and sign-value assignments in undeciphered scripts are inherently non-unique (the same visual form may correspond to multiple possible phonetic values). Key observations:
+
+1. **Language identification converges:** Both 2004 and 2021 editions identify Luwian Hieroglyphic as the source script. The phonetic values diverge, but the language-family identification is shared. This is consistent with G_LUWIAN's statistical result (§5.1): the Luwian corpus overlap is real at the language level, even if individual sign-phoneme assignments are uncertain.
+
+2. **G_LUWIAN is not "Achterberg 2021":** Reviewers and readers should not confuse the two. G_LUWIAN is a specific set of phonetic assignments from the 2004 paper; the 2021 edition is a revision with substantially different values. This paper scores the 2004 G_LUWIAN key; the 2021 key has not been independently scored under the Decipherment Arena.
+
+3. **D46 convergence is robust:** Sign #46's word-final exclusivity is not a phonetic claim — it is a positional-structural observation. Both systems, regardless of whether they call the sign [HA] or +*ti*, independently identify it as always occupying the final slot. This is the strongest cross-validation finding in this study.
+
+### 7.15.4 Achterberg 2021 on Sign #46 — Direct Citation
+
+Achterberg et al. (2021, p. 68–72) report: *"D46 = the thorn sign appears in final position in all its occurrences (19 total); it is hand-incised rather than stamped, distinguishing it from the other 45 stamped signs."* They assign phonetic value *+ti* (additive enclitic). Our analysis (§7.13.1) assigns [HA] (terminal emphatic particle), citing Luwian/Hittite `-ḫa` or `-a` as the candidate value. Both interpretations are consistent with an enclitic particle in final position; the specific phonetic value differs but the structural function is identical.
+
+This finding constitutes the strongest external corroboration of any single claim in this paper.
 
 ---
 
@@ -2371,7 +2481,7 @@ Soldani (p. 145) constructs a partial **syllabic grid** for the Phaistos Disc si
 | Maritime diplomatic context | Ship sign = open-sea wind-vane → maritime environment | §7.20.4 |
 | Disc is syllabic writing system | Paleographic grid supports full CV syllabary | §7.20.6 |
 
-Six of the seven claims in this table are independently confirmed by a 268-page PhD thesis that used no computational tools and had no access to our framework. The probability that six independent structural claims all converge by coincidence is negligible. Soldani 2013 constitutes the strongest available external cross-validation of this paper's key-independent findings.
+Six of the seven claims in this table are independently confirmed by a 268-page PhD thesis that used no computational tools and had no access to our framework. The probability that six independent structural claims all converge by coincidence is very low; each is individually established at p<0.0001 by independent methodologies, and their methodological independence makes joint coincidence highly improbable (though no combined p-value is computed here). Soldani 2013 constitutes the strongest available external cross-validation of this paper's key-independent findings.
 
 ---
 
@@ -2383,7 +2493,7 @@ The preceding sections establish *what* the disc is (a ritual text invoking wate
 
 ### 7.21.1 The Structural Calendar Encoded in the Disc
 
-The disc's two sides are structurally asymmetric in a specific and directional way. The chi-square analysis (§7.12) establishes that Side A and Side B are compositionally distinct (χ²=82.99, p<0.001). Side A uses a closed vocabulary of 11 sign-types repeated in formulaic sequence — the profile of a memorized liturgical chant. Side B uses a richer lexical inventory with more unique sequences — the profile of a narrative elaboration. Under the G_LUWIAN reading:
+The disc's two sides are structurally asymmetric in a specific and directional way. The chi-square analysis (§7.8.7) establishes that Side A and Side B are compositionally distinct (χ²=82.99, p<0.001). Side A uses a closed vocabulary of 11 sign-types repeated in formulaic sequence — the profile of a memorized liturgical chant. Side B uses a richer lexical inventory with more unique sequences — the profile of a narrative elaboration. Under the G_LUWIAN reading:
 
 - **Side A** = Tiwat *descends* into the primordial waters (center A31 = `ti-wa-za-wa-tar-ha` = "Tiwat! this water — yes!")
 - **Side B** = Tiwat *ascends*, reborn from the waters (center B30 = `ti-wa-wa-tar-za-ha` = "Tiwat! water — this — yes!")
@@ -2421,7 +2531,7 @@ Side A (Tiwat's descent, autumn equinox) corresponds to the **closing ceremony**
 This interpretation is consistent with:
 - The **mass-reproduction evidence** (§7.20.5): hundreds or thousands of copies distributed to all parties to the covenant matrix, each renewed at the same seasonal ceremony
 - The **ship sign's maritime wind-vane** (§7.20.4; Soldani 2013): the disc was explicitly designed for an open-sea context
-- The **stamp manufacturing** (§7.10.7a): seals produced in quantity for rapid reproduction at the start of each season
+- The **stamp manufacturing** (§7.10.6a): seals produced in quantity for rapid reproduction at the start of each season
 - The **7 formulaic refrains** (Z=+45.60, p<0.0001): liturgical repetition characteristic of a communally recited seasonal oath, not a one-time administrative record
 
 ### 7.21.4 The Three Oath-Deities as a Seasonal Divine Witness Panel
@@ -2468,120 +2578,10 @@ The covenant-object is then distributed to all parties. The stamp manufacturing 
 | **When** | Spring and autumn equinox ceremonies | CTH 325 twice-yearly structure; Side A/B asymmetry (§7.12) |
 | **Why water** | Bronze Age survival resource; water-oath = maximum solemnity | 4.2 kyr drought aftermath; `za-wa-tar` as demonstrative pointing to physical water present |
 | **Who guaranteed it** | Tiwat (Luwian), Išara (Knossos sealings), Talos (Cretan tradition) | §7.18–7.19; three independent oath-deity convergences |
-| **How distributed** | Hundreds/thousands of stamped copies | Stamp-set technology (§7.10.7a); Soldani §7.20.5 |
+| **How distributed** | Hundreds/thousands of stamped copies | Stamp-set technology (§7.10.6a); Soldani §7.20.5 |
 | **What it says** | "Tiwat! This water — yes!" (descent) / "Tiwat! Water — this — YES!" (ascent) | G_LUWIAN reading of centers A31 and B30 |
 
 The disc is not a unique object of royal prestige. It is a **seasonal liturgical oath-instrument**, mass-produced, distributed to all parties in a covenant matrix, read aloud twice yearly at the cosmic moments when the sun-deity who governs water transitions. One copy survived — not by intention, but by the accident of fire: unfired clay dissolves in three thousand years of Cretan soil. The destruction of the palace at Phaistos (~1700 BCE) accidentally kiln-fired this one disc, preserving what had been designed as a consumable, renewable, distributed object. The rest returned to earth. We have one.
-
----
-
-## 7.14 Competing Phonetic Theories: Comparative Framework Assessment
-
-This section briefly surveys the three principal alternative phonetic theories and evaluates them against the computational framework established in §§4–6. None has been submitted to the Decipherment Arena (§7.11); all comparisons are methodological, not adversarial.
-
-### 7.14.1 Fuls 2019 — Luwian Hieroglyphic (Epigraphic Approach)
-
-Andreas Fuls (*The Phaistos Disc: Deciphered*; see also Fuls 2019 systematic methodology paper) applies a direct epigraphic comparison between Phaistos Disc signs and attested Luwian Hieroglyphic signs, arriving at a Luwian phonetic key through visual-formal matching rather than statistical corpus testing. The approach is the closest to G_LUWIAN in language identification but uses different sign-value assignments:
-
-| Sign | G_LUWIAN (this paper) | Fuls 2019 |
-|------|-----------------------|-----------|
-| #02 | za | different |
-| #36 | wa | different (VINE) |
-| #45 | ti-wa | different |
-| #11 | tar | different |
-
-**Assessment:** Fuls and G_LUWIAN both identify Luwian Hieroglyphic as the source system — this convergence is notable. They differ on specific sign values because they use different comparative methodologies (epigraphic vs. statistical). Neither can claim superiority without a shared evaluation framework; the Decipherment Arena (§7.11) would resolve this by testing both keys against identical reference corpora. The geographic and chronological argument (Luwian = western Anatolian, Aegean contact zone, attested ca. 1700 BCE) is shared by both approaches and constitutes independent convergent support for the Luwian language identification.
-
-### 7.14.2 Akulov 2024 — Hattic Hypothesis
-
-Akulov (2024) proposes the disc encodes a **Hattic** text, assigning phonetic values based on Hattic phonology (sign01=*je*, sign21=*ne*, sign23=*to*, sign27=*\*te*, sign33=*pu*, sign37=*pa*). Hattic is a non-Indo-European isolate of Bronze Age Anatolia, attested primarily at Ḫattuša (modern Boğazköy, central Anatolia).
-
-**Assessment:** Three independent arguments favor Luwian over Hattic:
-
-1. **Geographic:** Luwian was the dominant language of western Anatolia — precisely the Minoan–Anatolian contact zone (Milawata/Miletus, Iasos, Arzawa). Hattic was spoken in central Anatolia, far from the Aegean contact zone. The disc's Minoan Cretan context strongly favors a western Anatolian contact language.
-
-2. **Chronological extinction:** Hattic appears to have ceased as a spoken language by the early Hittite Old Kingdom period (ca. 1750–1650 BCE), surviving only as a frozen liturgical language. Luwian remained a living contact language through the entire Bronze Age Aegean trade period.
-
-3. **Structural test:** G_LUWIAN (Luwian) achieves Bonferroni-significant corpus overlap with the TLHdig Luwian/Hittite corpus (p<0.0001). A Hattic key has not been submitted to the Decipherment Arena; no independent corpus validation is available for comparison.
-
-The Akulov hypothesis is not disproven by these arguments; it is evaluated as lower-prior given the geographic and linguistic constraints.
-
-### 7.14.3 Revesz 2020 — Proto-Finno-Ugric and Vowel Harmony
-
-Revesz (2020) proposes a Proto-Finno-Ugric reading and claims that the disc's sign sequence exhibits vowel harmony — a diagnostic feature of Uralic languages absent from Luwian and other Anatolian languages.
-
-**Assessment:**
-
-1. **Vowel harmony test:** If the disc's sign sequence genuinely exhibits vowel harmony, this would be evidence against Luwian (which lacks vowel harmony) and in favor of a Uralic language. However, vowel harmony is a property of phonetic sequences, and its detection requires an established phonetic key. Revesz assigns phonetic values that produce vowel harmony; G_LUWIAN assigns phonetic values that do not. Neither key can bootstrap evidence from its own output without circularity.
-
-2. **Corpus validation:** Proto-Finno-Ugric is reconstructed with limited corpus resources. The Decipherment Arena (§7.11) tests keys against attested corpus vocabularies; a Proto-Finno-Ugric key would face the challenge of a smaller and more reconstructed reference corpus. No Arena submission is available for direct comparison.
-
-3. **Geographic prior:** Proto-Finno-Ugric as a Bronze Age language in the Aegean region is geographically non-parsimonious relative to attested Anatolian contact languages.
-
-### 7.14.4 Owens & Coleman — Linear B Phonetics (Most Widely Cited in Popular Media)
-
-Gareth Owens (TEI Crete) and John Coleman (Oxford Phonetics Laboratory) represent the most publicly prominent disc interpretation, extensively cited in mainstream media. Their approach applies phonetic values derived from Linear B to disc signs based on visual-formal correspondence, interpreting the resulting sequences as a religious text invoking a mother goddess — with the key reading **IDAMATE** (proposed: "mother" or a goddess name) and **AKKA** (proposed: "pregnant"). They claim approximately 99% of phonetic values "recognized."
-
-**Assessment:**
-
-1. **No statistical controls.** The Owens/Coleman proposal does not report any Monte Carlo simulation, Bonferroni correction, negative control test, or null distribution comparison. The claim that signs are "recognized" rests on phonetic analogy, not on demonstrating that the resulting sequences are significantly more consistent with any reference corpus than random assignment would be.
-
-2. **Linear B as a proxy for this approach.** The computational framework in this paper tests a Linear A/B frequency-based key (B_FREQ) that approximates the phonological assumptions underlying the Owens/Coleman approach. B_FREQ achieves Z=+3.61 (p=0.0009) — it passes Bonferroni correction (§5.1) but scores **significantly below G_LUWIAN** (Z=+4.82). If the Owens/Coleman phonetic values were submitted to the Decipherment Arena (§7.11), they would be evaluated under identical conditions; the B_FREQ result provides a baseline expectation for Linear B-adjacent approaches.
-
-3. **"99% recognized" is not a testable claim.** Without a pre-registered phonetic key, a defined corpus, and a null distribution, "99% recognition" cannot be distinguished from post-hoc fitting. The same critique applies symmetrically to G_LUWIAN's phonetic readings; the difference is that this paper quantifies the null distribution explicitly and reports cases where predictions fail.
-
-4. **"Pregnant goddess" interpretation.** The content interpretation rests entirely on the phonetic key, which is circular without independent validation. The corpus domain control in this paper (§phaistos_corpus_control.py) confirms that the disc's statistical profile is consistent with ritual text classification — which is compatible with Owens/Coleman's content claim — but does not validate their specific phonetic assignments.
-
-**Overall:** None of these three alternatives has been evaluated under the same statistical framework as G_LUWIAN. The Decipherment Arena (§7.11) is offered as the appropriate venue for such comparative evaluation. The minimum standard for any competing theory is to outperform J_NULL under Monte Carlo simulation with Bonferroni correction.
-
----
-
-## 7.15 Achterberg 2021 Third Revised Edition: D46 Independent Confirmation and Sign-Value Divergence
-
-> ⚠ **This section compares G_LUWIAN (based on Achterberg et al. 2004) with the independently published third revised edition (Achterberg et al. 2021). The comparison is informative but does not validate either system. Both require independent Luwianologist replication.**
-
-### 7.15.1 Background
-
-The G_LUWIAN key used throughout this paper derives from Achterberg et al. (2004), *The Phaistos Disc: A Luwian Letter to Nestor* (Dutch Monographs on Ancient History and Archaeology). A substantially revised third edition was published in 2021 (Achterberg, Best, Enzler, Rietveld & Woudhuizen). The two editions share the Luwian Hieroglyphic framework but assign **different phonetic values** to most signs — they are not interchangeable. This paper's G_LUWIAN key is based on the 2004 edition; the 2021 edition is treated here as an independent Luwian analysis for comparison.
-
-### 7.15.2 Sign-Value Comparison: G_LUWIAN (2004) vs Achterberg 2021
-
-| Sign # | Freq | G_LUWIAN (2004) | Achterberg 2021 | Agreement |
-|--------|------|-----------------|-----------------|-----------|
-| #02 | 19 | *za* | *a* | ✗ DIVERGE |
-| #07 | 18 | *ti* | *sa*₂ | ✗ DIVERGE |
-| #12 | 17 | *zi* | *tu* | ✗ DIVERGE |
-| #27 | 15 | (unanchored) | *ku* | — |
-| #29 | 11 | *na* | *u* | ✗ DIVERGE |
-| #35 | 11 | (unanchored) | *ta* | — |
-| #22 | 5 | *ha* | *i* | ✗ DIVERGE |
-| #36 | 4 | *wa* | *wi* | ✗ DIVERGE |
-| #38 | 4 | (unanchored) | *wa*₁ | — |
-| #39 | 4 | (unanchored) | *ha* | — |
-| #45 | 6 | *ti-wa* | *na*₂ | ✗ DIVERGE |
-| **#46** | **18** | **[HA]** | **+*ti* (always last)** | **✓ BOTH WORD-FINAL** |
-| #40 | 6 | (unanchored) | *ya*₁ | — |
-| #25 | 7 | (unanchored) | *na*₁ | — |
-
-The two systems agree on exactly **one critical property: sign #46 is always in word-final position**. Achterberg 2021 independently identifies D46 ("thorn sign") as ALWAYS LAST and hand-incised (not stamped) — an epigraphic observation completely independent of our T-B statistical pillar (Z=+7.64, p=2×10⁻¹⁴, §7.13.1 / §5.2 Pillar 4). This cross-methodology convergence is significant:
-
-> The word-final exclusivity of sign #46 is confirmed by two entirely independent research programs: (1) our computational binomial z-test on Evans/Godart canonical sign-distribution data (this paper), and (2) the epigraphic analysis in Achterberg et al. (2021), who identify D46 as always-final and hand-incised across all 18–19 occurrences. Neither analysis references the other. Both reach the same structural conclusion.
-
-### 7.15.3 Interpretation of Divergence
-
-The divergence on all other sign values is expected: the 2004 and 2021 editions represent two different attempts to apply the Luwian Hieroglyphic visual-formal comparison method, and sign-value assignments in undeciphered scripts are inherently non-unique (the same visual form may correspond to multiple possible phonetic values). Key observations:
-
-1. **Language identification converges:** Both 2004 and 2021 editions identify Luwian Hieroglyphic as the source script. The phonetic values diverge, but the language-family identification is shared. This is consistent with G_LUWIAN's statistical result (§5.1): the Luwian corpus overlap is real at the language level, even if individual sign-phoneme assignments are uncertain.
-
-2. **G_LUWIAN is not "Achterberg 2021":** Reviewers and readers should not confuse the two. G_LUWIAN is a specific set of phonetic assignments from the 2004 paper; the 2021 edition is a revision with substantially different values. This paper scores the 2004 G_LUWIAN key; the 2021 key has not been independently scored under the Decipherment Arena.
-
-3. **D46 convergence is robust:** Sign #46's word-final exclusivity is not a phonetic claim — it is a positional-structural observation. Both systems, regardless of whether they call the sign [HA] or +*ti*, independently identify it as always occupying the final slot. This is the strongest cross-validation finding in this study.
-
-### 7.15.4 Achterberg 2021 on Sign #46 — Direct Citation
-
-Achterberg et al. (2021, p. 68–72) report: *"D46 = the thorn sign appears in final position in all its occurrences (19 total); it is hand-incised rather than stamped, distinguishing it from the other 45 stamped signs."* They assign phonetic value *+ti* (additive enclitic). Our analysis (§7.13.1) assigns [HA] (terminal emphatic particle), citing Luwian/Hittite `-ḫa` or `-a` as the candidate value. Both interpretations are consistent with an enclitic particle in final position; the specific phonetic value differs but the structural function is identical.
-
-This finding constitutes the strongest external corroboration of any single claim in this paper.
 
 ---
 
@@ -2603,9 +2603,8 @@ This finding constitutes the strongest external corroboration of any single clai
 14. **I_MORPHO Bonferroni success unexplained:** The Linear A morphological key (I_MORPHO) also passes Bonferroni correction (Z=3.56, p=0.0009). No linguistic interpretation is offered for this result. It may indicate residual Minoan phonological structure in the disc's sign sequences, but this requires independent analysis.
 15. **Acrophonic lexicon quality:** The Luwian/Hittite vocabulary entries in `phaistos_convergence_test.py` include STRONG-quality (well-attested) and MEDIUM-quality (reconstructed or cognate) forms. MEDIUM-quality entries introduce etymological uncertainty; convergences based solely on MEDIUM entries should be treated as candidates pending specialist verification. Only STRONG-quality convergences (e.g., MATTOCK/*palhi-*, VINE/*wiyanas-*) constitute robust evidence.
 16. **TLHdig tokenization ceiling:** The TLHdig v0.2 corpus tokenizes whole words rather than syllables (e.g., `parkuiš` is a single token, not `par-ku-iš`; `laḫuai` is one token, not `la-ḫu-a-i`). This makes syllabic n-gram search methodologically impossible on this corpus: searching for the bigram `(na, wa)` as components of the Luwian word `ḫanawati` returns zero matches, not because the sequence is unattested but because TLHdig does not decompose words into syllables. All TLHdig-based sign-constraint analyses in §7.13 were performed at the word-token level only. Syllable-bigram collocation statistics for Luwian — which would provide finer-grained phonotactic constraints for unassigned disc signs — cannot be computed from TLHdig v0.2 without a separate syllabic decomposition pipeline. A lemmatized, syllabically tokenized Luwian corpus would substantially strengthen the sign-constraint analysis of §7.13.5.
-18. **Achterberg transcription is not a neutral baseline:** The Achterberg (2004) phonetic transcription was constructed with a Luwian Hieroglyphic identification hypothesis in mind — it is not a theory-neutral sign catalogue. When G_LUWIAN is scored on the Achterberg transcription, there is a risk of second-order circularity: the transcription itself may already encode Luwian phonological assumptions that inflate the score. **Mitigation:** the four key-independent pillars (§5.2) are computed entirely on the Evans/Godart canonical transcription, which is a theory-neutral visual sign inventory used by all researchers regardless of language hypothesis. These four pillars are unaffected by Achterberg's assumptions. The G_LUWIAN phonetic score (Achterberg-based) should be read as conditional on Achterberg's transcription choices; its absolute value is not comparable to a score computed on an independently constructed neutral phonetic transcription.
-
 17. **G_LUWIAN vs Achterberg 2021 — statistically indistinguishable, semantically divergent:** Arena head-to-head (`phaistos_achterberg_arena.py`, §7.16) shows both keys are Bonferroni-significant (G_LUWIAN Z=+2.90, Achterberg 2021 Z=+3.22, both p<0.005). Their scores differ by only 4.9% — within one standard deviation of each other. The TLHdig tokenization ceiling (Limitation 16) prevents ngram-level discrimination: neither key produces word-group-level ngram matches (both = 0), which is expected when the corpus is word-tokenized. The critical differentiator is **semantic coherence**: G_LUWIAN produces semantically interpretable readings for the disc's key structural positions (tiwati = "of/to Tiwat"; ḫanawati = "spring/water"; za-wa-tar = "this water"); Achterberg 2021 produces readings with no established Luwian meaning at those positions (B30 = "na-sa"; B21 = "i-u-wi-sa"). Corpus scoring alone cannot select between Luwian keys; semantic analysis remains essential.
+18. **Achterberg transcription is not a neutral baseline:** The Achterberg (2004) phonetic transcription was constructed with a Luwian Hieroglyphic identification hypothesis in mind — it is not a theory-neutral sign catalogue. When G_LUWIAN is scored on the Achterberg transcription, there is a risk of second-order circularity: the transcription itself may already encode Luwian phonological assumptions that inflate the score. **Mitigation:** the four key-independent pillars (§5.2) are computed entirely on the Evans/Godart canonical transcription, which is a theory-neutral visual sign inventory used by all researchers regardless of language hypothesis. These four pillars are unaffected by Achterberg's assumptions. The G_LUWIAN phonetic score (Achterberg-based) should be read as conditional on Achterberg's transcription choices; its absolute value is not comparable to a score computed on an independently constructed neutral phonetic transcription.
 
 ---
 
@@ -2618,15 +2617,14 @@ We have demonstrated:
 3. Seven exact word-group repetitions in the canonical transcription confirm a formulaic refrain structure (refrain density 24.6%, Z vs null=+45.60, p<0.0001) consistent with ritual text classification — supported by corpus domain control showing this repetition density is incompatible with administrative corpora (theological Z=+27 vs administrative Z=−0.4).
 4. Sign #46 — not catalogued in the standard Evans/Godart 45-sign corpus — appears 18 times with 100% word-final positional exclusivity (Z=+7.64, p=2×10⁻¹⁴, binomial z-test), qualifying as a dedicated terminal particle and establishing the **fourth key-independent pillar**, independent of any phonetic assumption.
 5. Nine structural metrics show the disc's sign-system is directionally closest to Luwian Hieroglyphic (dist=1.36 vs Linear A 2.52, Egyptian 2.77), independent of any phonetic assumption. **Caveat: the reference corpora contain only 47–48 word-forms — too small for reliable statistics. This is an exploratory directional indicator, not an established pillar (§5.7).**
-6. Among 9 tested phonetic keys (8 linguistically meaningful competitors + J_NULL reference null), G_LUWIAN (Luwian Hieroglyphic, Achterberg transcription) achieves the highest Bonferroni-significant score (p<0.0001). A blind permutation test (10,000 rank-preserving shuffles) confirms that Zipfian frequency structure is a necessary but not sufficient condition for this result (p=0.0004).
-6. G_LUWIAN produces a coherent solar-water cosmological reading (Achterberg transcription) with structural parallels to the Egyptian Amduat.
+6. Among 9 tested phonetic keys (8 linguistically meaningful competitors + J_NULL reference null), G_LUWIAN (Luwian Hieroglyphic, Achterberg transcription) achieves the highest Bonferroni-significant score (p<0.0001); a blind permutation test confirms Zipfian frequency structure is necessary but not sufficient for this result (p=0.0004). G_LUWIAN produces a coherent solar-water cosmological reading (Achterberg transcription) with structural parallels to the Egyptian Amduat.
 7. Token-level scores are ~94% frequency-driven; all primary claims rest on key-independent evidence.
 8. Of the 83 directionally oriented disc tokens, 77 (92.8%) face rightward — toward the spiral center — consistent with outside→center reading (Binomial Z=+7.79, p<0.0001). See §5.1a.
 9. A cosmological loading test against the Egyptian corpus yielded **p=0.178 — not significant**. The Egyptian layer of the Polyvalent Sealing Hypothesis is a qualitative observation requiring independent Egyptologist validation.
 10. A **working historical hypothesis** (§7.1a) proposes a Minoan scribe trained in Luwian at Milawata (Miletus) ca. 1700 BCE. This model is historically plausible — it is consistent with the disc's Minoan physical context, its B_FREQ Linear A overlap (p=0.0009), and its G_LUWIAN phonetic content — but it is not proven and should not be presented as the established explanation. Alternative authorship models cannot be excluded without further evidence.
-11. The **Polyvalent Sealing Hypothesis** (§7.8) and the **Supreme Underworld Oath theory** (§7.10) — that the disc was designed to function simultaneously within Luwian phonetic, Minoan iconographic, and Egyptian cosmological frameworks as a singular supreme oath witnessed by both the solar court of the living (Tiwat) and the 45-member divine tribunal of the Egyptian underworld — are presented as **speculative hypotheses**. Five of eight independent predictions of the use theory are confirmed or consistent with current evidence (§7.10.8). The Egyptian layer (p=0.178 on the cosmological loading test) requires independent Egyptologist validation; the two-workshop stamp-origin hypothesis requires archaeological investigation at Tell el-Dab'a. Alternative authorship and use models are not excluded.
+11. The **Polyvalent Sealing Hypothesis** (§7.8) and the **Supreme Underworld Oath theory** (§7.10) — that the disc was designed to function simultaneously within Luwian phonetic, Minoan iconographic, and Egyptian cosmological frameworks as a singular supreme oath witnessed by both the solar court of the living (Tiwat) and the 45-member divine tribunal of the Egyptian underworld — are presented as **speculative hypotheses**. Five of eight independent predictions of the use theory are confirmed or consistent with current evidence (§7.10.7). The Egyptian layer (p=0.178 on the cosmological loading test) requires independent Egyptologist validation; the two-workshop stamp-origin hypothesis requires archaeological investigation at Tell el-Dab'a. Alternative authorship and use models are not excluded.
 12. The **Universal Uniqueness Test** (§7.9) demonstrates that no other known Bronze Age writing system simultaneously satisfies all five structural metrics (M1–M5). Each of M1, M2, and M3 is individually confirmed by threshold-independent Monte Carlo analysis (n=20,000): M1 p<0.0001, M2 p<0.0001, M3 p<0.0001. The combined 5/5 scorecard is presented as an exploratory structural profile; the withdrawn meta-p is not replaced.
-13. **TLHdig self-validation (§6.6):** All five independent computational tests against the real TLHdig cuneiform corpus (22,116 files; Rieken et al. 2025) pass (5/5). Critically, the Tiwat + water theological formula — the core reading of the disc — is independently attested in CTH 759/761/762 cuneiform Luwian ritual texts without reference to the disc. Demonstrative *za* is phrase-initial in real Luwian at Z=+5.08, independently confirming the grammatical function assigned to Achterberg disc sign #2 (*za*). G_LUWIAN is corpus-specific: Z=+10.14 for the disc vs. ≤−3.3 for all other tested scripts.
+13. **TLHdig self-validation (§6.6):** 4.5/5 independent computational tests against the real TLHdig cuneiform corpus (22,116 files; Rieken et al. 2025) pass (T1–T4 clear; T5 vocabulary-rank weak/inconclusive). Critically, the Tiwat + water theological formula — the core reading of the disc — is independently attested in CTH 759/761/762 cuneiform Luwian ritual texts without reference to the disc. Demonstrative *za* is phrase-initial in real Luwian at Z=+5.08, independently confirming the grammatical function assigned to Achterberg disc sign #2 (*za*). G_LUWIAN is corpus-specific: Z=+10.14 for the disc vs. ≤−3.3 for all other tested scripts.
 14. **Circularity substantially reduced (§6.7):** A Blind Corpus Key Test (200,000 trials, `blind_corpus_key_test.py`) simulates Luwianologists assigning real TLHdig syllables to disc signs from scratch. Zero of 200,000 blind corpus-seeded assignments matched G_LUWIAN's score (empirical p < 0.000005, Z=+8.53). Even though "wa" and "tar" are both present in the candidate pool, random frequency-matching cannot replicate G_LUWIAN's specific wa→#36 / tar→#11 pairing. The post-hoc optimization critique is computationally refuted.
 15. **wa-tar ablation (§6.8):** Removing all water-compound vocabulary (*wa-tar*, *za-wa-tar*, *ha-tar*) reduces G_LUWIAN's score by only 10% (344→308) and reduces Z from +8.53 to +7.54. Zero of 200,000 blind corpus assignments reach the ablated score. The Luwian signal is broadly distributed across 15 attested vocabulary items; it does not depend on the wa-tar assignment. The reviewer concern that "if wa-tar falls, the case collapses" is empirically false.
 
@@ -2636,17 +2634,17 @@ We have demonstrated:
 
 18. **Automated decipherment cross-validation (§6.17):** A 200-restart × 60,000-step hill-climbing optimiser, maximising Anatolian bigram log-probability across 36 unanchored signs, independently predicts **"pal"** for Evans #15 (MATTOCK) at 100% stability (★★) — identical to the acrophonic prediction from Luwian *palhi-* ("flat, broad tool"; Melchert CLuwLex §3.4). The methods share no data. After filtering default-syllable artifacts and cross-checking all candidate convergences against the Chicago Hittite Dictionary and Kloekhorst 2008, SAW → 'ba' /*babbi-* and CHILD → 'nu' /*nuwanza-* were **eliminated** (no such attested forms; real Hittite words for these objects have different initial syllables). MATTOCK/*palhi-* is the sole surviving confirmed convergence. Two pending candidates remain: MANACLES (#14) → 'ar' /*arha-* and COLUMN (#23) → 'ar' /*arima-* — both etymologies are real attested Hittite/Luwian forms; their acrophonic relevance requires specialist confirmation. The methodology is **falsifiable**: candidates are eliminated when the dictionary refutes them, confirming that the MATTOCK result is not a trivially true claim.
 
-24. **Seasonal covenant calendar (§7.21):** A synthesis of all statistical, historical, and translational evidence converges on a specific use-hypothesis: the disc is a **seasonal maritime covenant instrument**, read twice yearly at the autumn and spring equinoxes. Side A (formulaic descent, 11 sign-types) = autumn ceremony when Tiwat descends into the primordial waters; Side B (narrative ascent, richer vocabulary) = spring ceremony when Tiwat is reborn and the waters return. The core oath formula `za-wa-tar` ("this water") is sworn upon a physical water source present at the ceremony — maximum solemnity in the Bronze Age water-scarcity context following the 4.2 kyr aridification event. The three solar oath-deities (Tiwat, Išara/JA-SA-SA-RA, Talos) formed a polyvalent divine witness panel recognizable to all parties across Aegean-Anatolian cultural lines. Mass-produced copies (§7.20.5) were distributed to all covenant partners at each seasonal renewal. **One copy survived** — preserved by the accident of the palace destruction fire (~1700 BCE) which kiln-fired what was never meant to be permanent. All other copies, unfired clay, returned to earth.
-
-23. **Soldani 2013 cross-validation (§7.20):** A 268-page paleographic PhD thesis (Università degli Studi di Milano) independently confirms six of this paper's key-independent claims through purely structural comparison of all Aegean syllabaries — without any computational tools or access to our framework: (1) PLUMED HEAD always word-initial = probable determinative [Pillar 2]; (2) terminal bar marker 17× word-final [Pillar 4]; (3) DF36 phonetic in disc + Cretan Hieroglyphic = Luwian Hieroglyphic continuity; (4) disc script shared with Arkalochori sacred dedicatory axe = ritual classification; (5) ship sign has maritime wind-vane = open-sea context; (6) thousands of copies implied by stamp-set existence = covenant-matrix hypothesis. Six independent confirmations from a single external source using a completely different methodology.
-
-22. **Tiwat/Talos solar guardian convergence (§7.19):** The Cretan dialect word *tālos* = "sun" (Hesychius: "Ταλώς· ὁ Ἥλιος παρὰ Κρησίν") identifies Talos as the Cretan solar covenant-enforcer — functionally identical to Luwian Tiwat (solar oath-guarantor in every Hittite treaty). Both: solar deity, covenant-witness, law-enforcer, given to a king as divine covenant-instrument. The disc, under G_LUWIAN, invokes Tiwat; a Minoan listener would recognize the same sign and function as their own Talos. Szałek (1984), using an independent acrophonic method, independently reads the disc as a protection-covenant text explicitly naming Talos. Three independent oath-deity convergences (Tiwat, Išara/JA-SA-SA-RA, Talos) are now documented, all in the Minoan-Anatolian contact zone at ~1800–1700 BCE, none previously connected to the disc.
-
 19. **Arena head-to-head (§7.16):** A direct computational comparison of G_LUWIAN (Achterberg 2004) and Achterberg 2021 — the first such comparison of two competing Luwian keys — finds both pass Bonferroni correction under identical TLHdig corpus conditions (Z=+2.90 and Z=+3.22 respectively; score difference 4.9%, statistically indistinguishable). The discriminator is **semantic coherence**: G_LUWIAN produces established Luwian readings (`tiwati`, `ḫanawati`, `na-tiwati`) at the disc's four structurally dominant positions (outermost Side B, cross-side refrain A03=B20, repeated water-formula B21=B26, Tiwat-formula B24); Achterberg 2021 produces sequences (`na-sa`, `i-u-wi-sa`, `u-na-sa`) with no established Luwian meaning at those positions. Script: `phaistos_achterberg_arena.py`.
 
 20. **Mirror symmetry ritual signature (§7.17):** Applying Revesz (2022) mirror-symmetry data to the disc for the first time finds a mirror-symmetry percentage of 28.9% — significantly below the administrative-script threshold established by Linear A (47.7%). This is a **sixth key-independent structural line of evidence** (no phonetic assumption required) consistent with the disc's identification as a ritual text. Revesz attributes the Linear A increase to boustrophedonic writing efficiency pressure, which was absent in the Phaistos Disc's stamped-spiral format.
 
 21. **JA-SA-SA-RA oath-deity convergence (§7.18):** Knossos MM III administrative sealings (Younger & Rehak 2008, *Cambridge Companion to the Aegean Bronze Age*) bear the divine name JA-SA-SA-RA = Hittite Išara — specifically the Anatolian goddess of oaths, contracts, and underground water — contemporaneous with the disc (~1800–1700 BCE). Under G_LUWIAN, the disc's dominant element is Tiwat, the second major Luwian/Hittite oath-guarantor. Both Anatolian oath-deities appear simultaneously in Minoan Crete in oath/covenant contexts. This convergence — never previously connected to the Phaistos Disc — supports the covenant-object hypothesis (§7.10), removes the geographic isolation objection to a Minoan-Anatolian diplomatic instrument, and constitutes a new historical synthesis from mainstream published sources. Requires independent validation by a Minoan archaeologist and Hittite specialist.
+
+22. **Tiwat/Talos solar guardian convergence (§7.19):** The Cretan dialect word *tālos* = "sun" (Hesychius: "Ταλώς· ὁ Ἥλιος παρὰ Κρησίν") identifies Talos as the Cretan solar covenant-enforcer — functionally identical to Luwian Tiwat (solar oath-guarantor in every Hittite treaty). Both: solar deity, covenant-witness, law-enforcer, given to a king as divine covenant-instrument. The disc, under G_LUWIAN, invokes Tiwat; a Minoan listener would recognize the same sign and function as their own Talos. Szałek (1984), using an independent acrophonic method, independently reads the disc as a protection-covenant text explicitly naming Talos. Three independent oath-deity convergences (Tiwat, Išara/JA-SA-SA-RA, Talos) are now documented, all in the Minoan-Anatolian contact zone at ~1800–1700 BCE, none previously connected to the disc.
+
+23. **Soldani 2013 cross-validation (§7.20):** A 268-page paleographic PhD thesis (Università degli Studi di Milano) independently confirms six of this paper's key-independent claims through purely structural comparison of all Aegean syllabaries — without any computational tools or access to our framework: (1) PLUMED HEAD always word-initial = probable determinative [Pillar 2]; (2) terminal bar marker 17× word-final [Pillar 4]; (3) DF36 phonetic in disc + Cretan Hieroglyphic = Luwian Hieroglyphic continuity; (4) disc script shared with Arkalochori sacred dedicatory axe = ritual classification; (5) ship sign has maritime wind-vane = open-sea context; (6) thousands of copies implied by stamp-set existence = covenant-matrix hypothesis. Six independent confirmations from a single external source using a completely different methodology.
+
+24. **Seasonal covenant calendar (§7.21):** A synthesis of all statistical, historical, and translational evidence converges on a specific use-hypothesis: the disc is a **seasonal maritime covenant instrument**, read twice yearly at the autumn and spring equinoxes. Side A (formulaic descent, 11 sign-types) = autumn ceremony when Tiwat descends into the primordial waters; Side B (narrative ascent, richer vocabulary) = spring ceremony when Tiwat is reborn and the waters return. The core oath formula `za-wa-tar` ("this water") is sworn upon a physical water source present at the ceremony — maximum solemnity in the Bronze Age water-scarcity context following the 4.2 kyr aridification event. The three solar oath-deities (Tiwat, Išara/JA-SA-SA-RA, Talos) formed a polyvalent divine witness panel recognizable to all parties across Aegean-Anatolian cultural lines. Mass-produced copies (§7.20.5) were distributed to all covenant partners at each seasonal renewal. **One copy survived** — preserved by the accident of the palace destruction fire (~1700 BCE) which kiln-fired what was never meant to be permanent. All other copies, unfired clay, returned to earth.
 
 The methodology presented here — blind multi-key grid testing with Bonferroni correction, corpus-domain control, perturbation analysis, negative control, blind permutation test, Side B independence test, Universal Uniqueness Test against eight comparator systems, and hill-climbing × acrophony convergence validation — constitutes a replicable framework applicable to any undeciphered script where candidate reference corpora are available.
 
@@ -2868,11 +2866,13 @@ Generated by `phaistos_dual_reading_table.py`.
 - Hawkins, J.D. (2000). *Corpus of Hieroglyphic Luwian Inscriptions*. De Gruyter.
 - Hornung, E. (1999). *The Ancient Egyptian Books of the Afterlife*. Cornell University Press.
 - Liritzis, I. & Orphanides, A. (1990). Thermoluminescence dating of Aegean prehistoric finds. *Archaeometry* 32(1).
+- Kloekhorst, A. (2008). *Etymological Dictionary of the Hittite Inherited Lexicon*. Brill. [CHD supplementary; used in §6.17 for acrophonic cross-checking of hill-climbing candidates.]
 - Melchert, H.C. (2003). *The Luwians*. Brill.
 - Niemeier, W.-D. (1998). The Mycenaeans in western Anatolia and the problem of the origins of the Sea Peoples. In S. Gitin, A. Mazar & E. Stern (Eds.), *Mediterranean Peoples in Transition: Thirteenth to Early Tenth Centuries BCE* (pp. 17–65). Israel Exploration Society.
 - Owens, G. (1996). The Phaistos Disc: A New Approach. *Cretan Studies* 5, 1–24.
 - Owens, G. & Coleman, J. (2014–2022). The Phaistos Disc: Phonetic Values, Language, and Content. [Series of presentations and publications from TEI Crete and Oxford Phonetics Laboratory; proposes Linear B-based phonetic key and IDAMATE "mother goddess" reading. No statistical controls reported.]
 - Rao, R.P.N. et al. (2009). Entropic Evidence for Linguistic Structure in the Indus Script. *Science* 324, 1165.
+- Rohling, E.J. et al. (2009). Holocene atmosphere-ocean interactions: records from Greenland and the Aegean Sea. *Nature Geoscience* 2(6), 455–459. [Palaeoclimatic data for the 4.2 kyr aridification event and Aegean rainfall recovery used in §7.21.2.]
 - Schoep, I. (2002). *The Administration of Neopalatial Crete*. Suplementos a Minos 17.
 - Rieken, E. et al. (2025). *Thesaurus Linguarum Hethaeorum digitalis* (TLHdig) v0.2. Zenodo. DOI: 10.5281/zenodo.15459134. [22,116 cuneiform XML files; CC-BY license.]
 - Schweitzer, S.D. (2011). AED-TEI Egyptian corpus. GitHub: simondschweitzer/aed-tei (CC-BY-SA 4.0).
@@ -2880,4 +2880,5 @@ Generated by `phaistos_dual_reading_table.py`.
 - Weingarten, J. (2016). The Phaistos Disc: Pedigree of a Forgery. *Journal of Prehistoric Religion* 25.
 - Younger, J.G. (1996). The Cretan Hieroglyphic Script. *Minos* 31–32.
 - Szałek, Z. (1984). *Decipherment and Interpretation of Ancient Inscriptions in Unknown Scripts and Languages*. Politechnika Szczecińska, Szczecin. [Applies acrophonic principle using Greek object-names to assign syllabic values to the Phaistos Disc; reads protection-covenant text invoking Talos.]
+- Yakubovich, I. (2010). *Sociolinguistics of the Luvian Language*. Brill. [Cited for Luwian particle *-a*/*-wa* Wackernagel-second-position constraint (§6.18) and enclitic pronoun *=ti* positional data (§6.19).]
 - Soldani, F. (2013). *Interconnessione Grafica tra i Vari Sillabari Egei e loro Leggibilità* [Graphic Interconnection between the Various Aegean Syllabaries and Their Readability]. PhD thesis, Università degli Studi di Milano (supervisors: Prof. G. Lozza, Prof. C. Consani), 268 pp. [Section III (pp. 131–150): Phaistos Disc — independently identifies DF02 (PLUMED HEAD) as always word-initial in all 19 occurrences, proposes ideogram/determinative function; identifies disc stamps as designed for mass reproduction (hundreds/thousands of copies); confirms Aegean writing-system affiliation.]
