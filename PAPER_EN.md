@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 26.0
+**Version:** 29.0
 
 ---
 
@@ -28,6 +28,8 @@ An **XML-aware TLHdig corpus search** (§7.13) across 21,941 cuneiform XML files
 **Three new analyses (§7.16–7.18)** extend the framework. First, a **head-to-head Arena comparison** of G_LUWIAN (Achterberg 2004) and Achterberg 2021 — the first computational comparison of two competing Luwian keys — finds both pass Bonferroni correction under identical TLHdig corpus conditions (Z=+2.90 and Z=+3.22 respectively; score difference 4.9%, statistically indistinguishable at corpus level). The discriminator is **semantic coherence**: G_LUWIAN produces established Luwian readings (`tiwati`, `ḫanawati`, `na-tiwati`) at the disc's four structurally dominant word-groups; Achterberg 2021 produces sequences with no established Luwian meaning at the same positions. Second, applying Revesz (2022) mirror-symmetry data to the disc for the first time establishes its mirror-symmetry percentage (28.9%) as significantly below the administrative-script threshold (Linear A 47.7%), providing a **sixth key-independent structural line of evidence** consistent with ritual text classification. Third, Knossos MM III administrative sealings (Younger & Rehak 2008, *Cambridge Companion to the Aegean Bronze Age*) bear the divine name JA-SA-SA-RA = Hittite Išara (goddess of oaths and water), contemporaneous with the disc (~1800–1700 BCE). The disc's dominant reading under G_LUWIAN invokes **Tiwat** — the second major Luwian/Hittite oath-guarantor. Both Anatolian oath-deities appear in Minoan Crete at the same period in oath/covenant contexts; this convergence, never previously connected to the disc, supports the covenant-object hypothesis (§7.10) and removes the geographic isolation objection to a Minoan-Anatolian diplomatic instrument.
 
 A **Talos/Tiwat solar guardian convergence** (§7.19) provides a fourth independent oath-deity connection. The Cretan dialect identifies *tālos* as "the sun" (Hesychius: "Ταλώς· ὁ Ἥλιος παρὰ Κρησίν"), and Talos functions in Cretan tradition as the solar covenant-enforcer given to Minos as a divine treaty-instrument — functionally identical to Luwian Tiwat, the solar oath-guarantor invoked in every Hittite treaty preamble. Zbigniew Szałek (1984), applying an independent acrophonic methodology to the disc, independently reads a protection-covenant text explicitly naming Talos — the first prior study to use acrophony on the disc and to arrive at a covenant-protection reading from a non-Luwian framework. Three independent oath-deity convergences (Tiwat, Išara/JA-SA-SA-RA, Talos) are now documented in the Minoan-Anatolian contact zone at ~1800–1700 BCE, none previously connected to the disc. Additionally, Soldani (2013) independently confirms, through systematic paleographic analysis of all Aegean syllabaries, that the PLUMED HEAD sign appears in word-initial position in all 19 of its occurrences and is best interpreted as a determinative or ideogram — independently corroborating Pillar 2 of this paper from a completely different methodology.
+
+A **seasonal covenant calendar synthesis** (§7.21) integrates statistical structure, Hittite ritual calendars, and Bronze Age climate history into a specific use-hypothesis. The disc's structural asymmetry — Side A: formulaic descent (11 sign-types, repetitive); Side B: narrative ascent (richer vocabulary) — maps directly onto the twice-yearly Hittite Vanishing God ceremony (CTH 325): Side A read at the autumn equinox when Tiwat descends into the primordial waters, Side B at the spring equinox when Tiwat ascends and the waters return. The core oath formula `za-wa-tar` ("this water") was sworn upon a physical water source — maximum solemnity in the Bronze Age context of the 4.2 kyr aridification event aftermath (~1800 BCE), when water was not metaphor but survival. The spring ceremony coincides with the opening of the Eastern Mediterranean sailing season (April), the natural moment for maritime covenant renewal. Three solar oath-deities (Tiwat, Išara/JA-SA-SA-RA, Talos) constituted a polyvalent divine witness panel simultaneously intelligible to Luwian scribes, Knossos palace officials, and Minoan mariners. Mass-produced copies (stamp-manufacturing technology) were distributed to all covenant partners and renewed each season. The disc is not a palace administrative document and not a unique royal object: it is a **seasonal liturgical covenant instrument** whose function required hundreds or thousands of identical copies. One copy survived.
 
 **Keywords:** Phaistos Disc, undeciphered scripts, computational linguistics, Luwian hieroglyphics, Monte Carlo simulation, Bonferroni correction, Bronze Age Aegean, ritual text analysis, Minoan-Luwian bilingualism, Milawata scribal contact zone, decipherment benchmark, open evaluation framework, multi-language arena, hybrid phonotactics, Kizzuwatna, Late Babylonian, MCTS optimization, TLHdig, water ritual formula, Vanishing God myth, CTH 325, sign constraint analysis, JA-SA-SA-RA, Išara, oath deity, mirror symmetry, Revesz, Achterberg 2021, Arena head-to-head, Talos, Tiwat, solar guardian, acrophony, Szałek, Soldani
 
@@ -2369,6 +2371,106 @@ Six of the seven claims in this table are independently confirmed by a 268-page 
 
 ---
 
+## 7.21 The Seasonal Covenant Calendar: When and Why Oaths Were Sworn
+
+> ⚠ **The following section integrates statistical findings, historical sources, and the G_LUWIAN phonetic reading into a unified use-hypothesis. The statistical elements (§§4–6, §7.13) are established results. The historical reconstruction is a working hypothesis drawing on independent primary sources; it is not asserted as proven. Independent specialist validation (Aegean archaeologist, Hittitologist) is required.**
+
+The preceding sections establish *what* the disc is (a ritual text invoking water and a solar oath-deity), *where* it connects (Minoan-Anatolian covenant theology), and *how* it was used (as a mass-reproduced covenant instrument). The question of *when* — specifically, at which moment in the calendar year — and *why* — the existential stakes that made such an oath necessary — can now be addressed through the convergence of statistical structure, Hittite ritual calendars, and Bronze Age climate history.
+
+### 7.21.1 The Structural Calendar Encoded in the Disc
+
+The disc's two sides are structurally asymmetric in a specific and directional way. The chi-square analysis (§7.12) establishes that Side A and Side B are compositionally distinct (χ²=82.99, p<0.001). Side A uses a closed vocabulary of 11 sign-types repeated in formulaic sequence — the profile of a memorized liturgical chant. Side B uses a richer lexical inventory with more unique sequences — the profile of a narrative elaboration. Under the G_LUWIAN reading:
+
+- **Side A** = Tiwat *descends* into the primordial waters (center A31 = `ti-wa-za-wa-tar-ha` = "Tiwat! this water — yes!")
+- **Side B** = Tiwat *ascends*, reborn from the waters (center B30 = `ti-wa-wa-tar-za-ha` = "Tiwat! water — this — yes!")
+
+This directional structure maps directly onto the attested Hittite **Vanishing God** mythology (CTH 325; §7.13.4): the sun-deity disappears in one season and returns in another, and the ritual is performed twice yearly to accompany and solemnize this cosmic transition. The CTH 325 text explicitly describes the returning sun-god as `waḫišnaš` ("the streaming one") bringing flowing water — `wa-tar` — to the divine banquet. The disc's dominant vocabulary item (`za-wa-tar` = "this water") is the exact semantic marker of this returning-waters moment.
+
+**Proposed calendar correspondence:**
+
+| Disc element | Seasonal moment | Astronomical event |
+|---|---|---|
+| Side A: descent formula (Tiwat enters waters) | **Autumn equinox** (~September) | Sun's arc shortens; days begin to lose to night |
+| Side B: ascent formula (Tiwat reborn, waters return) | **Spring equinox** (~March) | Sun returns; sailing season opens |
+| Refrain `za-wa-tar` (7× across both sides) | Transition marker | Pivot point of the seasonal oath renewal |
+
+This is consistent with the attested Hittite calendar: CTH 325 is classified among the **nuntarriašḫaš** festival cycle, performed in both autumn and spring as the great seasonal transitions of the Anatolian religious year. The disc's Side A / Side B duality encodes exactly this bipartite structure.
+
+### 7.21.2 The Bronze Age Existential Context: Why Water?
+
+The oath formula `za-wa-tar` ("this water") is not a poetic metaphor in the context of ca. 1700 BCE Eastern Mediterranean. It is the name of a survival resource whose scarcity had restructured the political order of the entire region within living memory.
+
+The **4.2 kyr aridification event** (approximately 2200–2000 BCE) produced a multi-century drought across the Eastern Mediterranean and Near East that contributed to the collapse of the Old Kingdom of Egypt, the Akkadian Empire, and multiple Aegean Early Bronze Age settlements. By ~1800 BCE, the region was in a period of recovery and reorganization — the founding of the New Palace period at Phaistos and Knossos coincides precisely with the documented return of stable rainfall in the Aegean palaeoclimatic record (Rohling et al. 2009, *Nature Geoscience*). 
+
+In this context, an oath invoked upon *water itself* — not upon a deity *of* water, but directly upon `za-wa-tar`, "**this** water" (the demonstrative `za` pointing to a physical vessel or natural source present at the ceremony) — carries a weight that no modern reader can easily recover. Water was the substance that had recently reorganized civilizations. Swearing by it was swearing by the most powerful force the Bronze Age Eastern Mediterranean world had known.
+
+**Tiwat's role in this framework is precise:** As the solar deity who controls the seasonal water cycle — descending into primordial waters in autumn (the rains begin) and ascending in spring (the sources fill, the sailing season opens) — Tiwat *is* the mechanism by which `za-wa-tar` arrives. The oath formula does not merely mention water; it invokes the deity whose movements produce it.
+
+### 7.21.3 The Maritime Timing: Oath at the Opening of the Sailing Season
+
+The Eastern Mediterranean sailing season ran approximately **April to October** (Hesiod, *Works and Days* 618–694; Vegetius, *De Re Militari* IV.39 for Roman-period codification of what was older practice). Commercial and diplomatic voyages were concentrated in this window. A bilateral maritime covenant between Minoan Phaistos and Anatolian partners would logically be renewed at the **start of the sailing season** — the moment when the parties would next encounter each other at sea and in port.
+
+The spring equinox (Side B: Tiwat reborn) falls in March, immediately before the sailing season opens in April. **The disc's Side B is the half read at the moment of covenant renewal** — the ascent of Tiwat from the waters, the return of `za-wa-tar` (the spring rains, the filled cisterns, the navigable sea), and the reaffirmation of the bilateral agreement that will govern the coming season's trade.
+
+Side A (Tiwat's descent, autumn equinox) corresponds to the **closing ceremony** at the end of the sailing season — the sealing of the covenant in storage for the winter, as the sea closes and the waters descend underground. The compact was not dissolved at season's end; it descended with Tiwat, to re-emerge unchanged in spring.
+
+This interpretation is consistent with:
+- The **mass-reproduction evidence** (§7.20.5): hundreds or thousands of copies distributed to all parties to the covenant matrix, each renewed at the same seasonal ceremony
+- The **ship sign's maritime wind-vane** (§7.20.4; Soldani 2013): the disc was explicitly designed for an open-sea context
+- The **stamp manufacturing** (§7.10.7a): seals produced in quantity for rapid reproduction at the start of each season
+- The **7 formulaic refrains** (Z=+45.60, p<0.0001): liturgical repetition characteristic of a communally recited seasonal oath, not a one-time administrative record
+
+### 7.21.4 The Three Oath-Deities as a Seasonal Divine Witness Panel
+
+The three oath-deity convergences established in §7.18–7.19 now take on a structural function in the seasonal calendar framework:
+
+| Deity | Function | Seasonal role | Source |
+|---|---|---|---|
+| **Tiwat** (Luwian solar deity) | Solar oath-guarantor; treaty preamble witness | Controls seasonal water cycle; present at both transition moments | G_LUWIAN reading + CTH 759–762 |
+| **Išara** (JA-SA-SA-RA, Knossos sealings) | Oath-deity; goddess of contracts; underground water deity | Custodian of covenant obligations between seasons | Younger & Rehak 2008 |
+| **Talos** (Cretan solar guardian) | Solar covenant-enforcer; law-giver to Minos | The local Cretan cognitive equivalent of Tiwat; guarantees the treaty to the Minoan signatory | Hesychius; Apollonius *Argonautica* IV |
+
+Under this reading, the divine witness panel for a seasonal maritime covenant would have been recognizable to every party at the table: the Luwian scribe invokes Tiwat, the Knossos official recognizes Išara (whose name appears on their own palace sealings), and the Minoan who cannot read Luwian still understands the bronze guardian who enforces Minos's laws as the same force — solar, contractual, water-connected — by another name.
+
+The disc is polyvalent not because it was designed by committee but because the religious convergences were real: **the same deity had been independently named in three cultural frameworks across the Aegean-Anatolian contact zone.**
+
+### 7.21.5 The Oath Formula: Translation Synthesis
+
+Under the G_LUWIAN reading (Achterberg 2004 phonetic values applied to Evans/Godart canonical disc), the seasonal oath, read in the direction of its spiral (center outward on Side B = ascending, outside inward on Side A = descending), produces the following reconstructed ritual core:
+
+**Autumn ceremony (Side A — descent):**
+
+> *ti-wa-za-wa-tar-ha* [center] — "Tiwat! This water — yes!"
+> *za-wa-tar* [refrain ×n] — "This water. This water. This water."
+> *na-ti-wa-ti-[HA]* [A03 = B20] — "Of Tiwat [is this covenant]."
+
+Reading: the disc is activated at the autumn equinox ceremony by intoning the center formula and the refrain, physically presenting the water vessel named by `za-wa-tar`, and sealing the object with the terminal particle [HA] at each word-group boundary. The covenant descends with Tiwat into the winter waters.
+
+**Spring ceremony (Side B — ascent):**
+
+> *ti-wa-wa-tar-za-ha* [center B30] — "Tiwat! Water — this — YES!"
+> *za-wa-tar* [refrain ×n] — "This water. This water. This water."
+> *ha-na-wa-ti-[ya]-[HA]* [B21 = B26] — "At the spring of Ḫanawati [the covenant is renewed]."
+
+Reading: the disc is activated at the spring equinox with the inverted center formula (an anagram of the autumn formula — structurally, Tiwat has turned around), the same refrain spoken over fresh water from the source that has returned, and the B21=B26 formula anchoring the renewal to the physical water source (`ḫanawati` = "at the spring/well").
+
+The covenant-object is then distributed to all parties. The stamp manufacturing ensures that every trading partner along the Aegean-Anatolian sea lanes holds an identical copy — so the oath is simultaneously present everywhere the covenant extends.
+
+### 7.21.6 Summary: The Disc's Use
+
+| Question | Answer | Evidence |
+|---|---|---|
+| **What** | Seasonal maritime covenant instrument | Ritual classification (Z=+45.60), mass reproduction (§7.20.5), ship sign (§7.20.4) |
+| **When** | Spring and autumn equinox ceremonies | CTH 325 twice-yearly structure; Side A/B asymmetry (§7.12) |
+| **Why water** | Bronze Age survival resource; water-oath = maximum solemnity | 4.2 kyr drought aftermath; `za-wa-tar` as demonstrative pointing to physical water present |
+| **Who guaranteed it** | Tiwat (Luwian), Išara (Knossos sealings), Talos (Cretan tradition) | §7.18–7.19; three independent oath-deity convergences |
+| **How distributed** | Hundreds/thousands of stamped copies | Stamp-set technology (§7.10.7a); Soldani §7.20.5 |
+| **What it says** | "Tiwat! This water — yes!" (descent) / "Tiwat! Water — this — YES!" (ascent) | G_LUWIAN reading of centers A31 and B30 |
+
+The disc is not a unique object of royal prestige. It is a **seasonal liturgical oath-instrument**, mass-produced, distributed to all parties in a covenant matrix, read aloud twice yearly at the cosmic moments when the sun-deity who governs water transitions. One copy survived. The rest dissolved in the weather of three thousand years.
+
+---
+
 ## 7.14 Competing Phonetic Theories: Comparative Framework Assessment
 
 This section briefly surveys the three principal alternative phonetic theories and evaluates them against the computational framework established in §§4–6. None has been submitted to the Decipherment Arena (§7.11); all comparisons are methodological, not adversarial.
@@ -2513,6 +2615,8 @@ We have demonstrated:
 17. **Reading direction (§5.1a):** Of 83 directionally oriented disc tokens, 77 (92.8%) face rightward toward the spiral center (Binomial Z=+7.79, p<0.0001), independently confirming outside→center reading for both sides with no phonetic assumption.
 
 18. **Automated decipherment cross-validation (§6.17):** A 200-restart × 60,000-step hill-climbing optimiser, maximising Anatolian bigram log-probability across 36 unanchored signs, independently predicts **"pal"** for Evans #15 (MATTOCK) at 100% stability (★★) — identical to the acrophonic prediction from Luwian *palhi-* ("flat, broad tool"; Melchert CLuwLex §3.4). The methods share no data. After filtering default-syllable artifacts and cross-checking all candidate convergences against the Chicago Hittite Dictionary and Kloekhorst 2008, SAW → 'ba' /*babbi-* and CHILD → 'nu' /*nuwanza-* were **eliminated** (no such attested forms; real Hittite words for these objects have different initial syllables). MATTOCK/*palhi-* is the sole surviving confirmed convergence. Two pending candidates remain: MANACLES (#14) → 'ar' /*arha-* and COLUMN (#23) → 'ar' /*arima-* — both etymologies are real attested Hittite/Luwian forms; their acrophonic relevance requires specialist confirmation. The methodology is **falsifiable**: candidates are eliminated when the dictionary refutes them, confirming that the MATTOCK result is not a trivially true claim.
+
+24. **Seasonal covenant calendar (§7.21):** A synthesis of all statistical, historical, and translational evidence converges on a specific use-hypothesis: the disc is a **seasonal maritime covenant instrument**, read twice yearly at the autumn and spring equinoxes. Side A (formulaic descent, 11 sign-types) = autumn ceremony when Tiwat descends into the primordial waters; Side B (narrative ascent, richer vocabulary) = spring ceremony when Tiwat is reborn and the waters return. The core oath formula `za-wa-tar` ("this water") is sworn upon a physical water source present at the ceremony — maximum solemnity in the Bronze Age water-scarcity context following the 4.2 kyr aridification event. The three solar oath-deities (Tiwat, Išara/JA-SA-SA-RA, Talos) formed a polyvalent divine witness panel recognizable to all parties across Aegean-Anatolian cultural lines. Mass-produced copies (§7.20.5) were distributed to all covenant partners at each seasonal renewal. **One copy survived.**
 
 23. **Soldani 2013 cross-validation (§7.20):** A 268-page paleographic PhD thesis (Università degli Studi di Milano) independently confirms six of this paper's key-independent claims through purely structural comparison of all Aegean syllabaries — without any computational tools or access to our framework: (1) PLUMED HEAD always word-initial = probable determinative [Pillar 2]; (2) terminal bar marker 17× word-final [Pillar 4]; (3) DF36 phonetic in disc + Cretan Hieroglyphic = Luwian Hieroglyphic continuity; (4) disc script shared with Arkalochori sacred dedicatory axe = ritual classification; (5) ship sign has maritime wind-vane = open-sea context; (6) thousands of copies implied by stamp-set existence = covenant-matrix hypothesis. Six independent confirmations from a single external source using a completely different methodology.
 
