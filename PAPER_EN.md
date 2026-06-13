@@ -3,7 +3,7 @@
 **Author:** Manolis Chavadakis  
 **Affiliation:** Independent Researcher  
 **Date:** June 2026  
-**Version:** 29.0
+**Version:** 29.6
 
 ---
 
