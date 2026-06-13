@@ -41,6 +41,8 @@ The Phaistos Disc, discovered in 1908 at the Minoan palace of Phaistos (Crete) a
 
 Previous decipherment attempts number in the hundreds and span proposed languages from Minoan to Phoenician, Greek, Anatolian, and Semitic. Nearly all share a methodological weakness: the proposed phonetic key is constructed to produce semantically plausible readings, creating unfalsifiable circularity. The present study does not propose a decipherment. It proposes a **statistical methodology** for ranking competing phonetic key hypotheses against objective reference corpora, with explicit correction for multiple comparisons.
 
+Every researcher working on the Phaistos Disc — including this study — operates under the same fundamental constraint: there is only one disc. This is a property of the archaeological record, not a flaw of any particular approach. What distinguishes methodological approaches under this shared constraint is not whether the limitation exists, but what controls are applied despite it. The present framework addresses this through Bonferroni-corrected Monte Carlo simulation, blind corpus key testing, negative controls, and ablation studies — replacing the missing second corpus with the only available substitute: large, independent reference corpora and explicit null distributions. We are aware that statistical approaches to undeciphered scripts are an active area, and it is possible that comparable work on this specific object exists outside our literature search; where known, such work is cited and engaged directly.
+
 Our central question is: *given a candidate phonetic key, does the resulting character sequence show statistically significant overlap with a known language corpus, beyond what random key assignment would produce?*
 
 ---
