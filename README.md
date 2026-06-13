@@ -1,7 +1,7 @@
 # Phaistos Disc — Statistical & Computational Analysis
 
 **Author:** Manolis Chavadakis  
-**Version:** 25.0 (June 2026)  
+**Version:** 26.0 (June 2026)  
 **License:** CC-BY 4.0  
 
 ## Overview
