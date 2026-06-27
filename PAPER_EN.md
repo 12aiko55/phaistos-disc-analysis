@@ -2713,6 +2713,38 @@ The three historical convergences now form a coherent pattern, all centered on t
 
 None of these three connections was previously linked to the Phaistos Disc. Together they constitute a convergent historical argument: the disc was produced in a cultural environment where **the solar deity as covenant-guarantor was a shared concept across Luwian, Anatolian, and Cretan theological frameworks simultaneously**.
 
+### 7.19.6 The Triple Convergence: Statistical, Linguistic, and Iconographic
+
+The Talos–Tiwat identification is reinforced by three independent lines of evidence that converge on the same conclusion from wholly separate methodological domains.
+
+**A. Statistical (key-independent).** Under the key-independent Pillar 1 analysis (§6.1), sign #02 (plumed/crested head, Evans/Godart canonical) exhibits two extraordinary properties requiring no phonetic assumption:
+
+- It appears **100% word-initial** across all 19 occurrences (Z=+7.51, p<10⁻¹³): it invariably opens every word-group
+- Its bigram with sign #12 (shield/buckler) achieves **Z=+12.05**, observed/expected ratio 9.7× — the strongest pairwise association on the entire disc
+
+These properties identify sign #02 as a fixed **verse-opening formula** whose function is structural regardless of its phonetic value.
+
+**B. Linguistic (CLL attestation).** Systematic extraction from Melchert's *Cuneiform Luwian Lexicon* (CLL, 1993) — performed in this study using the full 309-page PDF text — yields the following headword directly relevant to the disc reading:
+
+> `tiwali(ya)- 'of the Sun-(god)'` (CLL p. 239)
+> `tiwari(ya)- 'of the Sun-(god)'` (CLL p. 239)
+
+Both are adjectives derived from *DTiwat-* (the Luwian sun deity) via the suffix *-li(ya)-* / *-ri(ya)-*, meaning "belonging to / pertaining to the Sun-god." The disc sequence `[zi]·[tiwa]·[li]` (signs #12·#45·#08 under G_LUWIAN) maps directly onto the CLL headword *tiwali(ya)-*: sign #45 (*tiwa* = the Sun-god's name-sign) followed by sign #08 (inferred *li*) reproduces the attested Luwian adjectival suffix. This is the first time a disc sign-sequence has been matched to a specific CLL headword.
+
+**C. Iconographic (semiotic).** From a semiotic standpoint, the statistical dominance of the #02→#12 bigram admits a natural reading in Bronze Age iconographic terms. Sign #02 depicts a plumed or crested head — in Aegean and Anatolian iconography the feathered/crested crown is the standard marker of solar divine authority (cf. Luwian Hieroglyphic DEUS and CAELUM determinatives; the Egyptian solar disc atop deity figures; the "Master Seal" divine figures of Minoan glyptic art). Sign #12 (shield), in permanent statistical association with the solar marker, suggests a compound logogram: **Solar Guardian** or **Sun-Protector**. From the Cretan perspective, a reader encountering the plumed-head sign opening every verse would recognize their own solar guardian — the deity their dialect called *tālos*, "the Sun" (Hesychius) — whose function was precisely to circle, protect, and witness.
+
+**Summary.** The three convergences are methodologically independent:
+
+| Domain | Evidence | Key value |
+|--------|----------|-----------|
+| Statistical | #02→#12 bigram, key-independent | Z=+12.05, obs/exp=9.7× |
+| Linguistic | CLL *tiwali(ya)-* 'of the Sun-god' | Directly attested headword |
+| Iconographic | Plumed head + shield = Solar Guardian | Bronze Age Aegean convention |
+
+No single one of these would be sufficient. Together they form a mutually reinforcing case that the disc's verse-opening formula invokes a solar deity — identifiable as *Tiwat* in Luwian and as *Talos* in the Cretan tradition that preserved the memory of the same Bronze Age solar covenant-guardian.
+
+> ⚠ **Caveat.** The CLL attestation (*tiwali(ya)-*) is from Cuneiform Luwian ritual texts (ca. 1400–1200 BCE), later than the disc (~1700 BCE). The Hesychius source is late antique (~5th century CE). The iconographic reading of sign #02 assumes Aegean Bronze Age conventions that may not apply to the disc's specific script tradition. All three lines of evidence are presented as convergent support for a working hypothesis, not as independent proof.
+
 ---
 
 ## 7.20 Soldani 2013: Six Independent Structural Confirmations
