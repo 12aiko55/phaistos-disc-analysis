@@ -2743,7 +2743,9 @@ Both are adjectives derived from *DTiwat-* (the Luwian sun deity) via the suffix
 
 No single one of these would be sufficient. Together they form a mutually reinforcing case that the disc's verse-opening formula invokes a solar deity — identifiable as *Tiwat* in Luwian and as *Talos* in the Cretan tradition that preserved the memory of the same Bronze Age solar covenant-guardian.
 
-> ⚠ **Caveat.** The CLL attestation (*tiwali(ya)-*) is from Cuneiform Luwian ritual texts (ca. 1400–1200 BCE), later than the disc (~1700 BCE). The Hesychius source is late antique (~5th century CE). The iconographic reading of sign #02 assumes Aegean Bronze Age conventions that may not apply to the disc's specific script tradition. All three lines of evidence are presented as convergent support for a working hypothesis, not as independent proof.
+> ⚠ **Caveat.** The CLL attestation (*tiwali(ya)-*) is from Cuneiform Luwian ritual texts (ca. 1400–1200 BCE), later than the disc (~1700 BCE); the adjectival formation *tiwali(ya)-* may be older than its earliest written attestation. The iconographic reading of sign #02 assumes Aegean Bronze Age conventions that require validation by a specialist in Minoan glyptic art.
+>
+> **On the Hesychius source:** Hesychius of Alexandria compiled his *Lexicon* (~5th century CE) as a systematic philological collection of rare, dialectal, and archaic Greek words drawn from older sources — many of which no longer survive independently. His role is precisely that of a careful linguistic researcher preserving ancient vocabulary that would otherwise be lost. His recording of *"Ταλώς· ὁ Ἥλιος παρὰ Κρησίν"* is not a late invention: it is the philological preservation of a Cretan dialectal tradition whose Bronze Age roots are exactly what we would expect given the evidence examined in §7.19. Far from weakening the argument, Hesychius functions as an independent linguistic witness — a researcher who documented what Cretan speakers knew about their own solar vocabulary. His attestation is treated here as additional corroborating evidence, not as a liability.
 
 ---
 
