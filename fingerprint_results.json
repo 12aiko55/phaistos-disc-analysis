@@ -1,0 +1,406 @@
+{
+  "known": {
+    "2": "za",
+    "36": "wa",
+    "11": "tar",
+    "22": "ha",
+    "7": "ti",
+    "29": "na",
+    "6": "an",
+    "12": "zi",
+    "45": "tiwa",
+    "1": "i"
+  },
+  "inferred": {
+    "4": {
+      "syl": "in",
+      "score": 2.533007,
+      "score2": 0.519426,
+      "confidence": 0.7949,
+      "top3": [
+        "in",
+        "u",
+        "a"
+      ],
+      "iteration": 1
+    },
+    "15": {
+      "syl": "u",
+      "score": 2.311246,
+      "score2": 1.076758,
+      "confidence": 0.5341,
+      "top3": [
+        "u",
+        "du",
+        "ia"
+      ],
+      "iteration": 1
+    },
+    "9": {
+      "syl": "a",
+      "score": 1.091559,
+      "score2": 0.433025,
+      "confidence": 0.6033,
+      "top3": [
+        "a",
+        "hi",
+        "ri"
+      ],
+      "iteration": 1
+    },
+    "21": {
+      "syl": "as",
+      "score": 0.859865,
+      "score2": 0.320014,
+      "confidence": 0.6278,
+      "top3": [
+        "as",
+        "ah",
+        "ni"
+      ],
+      "iteration": 1
+    },
+    "10": {
+      "syl": "ia",
+      "score": 1.513043,
+      "score2": 0.669596,
+      "confidence": 0.5575,
+      "top3": [
+        "ia",
+        "is",
+        "li"
+      ],
+      "iteration": 1
+    },
+    "23": {
+      "syl": "is",
+      "score": 0.512448,
+      "score2": 0.235044,
+      "confidence": 0.5413,
+      "top3": [
+        "is",
+        "at",
+        "ta"
+      ],
+      "iteration": 1
+    },
+    "26": {
+      "syl": "tu",
+      "score": 3.50905,
+      "score2": 1.070662,
+      "confidence": 0.6949,
+      "top3": [
+        "tu",
+        "sa",
+        "hu"
+      ],
+      "iteration": 1
+    },
+    "32": {
+      "syl": "si",
+      "score": 1.719991,
+      "score2": 0.940448,
+      "confidence": 0.4532,
+      "top3": [
+        "si",
+        "li",
+        "ni"
+      ],
+      "iteration": 1
+    },
+    "31": {
+      "syl": "la",
+      "score": 1.020696,
+      "score2": 0.694289,
+      "confidence": 0.3198,
+      "top3": [
+        "la",
+        "ma",
+        "su"
+      ],
+      "iteration": 1
+    },
+    "13": {
+      "syl": "ma",
+      "score": 1.385771,
+      "score2": 0.426388,
+      "confidence": 0.6923,
+      "top3": [
+        "ma",
+        "ta",
+        "da"
+      ],
+      "iteration": 1
+    },
+    "8": {
+      "syl": "li",
+      "score": 0.690952,
+      "score2": 0.563197,
+      "confidence": 0.1849,
+      "top3": [
+        "li",
+        "at",
+        "al"
+      ],
+      "iteration": 1
+    },
+    "25": {
+      "syl": "im",
+      "score": 0.241947,
+      "score2": 0.03428,
+      "confidence": 0.8583,
+      "top3": [
+        "im",
+        "ni",
+        "sa"
+      ],
+      "iteration": 1
+    },
+    "17": {
+      "syl": "ta",
+      "score": 0.261643,
+      "score2": 0.215756,
+      "confidence": 0.1754,
+      "top3": [
+        "ta",
+        "ru",
+        "sa"
+      ],
+      "iteration": 1
+    },
+    "18": {
+      "syl": "ri",
+      "score": 0.483166,
+      "score2": 0.373862,
+      "confidence": 0.2262,
+      "top3": [
+        "ri",
+        "pa",
+        "ni"
+      ],
+      "iteration": 1
+    },
+    "3": {
+      "syl": "ku",
+      "score": 0.353719,
+      "score2": 0.299075,
+      "confidence": 0.1545,
+      "top3": [
+        "ku",
+        "ni",
+        "hi"
+      ],
+      "iteration": 1
+    },
+    "24": {
+      "syl": "nu",
+      "score": 1.137773,
+      "score2": 0.653783,
+      "confidence": 0.4254,
+      "top3": [
+        "nu",
+        "it",
+        "hi"
+      ],
+      "iteration": 1
+    },
+    "34": {
+      "syl": "ah",
+      "score": 0.320014,
+      "score2": 0.289651,
+      "confidence": 0.0949,
+      "top3": [
+        "ah",
+        "ni",
+        "es"
+      ],
+      "iteration": 1
+    },
+    "19": {
+      "syl": "ru",
+      "score": 0.215756,
+      "score2": 0.213905,
+      "confidence": 0.0086,
+      "top3": [
+        "ru",
+        "sa",
+        "du"
+      ],
+      "iteration": 1
+    }
+  },
+  "full_key": {
+    "2": "za",
+    "36": "wa",
+    "11": "tar",
+    "22": "ha",
+    "7": "ti",
+    "29": "na",
+    "6": "an",
+    "12": "zi",
+    "45": "tiwa",
+    "1": "i",
+    "4": "in",
+    "15": "u",
+    "9": "a",
+    "21": "as",
+    "10": "ia",
+    "23": "is",
+    "26": "tu",
+    "32": "si",
+    "31": "la",
+    "13": "ma",
+    "8": "li",
+    "25": "im",
+    "17": "ta",
+    "18": "ri",
+    "3": "ku",
+    "24": "nu",
+    "34": "ah",
+    "19": "ru"
+  },
+  "calibration": [
+    {
+      "sign": 1,
+      "true_syl": "i",
+      "ref": "i",
+      "rank": 8,
+      "score_true": 0.068301,
+      "score_best": 0.487822,
+      "top3": [
+        "u",
+        "du",
+        "ku"
+      ]
+    },
+    {
+      "sign": 2,
+      "true_syl": "za",
+      "ref": "za",
+      "rank": 23,
+      "score_true": 0.044796,
+      "score_best": 1.099786,
+      "top3": [
+        "in",
+        "an",
+        "a"
+      ]
+    },
+    {
+      "sign": 6,
+      "true_syl": "an",
+      "ref": "an",
+      "rank": 0,
+      "score_true": 2.756833,
+      "score_best": 2.756833,
+      "top3": [
+        "an",
+        "in",
+        "a"
+      ]
+    },
+    {
+      "sign": 7,
+      "true_syl": "ti",
+      "ref": "ti",
+      "rank": 4,
+      "score_true": 0.553605,
+      "score_best": 1.299645,
+      "top3": [
+        "a",
+        "u",
+        "as"
+      ]
+    },
+    {
+      "sign": 11,
+      "true_syl": "tar",
+      "ref": "tar",
+      "rank": 39,
+      "score_true": 0.014451,
+      "score_best": 1.115205,
+      "top3": [
+        "na",
+        "an",
+        "a"
+      ]
+    },
+    {
+      "sign": 12,
+      "true_syl": "zi",
+      "ref": "zi",
+      "rank": 21,
+      "score_true": 0.06804,
+      "score_best": 0.998059,
+      "top3": [
+        "a",
+        "an",
+        "ti"
+      ]
+    },
+    {
+      "sign": 22,
+      "true_syl": "ha",
+      "ref": "ha",
+      "rank": 34,
+      "score_true": 0.063431,
+      "score_best": 2.92139,
+      "top3": [
+        "a",
+        "an",
+        "ia"
+      ]
+    },
+    {
+      "sign": 29,
+      "true_syl": "na",
+      "ref": "na",
+      "rank": 12,
+      "score_true": 0.228538,
+      "score_best": 1.801705,
+      "top3": [
+        "a",
+        "an",
+        "at"
+      ]
+    },
+    {
+      "sign": 36,
+      "true_syl": "wa",
+      "ref": "wa",
+      "rank": 14,
+      "score_true": 0.112658,
+      "score_best": 1.149755,
+      "top3": [
+        "na",
+        "ia",
+        "a"
+      ]
+    },
+    {
+      "sign": 45,
+      "true_syl": "tiwa",
+      "ref": "ti",
+      "rank": 12,
+      "score_true": 0.254976,
+      "score_best": 5.013272,
+      "top3": [
+        "a",
+        "i",
+        "sa"
+      ]
+    }
+  ],
+  "calibration_pvalue": {
+    "n_candidates": 200,
+    "observed_top10": 3,
+    "observed_top20": 6,
+    "observed_mean_rank": 16.7,
+    "null_expected_mean_rank": 99.5,
+    "p_binom_top10": 0.0115,
+    "p_binom_top20": 0.0001,
+    "z_mean_rank": -4.54,
+    "p_z_mean_rank": 3e-06
+  },
+  "n_corpus_syls": 1409
+}
