@@ -1,0 +1,17 @@
+{
+  "g_luwian_score": -6.123600587000492,
+  "g_luwian_rank_of_101": 10,
+  "n_synthetic": 50,
+  "n_random": 50,
+  "p_vs_synthetic": 0.14,
+  "p_vs_random": 0.04,
+  "z_vs_synthetic": 1.221,
+  "z_vs_random": 2.502,
+  "synthetic_mean": -8.493822666233086,
+  "synthetic_std": 1.9413396225056907,
+  "random_mean": -16.224806254726317,
+  "random_std": 4.036896044073564,
+  "verdict": "NOTE: G_LUWIAN does not significantly outperform synthetic circular keys (p=0.14). The circularity objection requires further analysis.",
+  "corpus_syllables": 156,
+  "corpus_bigrams": 39552
+}

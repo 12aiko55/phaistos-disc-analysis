@@ -1,0 +1,94 @@
+{
+  "full_disc": {
+    "plumed_initial": 1.0,
+    "z_02_12": 7.5841814787297945,
+    "refrain_density": 0.7428571428571429,
+    "gluwian_p": 0.0
+  },
+  "jackknife": {
+    "n_iter": 100,
+    "n_removed": 8,
+    "plumed_initial": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0,
+      "frac_significant": 1.0
+    },
+    "z_02_12": {
+      "mean": 7.024963065200544,
+      "std": 0.4283718628194303,
+      "min": 6.110383943752883,
+      "max": 8.132281882220784,
+      "frac_significant": 1.0
+    },
+    "refrain_density": {
+      "mean": 0.5909496121762498,
+      "std": 0.04496707388304192,
+      "min": 0.5142857142857142,
+      "max": 0.7096774193548387,
+      "frac_significant": 1.0
+    },
+    "gluwian_p": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "frac_significant": 1.0
+    }
+  },
+  "leave_one_out": {
+    "plumed_initial_top3": [
+      [
+        0.0,
+        60,
+        "W61(B30) [2, 36, 29, 7, 1]"
+      ],
+      [
+        0.0,
+        59,
+        "W60(B29) [2, 29, 23, 26, 15]"
+      ],
+      [
+        0.0,
+        58,
+        "W59(B28) [2, 36, 12, 3, 24, 1]"
+      ]
+    ],
+    "z_02_12_top3": [
+      [
+        0.2807,
+        54,
+        "W55(B24) [2, 12, 13, 9, 1, 36, 8, 25]"
+      ],
+      [
+        0.2807,
+        24,
+        "W25(A25) [2, 12, 13, 9, 1, 36, 8, 25]"
+      ],
+      [
+        0.2664,
+        53,
+        "W54(B23) [2, 12, 13, 9, 1, 36, 8]"
+      ]
+    ],
+    "refrain_density_top3": [
+      [
+        0.0286,
+        60,
+        "W61(B30) [2, 36, 29, 7, 1]"
+      ],
+      [
+        0.0286,
+        59,
+        "W60(B29) [2, 29, 23, 26, 15]"
+      ],
+      [
+        0.0286,
+        58,
+        "W59(B28) [2, 36, 12, 3, 24, 1]"
+      ]
+    ]
+  },
+  "verdict": "All three key-independent statistics remain significant (>90% of jackknife samples) after removing 13% of the disc at random. The findings are distributed across the full disc, not driven by outliers."
+}
